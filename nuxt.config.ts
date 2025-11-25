@@ -2,10 +2,11 @@
 export default defineNuxtConfig({
     compatibilityDate: '2025-07-15',
     devtools: {enabled: true},
-    modules: ['@unocss/nuxt', '@nuxt/icon'],
+    modules: ['@unocss/nuxt', '@nuxt/icon', '@pinia/nuxt'],
     pages: true,
     // Global CSS
     css: [
         '@/assets/reset/main.ts',
+        '@/assets/styles/theme.css',
     ],
 })

@@ -21,7 +21,26 @@ export const presets = [
   animatedUno(),
   presetWebFonts({
     fonts: {
-      // ...
+      sans: [
+        {
+          name: 'Inter',
+          weights: [300, 400, 500, 600, 700],
+        },
+        {
+          name: 'Inter Fallback',
+          provider: 'none',
+        },
+      ],
+      serif: [
+        {
+          name: 'Playfair Display',
+          weights: [400, 500, 600, 700],
+        },
+        {
+          name: 'Playfair Display Fallback',
+          provider: 'none',
+        },
+      ],
     },
   }),
   presetRadix({
