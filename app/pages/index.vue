@@ -31,7 +31,7 @@ useSeoMeta({ title: 'Funkmietwagen ADE - Premium Chauffeur Service' })
 
             <NuxtLink
               to="/vorbestellung"
-              class="group inline-flex items-center gap-3 border-b-2 border-foreground pb-2 text-sm font-light uppercase tracking-widest text-foreground transition-all hover:gap-5"
+              class="group inline-flex items-center gap-3 border-b-2 border-solid border-pureBlack pb-2 text-sm font-light uppercase tracking-widest text-foreground transition-all hover:gap-5"
             >
               Fahrt reservieren
               <Icon name="lucide:arrow-right" class="h-4 w-4 transition-transform group-hover:translate-x-1" />

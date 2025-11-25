@@ -24,7 +24,7 @@ const onSubmit = () => {
       <div class="container mx-auto px-4 md:px-6">
         <div v-if="submitted" class="flex min-h-[60vh] flex-col items-center justify-center py-24 text-center">
           <div class="mb-8 flex justify-center">
-            <div class="flex h-20 w-20 items-center justify-center border-2 border-foreground">
+            <div class="flex h-20 w-20 items-center justify-center border-2 border-solid border-gray-5">
               <Icon name="lucide:check" class="h-8 w-8 text-foreground" />
             </div>
           </div>
@@ -34,7 +34,7 @@ const onSubmit = () => {
           </p>
           <NuxtLink
             to="/"
-            class="inline-flex items-center justify-center border border-foreground bg-foreground px-8 py-4 text-sm font-light uppercase tracking-widest text-background transition-all hover:bg-transparent hover:text-foreground"
+            class="inline-flex items-center justify-center border border-solid border-gray-5 bg-foreground px-8 py-4 text-sm font-light uppercase tracking-widest text-background transition-all hover:bg-transparent hover:text-foreground"
           >
             Zur Startseite
           </NuxtLink>
@@ -54,7 +54,7 @@ const onSubmit = () => {
           <div class="mx-auto max-w-5xl">
             <div class="mb-16 text-center">
               <p class="mb-4 text-xs font-light uppercase tracking-[0.4em] text-muted-foreground">Reservierung</p>
-              <h1 class="mb-4 font-serif text-3xl font-medium text-foreground md:text-4xl">Fahrt anfragen</h1>
+              <h1 class="mb-4 font-serif text-3xl font-medium text-foreground md:text-5xl">Fahrt anfragen</h1>
               <p class="font-light text-muted-foreground">
                 Teilen Sie uns Ihre Wünsche mit und erhalten Sie ein individuelles Angebot.
               </p>
@@ -62,7 +62,7 @@ const onSubmit = () => {
 
             <div class="grid gap-12 lg:grid-cols-3">
               <div class="lg:col-span-1">
-                <div class="sticky top-28 border border-border p-8">
+                <div class="sticky top-28 border border-solid border-gray-5 p-8">
                   <h3 class="mb-6 text-xs font-light uppercase tracking-[0.3em] text-muted-foreground">
                     Preisübersicht
                   </h3>
@@ -86,7 +86,7 @@ const onSubmit = () => {
                     </ul>
                   </div>
 
-                  <div class="border-t border-border pt-6">
+                  <div class="border-t border-solid border-gray-5 pt-6">
                     <h4 class="mb-4 font-serif text-lg font-medium text-foreground">Stundenfahrt</h4>
                     <p class="text-sm font-light text-muted-foreground">
                       ab 55 € / Stunde
@@ -95,7 +95,7 @@ const onSubmit = () => {
                     </p>
                   </div>
 
-                  <div class="mt-8 border-t border-border pt-6">
+                  <div class="mt-8 border-t border-solid border-gray-5 pt-6">
                     <p class="text-xs font-light text-muted-foreground">
                       Die Preise sind Richtwerte. Ihr individuelles Angebot erhalten Sie nach der Anfrage.
                     </p>
@@ -105,7 +105,7 @@ const onSubmit = () => {
 
               <div class="lg:col-span-2">
                 <form class="space-y-8" @submit.prevent="onSubmit">
-                  <div class="border border-border p-8">
+                  <div class="border border-solid border-gray-5 p-8">
                     <h3 class="mb-6 text-xs font-light uppercase tracking-[0.3em] text-muted-foreground">
                       Persönliche Daten
                     </h3>
@@ -125,7 +125,7 @@ const onSubmit = () => {
                     </div>
                   </div>
 
-                  <div class="border border-border p-8">
+                  <div class="border border-solid border-gray-5 p-8">
                     <h3 class="mb-6 text-xs font-light uppercase tracking-[0.3em] text-muted-foreground">
                       Fahrtdetails
                     </h3>
@@ -142,7 +142,7 @@ const onSubmit = () => {
                           id="destination"
                           name="destination"
                           required
-                          class="h-11 w-full border border-border bg-transparent px-3 py-2 text-sm font-light text-foreground outline-none focus-visible:ring-2 focus-visible:ring-ring"
+                          class="h-11 w-full border border-solid border-gray-5 bg-transparent px-3 py-2 text-sm font-light text-foreground outline-none focus-visible:ring-2 focus-visible:ring-ring"
                         >
                           <option value="" disabled selected hidden>Bitte wählen</option>
                           <option value="cgn">Flughafen Köln/Bonn (CGN)</option>
@@ -170,7 +170,7 @@ const onSubmit = () => {
                           id="passengers"
                           name="passengers"
                           required
-                          class="h-11 w-full border border-border bg-transparent px-3 py-2 text-sm font-light text-foreground outline-none focus-visible:ring-2 focus-visible:ring-ring"
+                          class="h-11 w-full border border-solid border-gray-5 bg-transparent px-3 py-2 text-sm font-light text-foreground outline-none focus-visible:ring-2 focus-visible:ring-ring"
                         >
                           <option value="" disabled selected hidden>Bitte wählen</option>
                           <option value="1">1 Person</option>
@@ -185,7 +185,7 @@ const onSubmit = () => {
                     </div>
                   </div>
 
-                  <div class="border border-border p-8">
+                  <div class="border border-solid border-gray-5 p-8">
                     <h3 class="mb-6 text-xs font-light uppercase tracking-[0.3em] text-muted-foreground">
                       Anmerkungen
                     </h3>
