@@ -4,7 +4,7 @@
       <div class="grid gap-12 md:grid-cols-3">
         <div>
           <div class="mb-6 flex items-center gap-3">
-            <div class="flex h-11 w-11 items-center justify-center border-2 border-background">
+            <div class="flex h-11 w-11 items-center justify-center border-2 border-solid border-pureBlack">
               <span class="font-serif text-xl font-semibold tracking-tight">A</span>
             </div>
             <div>
@@ -50,7 +50,7 @@
         </div>
       </div>
 
-      <div class="mt-16 border-t border-background/20 pt-8 text-center text-xs font-light uppercase tracking-widest text-background/50">
+      <div class="mt-16 border-t border-solid border-gray-8 pt-8 color-gray-11 text-center text-xs font-light uppercase tracking-widest text-background/50">
         © {{ new Date().getFullYear() }} Funkmietwagen ADE
       </div>
     </div>

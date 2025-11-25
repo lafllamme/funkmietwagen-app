@@ -18,6 +18,6 @@ const onInput = (event: Event) => {
     v-bind="$attrs"
     :value="props.modelValue"
     @input="onInput"
-    class="h-11 w-full border border-border bg-transparent px-3 py-2 text-sm font-light text-foreground outline-none placeholder:text-muted-foreground/50 focus-visible:ring-2 focus-visible:ring-offset-0 focus-visible:ring-ring"
+    class="h-11 w-full border border-border rounded-sm bg-transparent px-3 py-2 text-sm font-light text-foreground outline-none placeholder:text-muted-foreground/50 focus-visible:ring-2 focus-visible:ring-offset-0 focus-visible:ring-pureWhite"
   />
 </template>
