@@ -3,7 +3,41 @@ import AppHeader from '@/components/layout/Header.vue'
 import AppFooter from '@/components/layout/Footer.vue'
 import ContactButtons from '@/components/ContactButtons.vue'
 
-useSeoMeta({ title: 'Funkmietwagen ADE - Premium Chauffeur Service' })
+useSeoMeta({
+  title: 'Funkmietwagen ADE – Premium Chauffeur Service',
+  description:
+      'Funkmietwagen ADE – Premium Chauffeur Service für Wien und Umgebung. Stilvolle Transfers, diskrete Fahrer und höchste Zuverlässigkeit für Flughafen, Business und Events.',
+
+  // Open Graph
+  ogTitle: 'Funkmietwagen ADE – Premium Chauffeur Service',
+  ogDescription:
+      'Erstklassige Chauffeur- und Transferdienste mit stilvollen Fahrzeugen, professionellen Fahrern und höchstem Komfort. Reservieren Sie Ihre Fahrt ganz einfach online.',
+  ogImage: 'https://i.imgur.com/qWUewqZ.png',
+  ogUrl: 'https://funkmietwagen.netlify.app',
+  ogType: 'website',
+
+  // Twitter
+  twitterCard: 'summary_large_image',
+  twitterTitle: 'Funkmietwagen ADE – Premium Chauffeur Service',
+  twitterDescription:
+      'Premium Chauffeur Service für Wien & Umgebung – stilvoll, zuverlässig, komfortabel. Jetzt Fahrt reservieren.',
+  twitterImage: 'https://i.imgur.com/qWUewqZ.png',
+})
+
+useHead({
+  link: [
+    {
+      rel: 'canonical',
+      href: 'https://funkmietwagen.netlify.app',
+    },
+  ],
+  meta: [
+    {
+      name: 'theme-color',
+      content: '#000000',
+    },
+  ],
+})
 </script>
 
 <template>
