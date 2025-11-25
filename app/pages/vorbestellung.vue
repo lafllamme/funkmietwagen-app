@@ -142,7 +142,7 @@ const onSubmit = () => {
                           id="destination"
                           name="destination"
                           required
-                          class="h-11 w-full border border-solid border-gray-5 bg-transparent px-3 py-2 text-sm font-light text-foreground outline-none focus-visible:ring-2 focus-visible:ring-ring"
+                          class="h-11 w-full border border-solid border-gray-5 bg-transparent px-3 py-2 text-base font-light text-foreground outline-none focus-visible:ring-2 focus-visible:ring-ring"
                         >
                           <option value="" disabled selected hidden>Bitte wählen</option>
                           <option value="cgn">Flughafen Köln/Bonn (CGN)</option>
@@ -170,7 +170,7 @@ const onSubmit = () => {
                           id="passengers"
                           name="passengers"
                           required
-                          class="h-11 w-full border border-solid border-gray-5 bg-transparent px-3 py-2 text-sm font-light text-foreground outline-none focus-visible:ring-2 focus-visible:ring-ring"
+                          class="h-11 w-full border border-solid border-gray-5 bg-transparent px-3 py-2 text-base font-light text-foreground outline-none focus-visible:ring-2 focus-visible:ring-ring"
                         >
                           <option value="" disabled selected hidden>Bitte wählen</option>
                           <option value="1">1 Person</option>
