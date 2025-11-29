@@ -7,7 +7,7 @@ const emit = defineEmits<{
   (e: 'update:modelValue', value: string): void
 }>()
 
-const onInput = (event: Event) => {
+function onInput(event: Event) {
   const target = event.target as HTMLTextAreaElement
   emit('update:modelValue', target.value)
 }
@@ -17,7 +17,7 @@ const onInput = (event: Event) => {
   <textarea
     v-bind="$attrs"
     :value="props.modelValue"
+    class="w-full border border-border bg-transparent px-3 py-2 text-base text-foreground font-light outline-none placeholder:text-muted-foreground/50 focus-visible:ring-2 focus-visible:ring-offset-0 focus-visible:ring-ring"
     @input="onInput"
-    class="w-full border border-border bg-transparent px-3 py-2 text-base font-light text-foreground outline-none placeholder:text-muted-foreground/50 focus-visible:ring-2 focus-visible:ring-offset-0 focus-visible:ring-ring"
   />
 </template>

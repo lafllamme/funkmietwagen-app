@@ -4,22 +4,24 @@
       <div class="grid gap-12 md:grid-cols-3">
         <div>
           <div class="mb-6 flex items-center gap-3">
-            <div class="flex h-11 w-11 items-center justify-center border-2 border-solid border-pureBlack">
-              <span class="font-serif text-xl font-semibold tracking-tight">A</span>
+            <div class="h-11 w-11 flex items-center justify-center border-2 border-pureBlack border-solid">
+              <span class="text-xl font-semibold tracking-tight font-serif">A</span>
             </div>
             <div>
-              <span class="block font-serif text-xl font-medium tracking-wide">Funkmietwagen</span>
-              <span class="block text-xs uppercase tracking-[0.3em] text-background/60">ADE</span>
+              <span class="block text-xl font-medium tracking-wide font-serif">Funkmietwagen</span>
+              <span class="block text-xs text-background/60 tracking-[0.3em] uppercase">ADE</span>
             </div>
           </div>
-          <p class="text-sm font-light leading-relaxed text-background/70">
+          <p class="text-sm text-background/70 font-light leading-relaxed">
             Ihr exklusiver Partner für erstklassige Chauffeur- und Transferdienste.
           </p>
         </div>
 
         <div>
-          <h3 class="mb-6 text-xs font-light uppercase tracking-[0.3em] text-background/60">Kontakt</h3>
-          <ul class="space-y-4 text-sm font-light">
+          <h3 class="mb-6 text-xs text-background/60 font-light tracking-[0.3em] uppercase">
+            Kontakt
+          </h3>
+          <ul class="text-sm font-light space-y-4">
             <li class="flex items-center gap-3">
               <Icon name="lucide:phone" class="h-4 w-4" />
               <a href="tel:+49123456789" class="transition-colors hover:text-background/80">
@@ -40,8 +42,10 @@
         </div>
 
         <div>
-          <h3 class="mb-6 text-xs font-light uppercase tracking-[0.3em] text-background/60">Services</h3>
-          <ul class="space-y-3 text-sm font-light text-background/70">
+          <h3 class="mb-6 text-xs text-background/60 font-light tracking-[0.3em] uppercase">
+            Services
+          </h3>
+          <ul class="text-sm text-background/70 font-light space-y-3">
             <li>Flughafentransfers</li>
             <li>Stundenfahrten</li>
             <li>Geschäftsreisen</li>
@@ -50,7 +54,7 @@
         </div>
       </div>
 
-      <div class="mt-16 border-t border-solid border-gray-8 pt-8 color-gray-11 text-center text-xs font-light uppercase tracking-widest text-background/50">
+      <div class="mt-16 border-t border-gray-8 border-solid pt-8 text-center text-xs text-background/50 color-gray-11 font-light tracking-widest uppercase">
         © {{ new Date().getFullYear() }} Funkmietwagen ADE
       </div>
     </div>
