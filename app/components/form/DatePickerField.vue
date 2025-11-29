@@ -48,11 +48,14 @@ function formatDate(value: DateValue) {
 }
 
 function displaySegment(part: string, value: string) {
+  const clean = value?.trim() ?? ''
+  if (part === 'literal')
+    return '.'
   if (part === 'day' || part === 'month')
-    return value.toString().padStart(2, '0')
+    return clean ? clean.padStart(2, '0').toUpperCase() : 'TT'
   if (part === 'year')
-    return value.toString().padStart(4, '0')
-  return value
+    return clean ? clean.padStart(4, '0').toUpperCase() : 'JJJJ'
+  return clean.toUpperCase()
 }
 </script>
 
