@@ -7,6 +7,8 @@ interface ContactPayload {
   email?: string
   pickup?: string
   destination?: string
+  destinationCode?: string
+  destinationLabel?: string
   date?: string
   time?: string
   passengers?: string
@@ -59,7 +61,10 @@ export default defineEventHandler(async (event) => {
       throw createError({ statusCode: 400, statusMessage: `Missing field: ${field}` })
   }
 
-  const html = buildEmailHtml(body)
+  const html = buildEmailHtml({
+    ...body,
+    destination: body.destinationLabel || body.destination || body.destinationCode,
+  })
   const subject = `Neue Vorbestellung ${body.date ?? ''} ${body.time ?? ''}`.trim()
   consola.info('[Resend] Sending email', { to: EMAIL_TO, subject })
 
