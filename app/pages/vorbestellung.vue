@@ -62,6 +62,8 @@ async function onSubmit() {
     }
     console.info('[Form] Submission accepted by Netlify')
     markSubmitted()
+    if (typeof window !== 'undefined')
+      window.scrollTo({ top: 0, behavior: 'smooth' })
   }
   catch (error) {
     console.error(error)
