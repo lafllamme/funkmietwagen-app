@@ -1,10 +1,11 @@
 <script setup lang="ts">
-import type { DateValue } from '@internationalized/date'
+import type { DateValue, TimeValue } from '@internationalized/date'
 import type { DestinationOption } from '@/components/form/DestinationSelect.model'
 import { computed, ref } from 'vue'
 import DatePickerField from '@/components/form/DatePickerField.vue'
 import DestinationSelect from '@/components/form/DestinationSelect.vue'
 import PersonSelector from '@/components/form/PersonSelector.vue'
+import TimeField from '@/components/form/TimeField.vue'
 import AppFooter from '@/components/layout/Footer.vue'
 import AppHeader from '@/components/layout/Header.vue'
 import UiInput from '@/components/ui/Input.vue'
@@ -27,6 +28,7 @@ const sending = ref(false)
 const errorMessage = ref('')
 const destinationValue = ref<DestinationOption | null>(null)
 const dateValue = ref<DateValue | null>(null)
+const timeValue = ref<TimeValue | null>(null)
 const passengers = ref(1)
 
 function toFormBody(form: HTMLFormElement) {
@@ -236,7 +238,7 @@ async function onSubmit() {
                           <UiLabel for="time">
                             Uhrzeit *
                           </UiLabel>
-                          <UiInput id="time" name="time" type="time" required />
+                          <TimeField v-model="timeValue" required />
                         </div>
                       </div>
 
