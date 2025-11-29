@@ -12,6 +12,7 @@
     "lint:fix": "eslint . --fix"
   },
   "dependencies": {
+    "@internationalized/date": "^3.5.5",
     "@pinia/nuxt": "^0.8.0",
     "@unocss/reset": "^66.5.9",
     "nuxt": "^4.2.1",
