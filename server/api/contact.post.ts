@@ -15,14 +15,17 @@ interface ContactPayload {
 
 const requiredFields: Array<keyof ContactPayload> = ['name', 'phone', 'email', 'pickup', 'destination', 'date', 'time', 'passengers']
 
-const row = (label: string, value?: string) => `
+function row(label: string, value?: string) {
+  return `
   <tr>
     <td style="padding:8px 12px;border:1px solid #e5e7eb;background:#f9fafb;font-weight:600;">${label}</td>
     <td style="padding:8px 12px;border:1px solid #e5e7eb;">${value ? String(value) : '-'}</td>
   </tr>
 `
+}
 
-const buildEmailHtml = (data: ContactPayload) => `
+function buildEmailHtml(data: ContactPayload) {
+  return `
   <div style="font-family: Arial, sans-serif; font-size: 14px; line-height: 1.6; color: #111827;">
     <h2 style="margin-bottom:12px;">Neue Fahrtanfrage</h2>
     <p style="margin:0 0 12px;">Es ist eine neue Anfrage eingegangen. Details siehe Tabelle:</p>
@@ -39,6 +42,7 @@ const buildEmailHtml = (data: ContactPayload) => `
     </table>
   </div>
 `
+}
 
 export default defineEventHandler(async (event) => {
   const config = useRuntimeConfig()
