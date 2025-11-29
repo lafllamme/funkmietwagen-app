@@ -1,6 +1,8 @@
 <script setup lang="ts">
+import type { DateValue } from '@internationalized/date'
 import type { DestinationOption } from '@/components/form/DestinationSelect.model'
 import { computed, ref } from 'vue'
+import DatePickerField from '@/components/form/DatePickerField.vue'
 import DestinationSelect from '@/components/form/DestinationSelect.vue'
 import PersonSelector from '@/components/form/PersonSelector.vue'
 import AppFooter from '@/components/layout/Footer.vue'
@@ -24,6 +26,7 @@ const formRef = useTemplateRef('formRef')
 const sending = ref(false)
 const errorMessage = ref('')
 const destinationValue = ref<DestinationOption | null>(null)
+const dateValue = ref<DateValue | null>(null)
 const passengers = ref(1)
 
 function toFormBody(form: HTMLFormElement) {
@@ -227,7 +230,7 @@ async function onSubmit() {
                           <UiLabel for="date">
                             Datum *
                           </UiLabel>
-                          <UiInput id="date" name="date" type="date" required />
+                          <DatePickerField v-model="dateValue" required />
                         </div>
                         <div class="space-y-2">
                           <UiLabel for="time">
