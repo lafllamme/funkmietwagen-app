@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import type { DateValue } from '@internationalized/date'
 import type { DatePickerFieldProps } from './DatePickerField.model'
+import { getLocalTimeZone, today } from '@internationalized/date'
 import {
   DatePickerArrow,
   DatePickerCalendar,
@@ -39,15 +40,28 @@ const dateValue = computed<DateValue | null>({
 })
 
 const isoDate = computed(() => (dateValue.value ? formatDate(dateValue.value) : ''))
+const minDate = today(getLocalTimeZone())
 
 function formatDate(value: DateValue) {
   // DateValue from @internationalized/date implements toString as ISO YYYY-MM-DD
   return value.toString()
 }
+
+function displaySegment(part: string, value: string) {
+  if (part === 'day' || part === 'month')
+    return value.toString().padStart(2, '0')
+  if (part === 'year')
+    return value.toString().padStart(4, '0')
+  return value
+}
 </script>
 
 <template>
-  <DatePickerRoot v-model="dateValue">
+  <DatePickerRoot
+    v-model="dateValue"
+    :is-date-unavailable="(date) => date.compare(minDate) < 0"
+    :locale="props.locale"
+  >
     <DatePickerField
       :id="props.id"
       v-slot="{ segments }"
@@ -60,14 +74,14 @@ function formatDate(value: DateValue) {
             :part="item.part"
             class="text-muted-foreground"
           >
-            {{ item.value }}
+            {{ displaySegment(item.part, item.value) }}
           </DatePickerInput>
           <DatePickerInput
             v-else
             :part="item.part"
             class="min-w-[1.4ch] text-left data-[placeholder]:text-muted-foreground focus:outline-none"
           >
-            {{ item.value }}
+            {{ displaySegment(item.part, item.value) }}
           </DatePickerInput>
         </template>
       </div>
