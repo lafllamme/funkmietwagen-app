@@ -1,5 +1,17 @@
 <script setup lang="ts">
-import { computed, ref } from 'vue'
+import {
+  ComboboxAnchor,
+  ComboboxContent,
+  ComboboxInput,
+  ComboboxItem,
+  ComboboxItemIndicator,
+  ComboboxPortal,
+  ComboboxRoot,
+  ComboboxTrigger,
+  ComboboxViewport,
+  useFilter,
+} from 'reka-ui'
+import { computed, ref, watch } from 'vue'
 import AppFooter from '@/components/layout/Footer.vue'
 import AppHeader from '@/components/layout/Header.vue'
 import UiInput from '@/components/ui/Input.vue'
@@ -13,6 +25,14 @@ const FORM_METHOD = 'POST'
 const ERROR_MESSAGE
   = 'Die Anfrage konnte nicht gesendet werden. Bitte versuchen Sie es erneut oder kontaktieren Sie uns telefonisch.'
 
+const destinationOptions = [
+  { code: 'cgn', label: 'Flughafen Köln/Bonn (CGN)' },
+  { code: 'dus', label: 'Flughafen Düsseldorf (DUS)' },
+  { code: 'fra', label: 'Flughafen Frankfurt (FRA)' },
+  { code: 'hourly', label: 'Stundenfahrt' },
+  { code: 'other', label: 'Anderes Ziel' },
+]
+
 const store = useBookingStore()
 const { markSubmitted } = store
 const submitted = computed(() => store.submitted)
@@ -20,6 +40,43 @@ const formRef = useTemplateRef('formRef')
 
 const sending = ref(false)
 const errorMessage = ref('')
+const destinationValue = ref<(typeof destinationOptions)[number] | string | null>(null)
+const destinationInput = ref('')
+const destinationCode = ref('')
+const { contains } = useFilter({ sensitivity: 'base' })
+
+const filteredDestinations = computed(() =>
+  destinationOptions.filter(option => contains(option.label, destinationInput.value)),
+)
+
+watch(destinationValue, (val) => {
+  if (!val) {
+    destinationInput.value = ''
+    destinationCode.value = ''
+    return
+  }
+
+  if (typeof val === 'object') {
+    destinationInput.value = val.label
+    destinationCode.value = val.code
+  }
+  else {
+    destinationInput.value = val
+    destinationCode.value = ''
+  }
+})
+
+watch(destinationInput, (val) => {
+  if (!val) {
+    destinationValue.value = null
+    destinationCode.value = ''
+  }
+  else {
+    // Free typing keeps the text, clears the code
+    destinationValue.value = val
+    destinationCode.value = ''
+  }
+})
 
 function toFormBody(form: HTMLFormElement) {
   const formData = new FormData(form)
@@ -214,31 +271,62 @@ async function onSubmit() {
                         <UiLabel for="destination">
                           Ziel *
                         </UiLabel>
-                        <select
-                          id="destination"
-                          name="destination"
-                          required
-                          class="h-11 w-full border border-gray-5 border-solid bg-transparent px-3 py-2 text-base text-foreground font-light outline-none focus-visible:ring-2 focus-visible:ring-ring"
+                        <ComboboxRoot
+                          v-model="destinationValue"
+                          :ignore-filter="true"
+                          :open-on-click="true"
+                          :open-on-focus="true"
+                          :display-value="val => (typeof val === 'object' && val ? val.label : (val ?? ''))"
+                          class="w-full focus-visible:outline-none"
                         >
-                          <option value="" disabled selected hidden>
-                            Bitte wählen
-                          </option>
-                          <option value="cgn">
-                            Flughafen Köln/Bonn (CGN)
-                          </option>
-                          <option value="dus">
-                            Flughafen Düsseldorf (DUS)
-                          </option>
-                          <option value="fra">
-                            Flughafen Frankfurt (FRA)
-                          </option>
-                          <option value="hourly">
-                            Stundenfahrt
-                          </option>
-                          <option value="other">
-                            Anderes Ziel
-                          </option>
-                        </select>
+                          <ComboboxAnchor class="relative">
+                            <ComboboxInput
+                              id="destination"
+                              v-model="destinationInput"
+                              name="destination"
+                              required
+                              placeholder="Ziel eingeben oder wählen"
+                              class="h-11 w-full border rounded-sm border-solid bg-transparent px-3 py-2 pr-10 text-base text-foreground font-light outline-none focus-visible:ring-2 focus-visible:ring-offset-0 focus-visible:ring-pureWhite"
+                            />
+                            <ComboboxTrigger
+                              class="absolute right-3 top-1/2 text-muted-foreground -translate-y-1/2"
+                              aria-label="Ziel auswählen"
+                            >
+                              <Icon name="lucide:chevron-down" class="h-4 w-4" />
+                            </ComboboxTrigger>
+                          </ComboboxAnchor>
+
+                          <ComboboxPortal>
+                            <ComboboxContent
+                              class="z-50 mt-2 border border-gray-5 border-solid bg-background shadow-lg"
+                              position="popper"
+                              side="bottom"
+                              :style="{ minWidth: 'var(--reka-combobox-trigger-width)', width: 'var(--reka-combobox-trigger-width)' }"
+                            >
+                              <ComboboxViewport>
+                                <ComboboxItem
+                                  v-for="option in filteredDestinations"
+                                  :key="option.code"
+                                  :value="option"
+                                  :text-value="option.label"
+                                  class="cursor-pointer px-3 py-2 text-sm text-foreground data-[highlighted]:bg-gray-11 hover:bg-gray-11"
+                                >
+                                  <div class="flex items-center gap-2">
+                                    <ComboboxItemIndicator class="text-foreground">
+                                      <Icon name="lucide:check" class="h-4 w-4" />
+                                    </ComboboxItemIndicator>
+                                    <span>{{ option.label }}</span>
+                                  </div>
+                                </ComboboxItem>
+                                <div v-if="!filteredDestinations.length" class="px-3 py-2 text-sm text-muted-foreground">
+                                  Keine Treffer
+                                </div>
+                              </ComboboxViewport>
+                            </ComboboxContent>
+                          </ComboboxPortal>
+                        </ComboboxRoot>
+                        <input type="hidden" name="destinationCode" :value="destinationCode">
+                        <input type="hidden" name="destinationLabel" :value="destinationInput">
                       </div>
 
                       <div class="grid gap-6 sm:grid-cols-2">
@@ -264,7 +352,7 @@ async function onSubmit() {
                           id="passengers"
                           name="passengers"
                           required
-                          class="h-11 w-full border border-gray-5 border-solid bg-transparent px-3 py-2 text-base text-foreground font-light outline-none focus-visible:ring-2 focus-visible:ring-ring"
+                          class="h-11 w-full border border-solid bg-transparent px-3 py-2 text-base text-foreground font-light outline-none focus-visible:ring-2 focus-visible:ring-ring"
                         >
                           <option value="" disabled selected hidden>
                             Bitte wählen
