@@ -4,6 +4,9 @@ export default defineNuxtConfig({
   devtools: { enabled: true },
   modules: ['@unocss/nuxt', '@nuxt/icon', '@pinia/nuxt'],
   pages: true,
+  routeRules: {
+    '/vorbestellung': { prerender: true },
+  },
   // Global CSS
   css: [
     '@/assets/reset/main.ts',
