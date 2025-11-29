@@ -11,9 +11,11 @@ const FORM_NAME = 'vorbestellung'
 const FORM_NAME_FIELD = 'form-name'
 const FORM_HEADERS = { 'Content-Type': 'application/x-www-form-urlencoded' }
 
-const FORM_ACTION = '/'
+// Post back to the same static page so Netlify form handling can process it
+const FORM_ACTION = '/vorbestellung'
 const FORM_METHOD = 'POST'
-const ERROR_MESSAGE = 'Die Anfrage konnte nicht gesendet werden. Bitte versuchen Sie es erneut oder kontaktieren Sie uns telefonisch.'
+const ERROR_MESSAGE
+  = 'Die Anfrage konnte nicht gesendet werden. Bitte versuchen Sie es erneut oder kontaktieren Sie uns telefonisch.'
 
 const store = useBookingStore()
 const { markSubmitted } = store
@@ -28,25 +30,34 @@ function toFormBody(form: HTMLFormElement) {
   // Netlify expects form-name in the encoded payload too
   if (!formData.has(FORM_NAME_FIELD))
     formData.set(FORM_NAME_FIELD, FORM_NAME)
-  return new URLSearchParams(formData as unknown as Record<string, string>).toString()
+  return new URLSearchParams(Array.from(formData.entries()) as [string, string][]).toString()
 }
 
 async function onSubmit() {
-  if (!formRef.value)
+  if (!formRef.value) {
+    console.warn('[Form] No form ref found, aborting submit')
     return
+  }
   sending.value = true
   errorMessage.value = ''
 
   // Prepare form data and send it to Netlify
   const bodyContent = toFormBody(formRef.value)
-  console.info('[Form] Sending form data:', bodyContent)
+  console.info('[Form] Sending form data to', FORM_ACTION, 'payload:', bodyContent)
 
   try {
-    await fetch(FORM_ACTION, {
+    const response = await fetch(FORM_ACTION, {
       method: FORM_METHOD,
       headers: FORM_HEADERS,
       body: bodyContent,
     })
+    console.info('[Form] Received response', response.status, response.statusText)
+
+    if (!response.ok) {
+      const text = await response.text()
+      throw new Error(`[Form] Failed with status ${response.status}: ${text}`)
+    }
+    console.info('[Form] Submission accepted by Netlify')
     markSubmitted()
   }
   catch (error) {
@@ -54,6 +65,7 @@ async function onSubmit() {
     errorMessage.value = ERROR_MESSAGE
   }
   finally {
+    console.info('[Form] Submit finished')
     sending.value = false
   }
 }
