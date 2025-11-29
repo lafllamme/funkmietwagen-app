@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import AppHeader from '@/components/layout/Header.vue'
-import AppFooter from '@/components/layout/Footer.vue'
 import ContactButtons from '@/components/ContactButtons.vue'
+import AppFooter from '@/components/layout/Footer.vue'
+import AppHeader from '@/components/layout/Header.vue'
 
 useSeoMeta({
   title: 'Funkmietwagen ADE – Premium Chauffeur Service',
@@ -41,20 +41,20 @@ useHead({
 </script>
 
 <template>
-  <div class="flex min-h-screen flex-col bg-background">
+  <div class="min-h-screen flex flex-col bg-background">
     <AppHeader />
 
     <main class="flex-1">
-      <section class="relative py-24 md:py-32 lg:py-40">
+      <section class="relative py-24 lg:py-40 md:py-32">
         <div class="container mx-auto px-4 md:px-6">
           <div class="mx-auto max-w-4xl text-center">
-            <p class="mb-4 text-xs font-light uppercase tracking-[0.4em] text-muted-foreground">
+            <p class="mb-4 text-xs text-muted-foreground font-light tracking-[0.4em] uppercase">
               Premium Chauffeur Service
             </p>
-            <h1 class="mb-6 font-serif text-4xl font-medium tracking-tight text-foreground md:text-5xl lg:text-6xl">
+            <h1 class="mb-6 text-4xl text-foreground font-medium tracking-tight font-serif lg:text-6xl md:text-5xl">
               Exzellenz in Bewegung
             </h1>
-            <p class="mx-auto mb-12 max-w-2xl text-lg font-light leading-relaxed text-muted-foreground">
+            <p class="mx-auto mb-12 max-w-2xl text-lg text-muted-foreground font-light leading-relaxed">
               Erleben Sie erstklassigen Transferservice mit höchstem Komfort und absoluter Zuverlässigkeit.
               Kontaktieren Sie uns für Ihre Fahrt.
             </p>
@@ -65,7 +65,7 @@ useHead({
 
             <NuxtLink
               to="/vorbestellung"
-              class="group inline-flex items-center gap-3 border-b-2 border-solid border-pureWhite pb-2 text-sm font-light uppercase tracking-widest text-foreground transition-all hover:gap-5"
+              class="group inline-flex items-center gap-3 border-b-2 border-pureWhite border-solid pb-2 text-sm text-foreground font-light tracking-widest uppercase transition-all hover:gap-5"
             >
               Fahrt reservieren
               <Icon name="lucide:arrow-right" class="h-4 w-4 transition-transform group-hover:translate-x-1" />
@@ -76,10 +76,10 @@ useHead({
 
       <section class="border-y border-border py-20 md:py-24">
         <div class="container mx-auto px-4 md:px-6">
-          <p class="mb-12 text-center text-xs font-light uppercase tracking-[0.4em] text-muted-foreground">
+          <p class="mb-12 text-center text-xs text-muted-foreground font-light tracking-[0.4em] uppercase">
             Warum Funkmietwagen ADE
           </p>
-          <div class="grid gap-px bg-border md:grid-cols-2 lg:grid-cols-4">
+          <div class="grid gap-px bg-border lg:grid-cols-4 md:grid-cols-2">
             <div
               v-for="(feature, i) in [
                 { icon: 'lucide:clock', title: 'Pünktlichkeit', desc: 'Zuverlässig und immer rechtzeitig' },
@@ -91,8 +91,12 @@ useHead({
               class="flex flex-col items-center bg-background p-12 text-center"
             >
               <Icon :name="feature.icon" class="mb-6 h-8 w-8 text-foreground" />
-              <h3 class="mb-2 font-serif text-lg font-medium text-foreground">{{ feature.title }}</h3>
-              <p class="text-sm font-light text-muted-foreground">{{ feature.desc }}</p>
+              <h3 class="mb-2 text-lg text-foreground font-medium font-serif">
+                {{ feature.title }}
+              </h3>
+              <p class="text-sm text-muted-foreground font-light">
+                {{ feature.desc }}
+              </p>
             </div>
           </div>
         </div>
@@ -101,20 +105,22 @@ useHead({
       <section class="py-20 md:py-24">
         <div class="container mx-auto px-4 md:px-6">
           <div class="mx-auto max-w-4xl">
-            <p class="mb-4 text-center text-xs font-light uppercase tracking-[0.4em] text-muted-foreground">
+            <p class="mb-4 text-center text-xs text-muted-foreground font-light tracking-[0.4em] uppercase">
               Unsere Leistungen
             </p>
-            <h2 class="mb-16 text-center font-serif text-3xl font-medium text-foreground md:text-4xl">
+            <h2 class="mb-16 text-center text-3xl text-foreground font-medium font-serif md:text-4xl">
               Maßgeschneiderte Transfers
             </h2>
 
             <div class="grid gap-8 md:grid-cols-3">
               <div class="border border-border p-8">
-                <h3 class="mb-4 font-serif text-xl font-medium text-foreground">Flughafentransfers</h3>
-                <p class="mb-6 text-sm font-light leading-relaxed text-muted-foreground">
+                <h3 class="mb-4 text-xl text-foreground font-medium font-serif">
+                  Flughafentransfers
+                </h3>
+                <p class="mb-6 text-sm text-muted-foreground font-light leading-relaxed">
                   Komfortable Transfers zu allen Flughäfen der Region.
                 </p>
-                <ul class="space-y-2 text-sm font-light text-muted-foreground">
+                <ul class="text-sm text-muted-foreground font-light space-y-2">
                   <li>Köln/Bonn (CGN)</li>
                   <li>Düsseldorf (DUS)</li>
                   <li>Frankfurt (FRA)</li>
@@ -122,16 +128,20 @@ useHead({
               </div>
 
               <div class="border border-border p-8">
-                <h3 class="mb-4 font-serif text-xl font-medium text-foreground">Stundenfahrten</h3>
-                <p class="text-sm font-light leading-relaxed text-muted-foreground">
+                <h3 class="mb-4 text-xl text-foreground font-medium font-serif">
+                  Stundenfahrten
+                </h3>
+                <p class="text-sm text-muted-foreground font-light leading-relaxed">
                   Flexibel buchbar für Geschäftstermine, Stadtfahrten oder individuelle Touren. Wir stehen Ihnen
                   stundenweise zur Verfügung.
                 </p>
               </div>
 
               <div class="border border-border p-8">
-                <h3 class="mb-4 font-serif text-xl font-medium text-foreground">Individuelle Transfers</h3>
-                <p class="text-sm font-light leading-relaxed text-muted-foreground">
+                <h3 class="mb-4 text-xl text-foreground font-medium font-serif">
+                  Individuelle Transfers
+                </h3>
+                <p class="text-sm text-muted-foreground font-light leading-relaxed">
                   Haben Sie einen besonderen Wunsch? Kontaktieren Sie uns für ein maßgeschneidertes Angebot.
                 </p>
               </div>
@@ -140,7 +150,7 @@ useHead({
             <div class="mt-16 text-center">
               <NuxtLink
                 to="/vorbestellung"
-                class="inline-flex items-center justify-center border border-foreground bg-foreground px-10 py-4 text-sm font-light uppercase tracking-widest text-background transition-all hover:bg-transparent hover:text-foreground"
+                class="inline-flex items-center justify-center border border-foreground bg-foreground px-10 py-4 text-sm text-background font-light tracking-widest uppercase transition-all hover:bg-transparent hover:text-foreground"
               >
                 Jetzt reservieren
               </NuxtLink>
@@ -153,4 +163,3 @@ useHead({
     <AppFooter />
   </div>
 </template>
-
