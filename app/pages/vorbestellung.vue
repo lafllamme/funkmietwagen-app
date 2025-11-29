@@ -7,12 +7,8 @@ import UiLabel from '@/components/ui/Label.vue'
 import UiTextarea from '@/components/ui/Textarea.vue'
 import { useBookingStore } from '@/stores/useBookingStore'
 
-const FORM_NAME = 'vorbestellung'
-const FORM_NAME_FIELD = 'form-name'
-const FORM_HEADERS = { 'Content-Type': 'application/x-www-form-urlencoded' }
-
-// Post back to the same static page so Netlify form handling can process it
-const FORM_ACTION = '/vorbestellung'
+const FORM_HEADERS = { 'Content-Type': 'application/json' }
+const FORM_ACTION = '/api/contact'
 const FORM_METHOD = 'POST'
 const ERROR_MESSAGE
   = 'Die Anfrage konnte nicht gesendet werden. Bitte versuchen Sie es erneut oder kontaktieren Sie uns telefonisch.'
@@ -27,10 +23,7 @@ const errorMessage = ref('')
 
 function toFormBody(form: HTMLFormElement) {
   const formData = new FormData(form)
-  // Netlify expects form-name in the encoded payload too
-  if (!formData.has(FORM_NAME_FIELD))
-    formData.set(FORM_NAME_FIELD, FORM_NAME)
-  return new URLSearchParams(Array.from(formData.entries()) as [string, string][]).toString()
+  return JSON.stringify(Object.fromEntries(formData.entries()))
 }
 
 async function onSubmit() {
@@ -173,17 +166,11 @@ async function onSubmit() {
               <div class="lg:col-span-2">
                 <form
                   ref="formRef"
-                  class="-mt-8 space-y-8"
-                  :name="FORM_NAME"
+                  class="space-y-8"
                   :method="FORM_METHOD"
                   :action="FORM_ACTION"
-                  data-netlify="true"
-                  netlify-honeypot="bot-field"
                   @submit.prevent="onSubmit"
                 >
-                  <input type="hidden" class="hidden" name="form-name" :value="FORM_NAME">
-                  <input type="hidden" class="hidden" name="bot-field">
-
                   <div class="border border-gray-5 border-solid p-8">
                     <h3 class="mb-6 text-xs text-muted-foreground font-light tracking-[0.3em] uppercase">
                       Persönliche Daten
