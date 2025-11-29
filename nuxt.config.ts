@@ -12,4 +12,11 @@ export default defineNuxtConfig({
     '@/assets/reset/main.ts',
     '@/assets/styles/theme.css',
   ],
+  runtimeConfig: {
+    resend: {
+      EMAIL_FROM: '',
+      EMAIL_TO: '',
+      API_KEY: '',
+    },
+  },
 })
