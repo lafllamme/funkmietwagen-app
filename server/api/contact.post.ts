@@ -20,24 +20,34 @@ const requiredFields: Array<keyof ContactPayload> = ['name', 'phone', 'email', '
 function row(label: string, value?: string) {
   return `
   <tr>
-    <td style="padding:8px 12px;border:1px solid #e5e7eb;background:#f9fafb;font-weight:600;">${label}</td>
-    <td style="padding:8px 12px;border:1px solid #e5e7eb;">${value ? String(value) : '-'}</td>
+    <td style="padding:10px 14px;border:1px solid #2b2b2b;background:#111;font-weight:600;color:#f5f5f5;">${label}</td>
+    <td style="padding:10px 14px;border:1px solid #2b2b2b;color:#e5e5e5;">${value ? String(value) : '-'}</td>
   </tr>
 `
 }
 
+function formatDateGerman(value?: string) {
+  if (!value)
+    return value
+  const match = value.match(/^(\d{4})-(\d{2})-(\d{2})$/)
+  if (!match)
+    return value
+  const [, y, m, d] = match
+  return `${d}.${m}.${y}`
+}
+
 function buildEmailHtml(data: ContactPayload) {
   return `
-  <div style="font-family: Arial, sans-serif; font-size: 14px; line-height: 1.6; color: #111827;">
-    <h2 style="margin-bottom:12px;">Neue Fahrtanfrage</h2>
-    <p style="margin:0 0 12px;">Es ist eine neue Anfrage eingegangen. Details siehe Tabelle:</p>
-    <table style="border-collapse: collapse; width: 100%; max-width: 720px;">
+  <div style="font-family: Arial, sans-serif; font-size: 14px; line-height: 1.6; color: #f5f5f5; background:#0b0b0b; padding:16px;">
+    <h2 style="margin:0 0 12px;font-weight:600;color:#ffffff;">Neue Fahrtanfrage</h2>
+    <p style="margin:0 0 16px;color:#d0d0d0;">Es ist eine neue Anfrage eingegangen. Details siehe Tabelle:</p>
+    <table style="border-collapse: collapse; width: 100%; max-width: 720px; background:#0f0f0f; border:1px solid #2b2b2b;">
       ${row('Name', data.name)}
       ${row('Telefon', data.phone)}
       ${row('E-Mail', data.email)}
       ${row('Abholadresse', data.pickup)}
       ${row('Ziel', data.destination)}
-      ${row('Datum', data.date)}
+      ${row('Datum', formatDateGerman(data.date))}
       ${row('Uhrzeit', data.time)}
       ${row('Passagiere', data.passengers)}
       ${row('Anmerkungen', data.notes)}
@@ -61,11 +71,12 @@ export default defineEventHandler(async (event) => {
       throw createError({ statusCode: 400, statusMessage: `Missing field: ${field}` })
   }
 
+  const formattedDate = formatDateGerman(body.date)
   const html = buildEmailHtml({
     ...body,
     destination: body.destinationLabel || body.destination || body.destinationCode,
   })
-  const subject = `Neue Vorbestellung ${body.date ?? ''} ${body.time ?? ''}`.trim()
+  const subject = `FUNKMIETWAGEN // BESTELLUNG // ${formattedDate || body.date || ''}${body.time ? ` // ${body.time}` : ''}`.trim()
   consola.info('[Resend] Sending email', { to: EMAIL_TO, subject })
 
   try {
