@@ -54,8 +54,12 @@ function dec() {
       >
         −
       </button>
-      <div class="w-10 text-center text-lg tabular-nums">
-        {{ value }}
+      <div class="w-10 text-center text-lg tabular-nums overflow-hidden h-8 flex items-center justify-center">
+        <Transition name="slide" mode="out-in">
+          <span :key="value">
+            {{ value }}
+          </span>
+        </Transition>
       </div>
       <button
         type="button"
@@ -71,3 +75,18 @@ function dec() {
     <input type="hidden" :name="props.name" :value="value" :required="props.required">
   </div>
 </template>
+
+<style scoped>
+.slide-enter-active,
+.slide-leave-active {
+  transition: all 0.18s ease;
+}
+.slide-enter-from {
+  opacity: 0;
+  transform: translateY(-10px);
+}
+.slide-leave-to {
+  opacity: 0;
+  transform: translateY(10px);
+}
+</style>
