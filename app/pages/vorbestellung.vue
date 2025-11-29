@@ -25,7 +25,12 @@ const FORM_METHOD = 'POST'
 const ERROR_MESSAGE
   = 'Die Anfrage konnte nicht gesendet werden. Bitte versuchen Sie es erneut oder kontaktieren Sie uns telefonisch.'
 
-const destinationOptions = [
+interface DestinationOption {
+  code: string
+  label: string
+}
+
+const destinationOptions: DestinationOption[] = [
   { code: 'cgn', label: 'Flughafen Köln/Bonn (CGN)' },
   { code: 'dus', label: 'Flughafen Düsseldorf (DUS)' },
   { code: 'fra', label: 'Flughafen Frankfurt (FRA)' },
@@ -40,42 +45,93 @@ const formRef = useTemplateRef('formRef')
 
 const sending = ref(false)
 const errorMessage = ref('')
-const destinationValue = ref<(typeof destinationOptions)[number] | string | null>(null)
+const destinationValue = ref<DestinationOption | null>(null)
 const destinationInput = ref('')
 const destinationCode = ref('')
 const { contains } = useFilter({ sensitivity: 'base' })
 
+const customDestinations = ref<DestinationOption[]>([])
+const allDestinations = computed(() => [
+  ...destinationOptions,
+  ...customDestinations.value,
+])
+const trimmedDestinationInput = computed(() => destinationInput.value.trim())
+
 const filteredDestinations = computed(() =>
-  destinationOptions.filter(option => contains(option.label, destinationInput.value)),
+  allDestinations.value.filter(option => contains(option.label, destinationInput.value)),
 )
+
+const hasExactDestination = computed(() =>
+  !!trimmedDestinationInput.value
+  && allDestinations.value.some(option => option.label.toLowerCase() === trimmedDestinationInput.value.toLowerCase()),
+)
+
+function toSlug(label: string) {
+  return label
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/^-+|-+$/g, '') || 'ziel'
+}
+
+function buildCustomDestination(label: string): DestinationOption {
+  const normalized = label.trim()
+  return {
+    code: `custom-${toSlug(normalized)}`,
+    label: normalized,
+  }
+}
+
+function ensureCustomDestination(label: string) {
+  if (!label.trim() || hasExactDestination.value)
+    return
+
+  const normalized = label.trim()
+  const exists = allDestinations.value.some(
+    option => option.label.toLowerCase() === normalized.toLowerCase(),
+  )
+  if (exists)
+    return
+
+  customDestinations.value.push(buildCustomDestination(normalized))
+}
+
+const customDestinationOption = computed(() => {
+  if (!trimmedDestinationInput.value || hasExactDestination.value)
+    return null
+  return buildCustomDestination(trimmedDestinationInput.value)
+})
+
+function handleDestinationEnter(event: KeyboardEvent) {
+  if (customDestinationOption.value && !filteredDestinations.value.length) {
+    event.preventDefault()
+    destinationValue.value = customDestinationOption.value
+  }
+}
 
 watch(destinationValue, (val) => {
   if (!val) {
-    destinationInput.value = ''
     destinationCode.value = ''
     return
   }
 
-  if (typeof val === 'object') {
-    destinationInput.value = val.label
-    destinationCode.value = val.code
-  }
-  else {
-    destinationInput.value = val
-    destinationCode.value = ''
-  }
+  destinationInput.value = val.label
+  destinationCode.value = val.code
+  ensureCustomDestination(val.label)
 })
 
 watch(destinationInput, (val) => {
   if (!val) {
     destinationValue.value = null
     destinationCode.value = ''
+    return
   }
-  else {
-    // Free typing keeps the text, clears the code
-    destinationValue.value = val
-    destinationCode.value = ''
-  }
+
+  const selectedLabel = destinationValue.value?.label || ''
+  if (selectedLabel === val)
+    return
+
+  destinationValue.value = null
+  destinationCode.value = ''
 })
 
 function toFormBody(form: HTMLFormElement) {
@@ -276,7 +332,6 @@ async function onSubmit() {
                           :ignore-filter="true"
                           :open-on-click="true"
                           :open-on-focus="true"
-                          :display-value="val => (typeof val === 'object' && val ? val.label : (val ?? ''))"
                           class="relative w-full focus-visible:outline-none"
                         >
                           <ComboboxAnchor class="relative block w-full">
@@ -286,7 +341,9 @@ async function onSubmit() {
                               name="destination"
                               required
                               placeholder="Ziel eingeben oder wählen"
+                              :display-value="val => (val ? val.label : '')"
                               class="h-11 w-full border rounded-sm border-solid bg-transparent px-3 py-2 pr-10 text-base text-foreground font-light outline-none focus-visible:ring-2 focus-visible:ring-offset-0 focus-visible:ring-pureWhite"
+                              @keydown.enter="handleDestinationEnter"
                             />
                             <ComboboxTrigger
                               class="absolute right-3 top-1/2 text-muted-foreground -translate-y-1/2"
@@ -323,7 +380,19 @@ async function onSubmit() {
                                     <span>{{ option.label }}</span>
                                   </div>
                                 </ComboboxItem>
-                                <div v-if="!filteredDestinations.length" class="px-3 py-2 text-sm text-muted-foreground">
+                                <ComboboxItem
+                                  v-if="customDestinationOption && !filteredDestinations.length"
+                                  :key="customDestinationOption.code"
+                                  :value="customDestinationOption"
+                                  :text-value="customDestinationOption.label"
+                                  class="cursor-pointer rounded-sm px-3 py-2 text-sm text-foreground data-[highlighted]:bg-gray-11 hover:bg-gray-11"
+                                >
+                                  <div class="flex items-center gap-2">
+                                    <Icon name="lucide:plus" class="size-4 text-muted-foreground" />
+                                    <span>{{ customDestinationOption.label }} hinzufügen</span>
+                                  </div>
+                                </ComboboxItem>
+                                <div v-else-if="!filteredDestinations.length" class="px-3 py-2 text-sm text-muted-foreground">
                                   Keine Treffer
                                 </div>
                               </ComboboxViewport>
