@@ -41,7 +41,7 @@ function setValue(n: number) {
         v-for="n in props.max"
         :key="n"
         type="button"
-        class="rounded-sm p-1 text-foreground/70 transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-pureWhite"
+        class="rounded-sm p-1 text-foreground/70 transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-pureWhite touch-manipulation"
         :class="n <= value ? 'opacity-100 scale-100 text-foreground' : 'opacity-25 scale-95'"
         :aria-pressed="n === value"
         :aria-label="`${n} ${n === 1 ? 'Person' : 'Personen'}`"
@@ -56,7 +56,7 @@ function setValue(n: number) {
       <button
         type="button"
         :disabled="value <= props.min"
-        class="text-xl text-muted-foreground transition-colors hover:text-foreground disabled:opacity-40 disabled:hover:text-muted-foreground"
+        class="text-xl text-muted-foreground transition-colors hover:text-foreground disabled:opacity-40 disabled:hover:text-muted-foreground touch-manipulation"
         aria-label="Weniger Personen"
         @click="dec"
       >
@@ -72,7 +72,7 @@ function setValue(n: number) {
       <button
         type="button"
         :disabled="value >= props.max"
-        class="text-xl text-muted-foreground transition-colors hover:text-foreground disabled:opacity-40 disabled:hover:text-muted-foreground"
+        class="text-xl text-muted-foreground transition-colors hover:text-foreground disabled:opacity-40 disabled:hover:text-muted-foreground touch-manipulation"
         aria-label="Mehr Personen"
         @click="inc"
       >
