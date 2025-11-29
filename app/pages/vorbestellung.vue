@@ -1,18 +1,56 @@
 <script setup lang="ts">
-import { computed } from 'vue'
+import { computed, ref } from 'vue'
 import { useBookingStore } from '@/stores/useBookingStore'
 import AppHeader from '@/components/layout/Header.vue'
 import AppFooter from '@/components/layout/Footer.vue'
-import ContactButtons from '@/components/ContactButtons.vue'
 import UiInput from '@/components/ui/Input.vue'
 import UiLabel from '@/components/ui/Label.vue'
 import UiTextarea from '@/components/ui/Textarea.vue'
 
-const store = useBookingStore()
-const submitted = computed(() => store.submitted)
+const FORM_NAME = 'vorbestellung'
+const FORM_NAME_FIELD = 'form-name'
+const FORM_HEADERS = { 'Content-Type': 'application/x-www-form-urlencoded' }
+const FORM_ACTION = '/'
+const FORM_METHOD = 'POST'
+const ERROR_MESSAGE = 'Die Anfrage konnte nicht gesendet werden. Bitte versuchen Sie es erneut oder kontaktieren Sie uns telefonisch.'
 
-const onSubmit = () => {
-  store.markSubmitted()
+const store = useBookingStore()
+const {markSubmitted} = store
+const submitted = computed(() => store.submitted)
+const formRef = useTemplateRef('formRef')
+
+const sending = ref(false)
+const errorMessage = ref('')
+
+const toFormBody = (form: HTMLFormElement) => {
+  const formData = new FormData(form)
+  // Netlify expects form-name in the encoded payload too
+  if (!formData.has(FORM_NAME_FIELD)) formData.set(FORM_NAME_FIELD, FORM_NAME)
+  return new URLSearchParams(formData as unknown as Record<string, string>).toString()
+}
+
+const onSubmit = async () => {
+  if (!formRef.value) return
+  sending.value = true
+  errorMessage.value = ''
+
+  // Prepare form data and send it to Netlify
+  const bodyContent = toFormBody(formRef.value)
+  console.info('[Form] Sending form data:', bodyContent)
+
+  try {
+    await fetch(FORM_ACTION, {
+      method: FORM_METHOD,
+      headers: FORM_HEADERS,
+      body: bodyContent,
+    })
+   markSubmitted()
+  } catch (error) {
+    console.error(error)
+    errorMessage.value = ERROR_MESSAGE
+  } finally {
+    sending.value = false
+  }
 }
 </script>
 
@@ -104,7 +142,19 @@ const onSubmit = () => {
               </div>
 
               <div class="lg:col-span-2">
-                <form class="space-y-8" @submit.prevent="onSubmit">
+                <form
+                  ref="formRef"
+                  class="space-y-8 -mt-8"
+                  :name="FORM_NAME"
+                  :method="FORM_METHOD"
+                  :action="FORM_ACTION"
+                  data-netlify="true"
+                  netlify-honeypot="bot-field"
+                  @submit.prevent="onSubmit"
+                >
+                  <input type="hidden" class="hidden" name="form-name" :value="FORM_NAME" />
+                  <input type="hidden" class="hidden" name="bot-field" />
+
                   <div class="border border-solid border-gray-5 p-8">
                     <h3 class="mb-6 text-xs font-light uppercase tracking-[0.3em] text-muted-foreground">
                       Persönliche Daten
@@ -199,12 +249,16 @@ const onSubmit = () => {
 
                   <button
                     type="submit"
+                    :disabled="sending"
                     class="flex w-full items-center justify-center gap-3 border border-foreground bg-foreground px-8 py-5 text-sm font-light uppercase tracking-widest text-background transition-all hover:bg-transparent hover:text-foreground"
                   >
                     <Icon name="lucide:send" class="h-4 w-4" />
-                    Anfrage senden
+                    {{ sending ? 'Wird gesendet...' : 'Anfrage senden' }}
                   </button>
 
+                  <p v-if="errorMessage" class="text-center text-sm font-light text-red-500">
+                    {{ errorMessage }}
+                  </p>
                   <p class="text-center text-xs font-light text-muted-foreground">
                     Wir melden uns innerhalb von 24 Stunden bei Ihnen.
                   </p>
