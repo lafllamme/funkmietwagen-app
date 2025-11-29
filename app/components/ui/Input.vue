@@ -17,7 +17,7 @@ function onInput(event: Event) {
   <input
     v-bind="$attrs"
     :value="props.modelValue"
-    class="h-11 w-full border border-border rounded-sm bg-transparent px-3 py-2 text-base text-foreground font-light outline-none placeholder:text-muted-foreground/50 focus-visible:ring-2 focus-visible:ring-offset-0 focus-visible:ring-pureWhite"
+    class="h-11 w-full border rounded-sm border-solid bg-transparent px-3 py-2 text-base text-foreground font-light outline-none placeholder:text-muted-foreground/50 focus-visible:ring-2 focus-visible:ring-offset-0 focus-visible:ring-pureWhite"
     @input="onInput"
   >
 </template>
