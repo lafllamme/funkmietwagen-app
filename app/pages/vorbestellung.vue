@@ -277,9 +277,9 @@ async function onSubmit() {
                           :open-on-click="true"
                           :open-on-focus="true"
                           :display-value="val => (typeof val === 'object' && val ? val.label : (val ?? ''))"
-                          class="w-full focus-visible:outline-none"
+                          class="relative w-full focus-visible:outline-none"
                         >
-                          <ComboboxAnchor class="relative">
+                          <ComboboxAnchor class="relative block w-full">
                             <ComboboxInput
                               id="destination"
                               v-model="destinationInput"
@@ -298,10 +298,15 @@ async function onSubmit() {
 
                           <ComboboxPortal>
                             <ComboboxContent
-                              class="z-50 mt-2 border border-gray-5 border-solid bg-background shadow-lg"
+                              class="z-50 mt-2 rounded-sm bg-background shadow-lg ring-2 ring-pureWhite"
                               position="popper"
                               side="bottom"
-                              :style="{ minWidth: 'var(--reka-combobox-trigger-width)', width: 'var(--reka-combobox-trigger-width)' }"
+                              :side-offset="4"
+                              :side-flip="false"
+                              :style="{
+                                width: 'var(--reka-combobox-trigger-width)',
+                                minWidth: 'var(--reka-combobox-trigger-width)',
+                              }"
                             >
                               <ComboboxViewport>
                                 <ComboboxItem
@@ -309,7 +314,7 @@ async function onSubmit() {
                                   :key="option.code"
                                   :value="option"
                                   :text-value="option.label"
-                                  class="cursor-pointer px-3 py-2 text-sm text-foreground data-[highlighted]:bg-gray-11 hover:bg-gray-11"
+                                  class="cursor-pointer rounded-sm px-3 py-2 text-sm text-foreground data-[highlighted]:bg-gray-11 hover:bg-gray-11"
                                 >
                                   <div class="flex items-center gap-2">
                                     <ComboboxItemIndicator class="text-foreground">
