@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { DateValue, TimeValue } from '@internationalized/date'
+import type { DateValue, Time } from '@internationalized/date'
 import type { DestinationOption } from '@/components/form/DestinationSelect.model'
 import { computed, ref } from 'vue'
 import DatePickerField from '@/components/form/DatePickerField.vue'
@@ -28,7 +28,7 @@ const sending = ref(false)
 const errorMessage = ref('')
 const destinationValue = ref<DestinationOption | null>(null)
 const dateValue = ref<DateValue | null>(null)
-const timeValue = ref<TimeValue | null>(null)
+const timeValue = ref<Time | null>(null)
 const passengers = ref(1)
 
 function toFormBody(form: HTMLFormElement) {

@@ -1,7 +1,7 @@
-import type { TimeValue } from '@internationalized/date'
+import type { Time } from '@internationalized/date'
 
 export interface TimeFieldProps {
-  modelValue?: TimeValue | null
+  modelValue?: Time | null
   name?: string
   required?: boolean
   placeholder?: string

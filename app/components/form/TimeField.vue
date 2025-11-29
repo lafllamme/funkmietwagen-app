@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { Time, TimeValue } from '@internationalized/date'
+import type { Time } from '@internationalized/date'
 import type { TimeFieldProps } from './TimeField.model'
 import {
   TimeFieldInput,
@@ -14,18 +14,18 @@ const props = withDefaults(defineProps<TimeFieldProps>(), {
 })
 
 const emit = defineEmits<{
-  'update:modelValue': [TimeValue | null]
+  'update:modelValue': [Time | null]
 }>()
 
-const timeValue = computed<TimeValue | null>({
+const timeValue = computed<Time | null>({
   get: () => props.modelValue ?? null,
   set: val => emit('update:modelValue', val),
 })
 
 const timeString = computed(() => timeValue.value ? formatTime(timeValue.value) : '')
 
-function formatTime(value: TimeValue) {
-  // TimeValue implements toString as HH:MM or HH:MM:SS; force HH:MM
+function formatTime(value: Time) {
+  // Time implements toString as HH:MM or HH:MM:SS; force HH:MM
   const date = value as Time
   return `${String(date.hour).padStart(2, '0')}:${String(date.minute).padStart(2, '0')}`
 }
