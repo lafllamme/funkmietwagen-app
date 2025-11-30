@@ -3,7 +3,7 @@ import type { DateValue, Time } from '@internationalized/date'
 import type { DestinationOption } from '@/components/form/DestinationSelect.model'
 import type { VehicleOption } from '@/components/form/VehicleRadioGroup.model'
 import { useRoute } from '#imports'
-import { computed, nextTick, onMounted, ref, watch } from 'vue'
+import { computed, nextTick, ref, watch } from 'vue'
 import DatePickerField from '@/components/form/DatePickerField.vue'
 import DestinationSelect from '@/components/form/DestinationSelect.vue'
 import PersonSelector from '@/components/form/PersonSelector.vue'
@@ -39,50 +39,36 @@ const passengers = ref(1)
 const vehicleValue = ref<VehicleOption | null>(null)
 const route = useRoute()
 const vehicleSectionRef = ref<HTMLElement | null>(null)
-const hasVehicleScrolled = ref(false)
-const isMounted = ref(false)
-
-function scrollVehicleIntoView() {
-  if (!vehicleSectionRef.value)
-    return
-  vehicleSectionRef.value.scrollIntoView({
-    behavior: 'smooth',
-    block: 'center',
-  })
-}
+const lastScrolledVehicle = ref<string | null>(null)
 
 const vehicleQueryId = computed(() => {
-  const v = route.query.vehicle
-  return Array.isArray(v) ? v[0] : v
+  const value = route.query.vehicle
+  return Array.isArray(value) ? value[0] : value ?? ''
 })
 
 watch(() => route.fullPath, () => {
-  hasVehicleScrolled.value = false
+  lastScrolledVehicle.value = null
 })
 
 watch(vehicleQueryId, (vehicleId) => {
-  console.info('[VehiclePrefill] query vehicle change:', vehicleId)
-  if (!vehicleId)
+  if (!vehicleId) {
+    vehicleValue.value = null
     return
-  const match = vehicleOptions.find(option => option.id === vehicleId)
-  if (!match)
-    return
-  console.info('[VehiclePrefill] match found:', match.id)
+  }
+  const match = vehicleOptions.find(option => option.id === vehicleId) ?? null
   vehicleValue.value = match
 }, { immediate: true })
 
-watch([vehicleValue, isMounted], () => {
-  if (!process.client || hasVehicleScrolled.value || !vehicleValue.value || !isMounted.value)
-    return
-  nextTick(() => {
-    scrollVehicleIntoView()
-    hasVehicleScrolled.value = true
-  })
-})
-
-onMounted(() => {
-  isMounted.value = true
-})
+watch(
+  () => vehicleValue.value?.id,
+  async (vehicleId) => {
+    if (!process.client || !vehicleId || lastScrolledVehicle.value === vehicleId)
+      return
+    await nextTick()
+    vehicleSectionRef.value?.scrollIntoView({ behavior: 'smooth', block: 'center' })
+    lastScrolledVehicle.value = vehicleId
+  },
+)
 
 function toFormBody(form: HTMLFormElement) {
   const formData = new FormData(form)

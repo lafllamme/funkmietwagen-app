@@ -72,7 +72,7 @@ function setExpanded(index: number) {
               <h3 class="text-2xl text-foreground font-light tracking-wide md:text-4xl">
                 {{ car.name }}
               </h3>
-              <p class="text-sm text-muted-foreground leading-relaxed md:max-w-xl">
+              <p class="text-sm color-sand-9 leading-relaxed md:max-w-xl">
                 {{ car.description }}
               </p>
               <div class="flex flex-wrap gap-4 text-sm md:gap-6">
