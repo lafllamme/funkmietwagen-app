@@ -26,8 +26,10 @@ function setExpanded(index: number) {
         <div
           v-for="(car, index) in vehicles"
           :key="car.id"
-          class="bg-black relative cursor-pointer overflow-hidden border border-border rounded-sm transition-[flex,opacity] duration-700"
-          :class="expanded === index ? 'md:flex-[3] flex-none' : 'md:flex-1 flex-none opacity-80 md:opacity-70 md:hover:opacity-90'"
+          class="bg-black relative cursor-pointer overflow-hidden border border-border rounded-sm transition-[flex,opacity,height] duration-500"
+          :class="expanded === index
+            ? 'h-[420px] md:h-auto md:flex-[3]'
+            : 'h-[260px] md:h-auto md:flex-1 opacity-90 md:opacity-70 md:hover:opacity-90'"
           @click="setExpanded(index)"
         >
           <img
