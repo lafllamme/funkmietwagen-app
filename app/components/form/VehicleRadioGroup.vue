@@ -47,7 +47,8 @@ const hiddenValue = computed(() => selected.value
       >
         <div class="flex items-center gap-4">
           <div
-            class="size-6 flex flex-shrink-0 items-center justify-center border border-2 border-gray-11 rounded-full border-solid bg-transparent transition-colors duration-300 group-focus:border-none"
+            :class="selected?.id === option.id && '!border-none'"
+            class="size-6 flex flex-shrink-0 items-center justify-center border border-2 border-gray-11 rounded-full border-solid bg-transparent transition-colors duration-300"
           >
             <RadioGroupIndicator class="h-full w-full flex items-center justify-center rounded-full bg-pureWhite">
               <Icon name="lucide:check" class="size-4 text-background" stroke-width="3" />
