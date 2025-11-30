@@ -43,15 +43,13 @@ const hiddenValue = computed(() => selected.value
         :key="option.id"
         :value="option"
         :name="props.name"
-        class="group w-full touch-manipulation border rounded-sm border-solid p-5 text-left transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-pureWhite"
-        :class="selected?.id === option.id ? 'border-pureWhite bg-gray-12' : 'hover:border-gray-10'"
+        class="group w-full touch-manipulation border rounded-sm border-solid p-5 text-left transition-all duration-300 data-[state=checked]:border-foreground data-[state=checked]:bg-gray-12 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-pureWhite data-[state=unchecked]:hover:border-gray-10"
       >
         <div class="flex items-center gap-4">
           <div
-            class="h-6 w-6 flex flex-shrink-0 items-center justify-center border-2 rounded-full transition-all duration-300"
-            :class="selected?.id === option.id ? 'border-foreground bg-foreground' : 'border-muted-foreground/40'"
+            class="h-6 w-6 flex flex-shrink-0 items-center justify-center border border-gray-10 rounded-full border-solid bg-transparent transition-all duration-300"
           >
-            <RadioGroupIndicator class="h-full w-full flex items-center justify-center rounded-full">
+            <RadioGroupIndicator class="h-full w-full flex items-center justify-center rounded-full bg-pureWhite">
               <Icon name="lucide:check" class="h-3.5 w-3.5 text-background" stroke-width="3" />
             </RadioGroupIndicator>
           </div>
