@@ -4,12 +4,14 @@ export interface VehicleOption {
   type: string
   seats: string
   icon: string
+  features: string[]
 }
 
 export interface VehicleSelectProps {
   modelValue?: VehicleOption | null
   name?: string
   required?: boolean
+  orientation?: 'vertical' | 'horizontal'
 }
 
 export const vehicleOptions: VehicleOption[] = [
@@ -18,18 +20,21 @@ export const vehicleOptions: VehicleOption[] = [
     name: 'V-Klasse',
     type: 'Großraum',
     seats: 'bis 7 Personen',
-    icon: 'mdi:van-passenger',
+    icon: 'lucide:users',
+    features: ['7 Sitze', 'Klimaanlage', 'WiFi'],
   },
   {
     id: 'lexus',
     name: 'Lexus',
     type: 'Limousine',
     seats: 'bis 3 Personen',
-    icon: 'ion:car-sport',
+    icon: 'lucide:briefcase',
+    features: ['4 Sitze', 'Leder', 'Premium Sound'],
   },
 ]
 
 export const vehicleSelectDefaults: Required<Omit<VehicleSelectProps, 'modelValue'>> = {
   name: 'vehicle',
   required: false,
+  orientation: 'vertical',
 }
