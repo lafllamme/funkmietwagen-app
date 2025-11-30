@@ -41,22 +41,20 @@ function setValue(n: number) {
         v-for="n in props.max"
         :key="n"
         type="button"
-        class="rounded-sm p-1 text-foreground/70 transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-pureWhite touch-manipulation"
+        class="touch-manipulation rounded-sm p-1 text-foreground/70 transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-pureWhite"
         :class="n <= value ? 'opacity-100 scale-100 text-foreground' : 'opacity-25 scale-95'"
         :aria-pressed="n === value"
         :aria-label="`${n} ${n === 1 ? 'Person' : 'Personen'}`"
         @click="setValue(n)"
       >
-        <svg class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-          <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z" />
-        </svg>
+        <Icon name="bxs:user" class="size-6" />
       </button>
     </div>
     <div class="flex items-center justify-center gap-4 text-foreground">
       <button
         type="button"
         :disabled="value <= props.min"
-        class="text-xl text-muted-foreground transition-colors hover:text-foreground disabled:opacity-40 disabled:hover:text-muted-foreground touch-manipulation"
+        class="touch-manipulation text-xl text-muted-foreground transition-colors hover:text-foreground disabled:opacity-40 disabled:hover:text-muted-foreground"
         aria-label="Weniger Personen"
         @click="dec"
       >
@@ -72,7 +70,7 @@ function setValue(n: number) {
       <button
         type="button"
         :disabled="value >= props.max"
-        class="text-xl text-muted-foreground transition-colors hover:text-foreground disabled:opacity-40 disabled:hover:text-muted-foreground touch-manipulation"
+        class="touch-manipulation text-xl text-muted-foreground transition-colors hover:text-foreground disabled:opacity-40 disabled:hover:text-muted-foreground"
         aria-label="Mehr Personen"
         @click="inc"
       >
