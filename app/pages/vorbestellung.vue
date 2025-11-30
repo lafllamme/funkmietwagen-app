@@ -1,8 +1,10 @@
 <script setup lang="ts">
 import type { DateValue, Time } from '@internationalized/date'
 import type { DestinationOption } from '@/components/form/DestinationSelect.model'
-import type { VehicleOption } from '@/components/form/VehicleSelect.model'
-import { computed, ref } from 'vue'
+import type { VehicleOption } from '@/components/form/VehicleRadioGroup.model'
+import { vehicleOptions } from '@/components/form/VehicleRadioGroup.model'
+import { computed, ref, watch } from 'vue'
+import { useRoute } from '#imports'
 import DatePickerField from '@/components/form/DatePickerField.vue'
 import DestinationSelect from '@/components/form/DestinationSelect.vue'
 import PersonSelector from '@/components/form/PersonSelector.vue'
@@ -33,6 +35,21 @@ const dateValue = ref<DateValue | null>(null)
 const timeValue = ref<Time | null>(null)
 const passengers = ref(1)
 const vehicleValue = ref<VehicleOption | null>(null)
+const route = useRoute()
+
+const vehicleQueryId = computed(() => {
+  const v = route.query.vehicle
+  return Array.isArray(v) ? v[0] : v
+})
+
+watch(vehicleQueryId, (vehicleId) => {
+  if (!vehicleId)
+    return
+  const match = vehicleOptions.find(option => option.id === vehicleId)
+  if (!match)
+    return
+  vehicleValue.value = match
+}, { immediate: true })
 
 function toFormBody(form: HTMLFormElement) {
   const formData = new FormData(form)

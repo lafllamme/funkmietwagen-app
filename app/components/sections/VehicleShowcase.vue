@@ -1,6 +1,7 @@
 <script setup lang="ts">
-import type { VehicleCard } from './VehicleShowcase.model'
+import { NuxtLink } from '#components'
 import { computed, ref } from 'vue'
+import type { VehicleCard } from './VehicleShowcase.model'
 import { vehicles } from './VehicleShowcase.model'
 
 const expanded = ref(0)
@@ -33,9 +34,14 @@ function setExpanded(index: number) {
             :src="car.image"
             :alt="car.name"
             class="h-full w-full object-cover transition-opacity duration-500"
-            :class="expanded === index ? 'opacity-90' : 'opacity-40'"
+            :class="expanded === index ? 'opacity-85' : 'opacity-30'"
           >
-          <div class="from-black via-black/40 absolute inset-0 to-transparent bg-gradient-to-t" />
+          <div
+            class="absolute inset-0 transition-colors duration-500"
+            :class="expanded === index
+              ? 'bg-gradient-to-t from-black/85 via-black/70 to-black/30'
+              : 'bg-gradient-to-t from-black/70 via-black/50 to-black/20'"
+          />
 
           <div v-if="expanded !== index" class="absolute inset-0 flex items-end justify-center pb-10 -translate-y-1/2">
             <h3 class="vertical-rl rotate-90 whitespace-nowrap text-xl text-foreground/80 tracking-[0.3em] tracking-widest">
@@ -44,6 +50,13 @@ function setExpanded(index: number) {
           </div>
 
           <div v-else class="absolute inset-0 flex items-end p-8 md:p-12">
+            <NuxtLink
+              :to="`/vorbestellung?vehicle=${car.id}`"
+              class="absolute right-4 top-4 inline-flex items-center gap-2 rounded-sm border border-foreground bg-foreground px-4 py-2 text-[11px] uppercase tracking-widest text-background transition-all hover:bg-transparent hover:text-foreground"
+            >
+              Reservieren
+              <Icon name="lucide:arrow-right" class="h-4 w-4" />
+            </NuxtLink>
             <div class="max-w-xl space-y-4">
               <p class="text-[10px] text-muted-foreground tracking-[0.4em] uppercase">
                 {{ car.type }}
