@@ -12,10 +12,11 @@ interface ContactPayload {
   date?: string
   time?: string
   passengers?: string
+  vehicle?: string
   notes?: string
 }
 
-const requiredFields: Array<keyof ContactPayload> = ['name', 'phone', 'email', 'pickup', 'destination', 'date', 'time', 'passengers']
+const requiredFields: Array<keyof ContactPayload> = ['name', 'phone', 'email', 'pickup', 'destination', 'date', 'time', 'passengers', 'vehicle']
 
 function row(label: string, value?: string) {
   return `
@@ -50,6 +51,7 @@ function buildEmailHtml(data: ContactPayload) {
       ${row('Datum', formatDateGerman(data.date))}
       ${row('Uhrzeit', data.time)}
       ${row('Passagiere', data.passengers)}
+      ${row('Fahrzeugklasse', data.vehicle)}
       ${row('Anmerkungen', data.notes)}
     </table>
   </div>

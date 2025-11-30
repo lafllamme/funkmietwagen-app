@@ -5,6 +5,7 @@ import { computed, ref } from 'vue'
 import DatePickerField from '@/components/form/DatePickerField.vue'
 import DestinationSelect from '@/components/form/DestinationSelect.vue'
 import PersonSelector from '@/components/form/PersonSelector.vue'
+import VehicleSelect from '@/components/form/VehicleSelect.vue'
 import TimeField from '@/components/form/TimeField.vue'
 import AppFooter from '@/components/layout/Footer.vue'
 import AppHeader from '@/components/layout/Header.vue'
@@ -30,6 +31,7 @@ const destinationValue = ref<DestinationOption | null>(null)
 const dateValue = ref<DateValue | null>(null)
 const timeValue = ref<Time | null>(null)
 const passengers = ref(1)
+const vehicleValue = ref(null)
 
 function toFormBody(form: HTMLFormElement) {
   const formData = new FormData(form)
@@ -249,6 +251,13 @@ async function onSubmit() {
                           Passagiere *
                         </UiLabel>
                         <PersonSelector v-model="passengers" required />
+                      </div>
+
+                      <div class="space-y-2">
+                        <UiLabel for="vehicle">
+                          Fahrzeugklasse *
+                        </UiLabel>
+                        <VehicleSelect v-model="vehicleValue" required />
                       </div>
                     </div>
                   </div>
