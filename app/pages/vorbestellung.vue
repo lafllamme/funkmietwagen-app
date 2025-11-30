@@ -2,20 +2,22 @@
 import type { DateValue, Time } from '@internationalized/date'
 import type { DestinationOption } from '@/components/form/DestinationSelect.model'
 import type { VehicleOption } from '@/components/form/VehicleRadioGroup.model'
-import { vehicleOptions } from '@/components/form/VehicleRadioGroup.model'
-import { computed, ref, watch } from 'vue'
 import { useRoute } from '#imports'
+import { computed, nextTick, onMounted, ref, watch } from 'vue'
 import DatePickerField from '@/components/form/DatePickerField.vue'
 import DestinationSelect from '@/components/form/DestinationSelect.vue'
 import PersonSelector from '@/components/form/PersonSelector.vue'
-import VehicleRadioGroup from '@/components/form/VehicleRadioGroup.vue'
 import TimeField from '@/components/form/TimeField.vue'
+import { vehicleOptions } from '@/components/form/VehicleRadioGroup.model'
+import VehicleRadioGroup from '@/components/form/VehicleRadioGroup.vue'
 import AppFooter from '@/components/layout/Footer.vue'
 import AppHeader from '@/components/layout/Header.vue'
 import UiInput from '@/components/ui/Input.vue'
 import UiLabel from '@/components/ui/Label.vue'
 import UiTextarea from '@/components/ui/Textarea.vue'
 import { useBookingStore } from '@/stores/useBookingStore'
+
+definePageMeta({ scrollToTop: false })
 
 const FORM_HEADERS = { 'Content-Type': 'application/json' }
 const FORM_ACTION = '/api/contact'
@@ -36,20 +38,51 @@ const timeValue = ref<Time | null>(null)
 const passengers = ref(1)
 const vehicleValue = ref<VehicleOption | null>(null)
 const route = useRoute()
+const vehicleSectionRef = ref<HTMLElement | null>(null)
+const hasVehicleScrolled = ref(false)
+const isMounted = ref(false)
+
+function scrollVehicleIntoView() {
+  if (!vehicleSectionRef.value)
+    return
+  vehicleSectionRef.value.scrollIntoView({
+    behavior: 'smooth',
+    block: 'center',
+  })
+}
 
 const vehicleQueryId = computed(() => {
   const v = route.query.vehicle
   return Array.isArray(v) ? v[0] : v
 })
 
+watch(() => route.fullPath, () => {
+  hasVehicleScrolled.value = false
+})
+
 watch(vehicleQueryId, (vehicleId) => {
+  console.info('[VehiclePrefill] query vehicle change:', vehicleId)
   if (!vehicleId)
     return
   const match = vehicleOptions.find(option => option.id === vehicleId)
   if (!match)
     return
+  console.info('[VehiclePrefill] match found:', match.id)
   vehicleValue.value = match
 }, { immediate: true })
+
+watch([vehicleValue, isMounted], () => {
+  if (!process.client || hasVehicleScrolled.value || !vehicleValue.value || !isMounted.value)
+    return
+  nextTick(() => {
+    scrollVehicleIntoView()
+    hasVehicleScrolled.value = true
+  })
+})
+
+onMounted(() => {
+  isMounted.value = true
+})
 
 function toFormBody(form: HTMLFormElement) {
   const formData = new FormData(form)
@@ -271,7 +304,7 @@ async function onSubmit() {
                         <PersonSelector v-model="passengers" required />
                       </div>
 
-                      <div class="space-y-2">
+                      <div ref="vehicleSectionRef" class="space-y-2">
                         <UiLabel for="vehicle">
                           Fahrzeugklasse *
                         </UiLabel>

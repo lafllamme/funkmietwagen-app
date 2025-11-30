@@ -60,6 +60,7 @@ function setExpanded(index: number) {
             <NuxtLink
               :to="`/vorbestellung?vehicle=${car.id}`"
               class="absolute right-3 top-3 inline-flex items-center gap-2 border border-foreground rounded-sm bg-foreground px-3 py-2 text-[11px] text-background tracking-widest uppercase transition-all md:right-4 md:top-4 hover:bg-transparent md:px-4 hover:text-foreground"
+              @click.stop="console.info('[VehicleShowcase] Reservieren clicked', car.id)"
             >
               Reservieren
               <Icon name="lucide:arrow-right" class="h-4 w-4" />
