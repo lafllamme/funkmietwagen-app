@@ -25,7 +25,7 @@ export const vehicleOptions: VehicleOption[] = [
   },
   {
     id: 'lexus',
-    name: 'Lexus',
+    name: 'ES Klasse',
     type: 'Limousine',
     seats: 'bis 3 Personen',
     icon: 'lucide:briefcase',
