@@ -37,8 +37,8 @@ function setExpanded(index: number) {
           >
           <div class="from-black via-black/40 absolute inset-0 to-transparent bg-gradient-to-t" />
 
-          <div v-if="expanded !== index" class="absolute inset-0 flex items-end justify-center pb-10">
-            <h3 class="vertical-rl rotate-180 whitespace-nowrap text-xl text-foreground/80 tracking-[0.3em]">
+          <div v-if="expanded !== index" class="absolute inset-0 flex items-end justify-center pb-10 -translate-y-1/2">
+            <h3 class="vertical-rl rotate-90 whitespace-nowrap text-xl text-foreground/80 tracking-[0.3em] tracking-widest">
               {{ car.name }}
             </h3>
           </div>

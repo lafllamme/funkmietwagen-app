@@ -17,7 +17,7 @@ export const vehicles: VehicleCard[] = [
     id: 'v-klasse',
     name: 'Mercedes V-Klasse',
     type: 'GROSSRAUM',
-    image: 'https://images.unsplash.com/photo-1619767886558-efdc259cde1a?q=80&w=2071&auto=format&fit=crop',
+    image: 'https://wallpapercave.com/wp/wp10473679.jpg',
     description:
       'Großzügiger Innenraum für bis zu 7 Passagiere. Perfekt für Gruppen, Familien oder Business-Transfers mit viel Gepäck.',
     specs: [
@@ -30,7 +30,7 @@ export const vehicles: VehicleCard[] = [
     id: 'lexus',
     name: 'Lexus Limousine',
     type: 'LIMOUSINE',
-    image: 'https://images.unsplash.com/photo-1621007947382-bb3c3994e3fb?q=80&w=2070&auto=format&fit=crop',
+    image: 'https://images.unsplash.com/photo-1577496549804-8b05f1f67338?fm=jpg&q=60&w=3000&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8bGV4dXN8ZW58MHx8MHx8fDA%3D',
     description:
       'Elegante Limousine für exklusive Einzelfahrten. Höchster Komfort und Diskretion für anspruchsvolle Kunden.',
     specs: [
