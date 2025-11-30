@@ -164,7 +164,7 @@ watch(destinationInput, (val) => {
               :key="option.code"
               :value="option"
               :text-value="option.label"
-              class="cursor-pointer rounded-sm px-3 py-2 text-sm text-foreground tracking-tighter capitalize data-[highlighted]:bg-gray-11 hover:bg-gray-11"
+              class="cursor-pointer rounded-sm px-3 py-2 text-sm text-foreground font-semibold tracking-tighter capitalize data-[highlighted]:bg-gray-11 hover:bg-gray-11"
             >
               <div class="flex items-center gap-2">
                 <ComboboxItemIndicator class="h-4 w-4 flex items-center justify-center text-foreground">
