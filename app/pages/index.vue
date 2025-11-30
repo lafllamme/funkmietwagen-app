@@ -2,6 +2,7 @@
 import ContactButtons from '@/components/ContactButtons.vue'
 import AppFooter from '@/components/layout/Footer.vue'
 import AppHeader from '@/components/layout/Header.vue'
+import VehicleShowcase from '@/components/sections/VehicleShowcase.vue'
 
 useSeoMeta({
   title: 'Funkmietwagen ADE – Premium Chauffeur Service',
@@ -73,6 +74,8 @@ useHead({
           </div>
         </div>
       </section>
+
+      <VehicleShowcase />
 
       <section class="border-y border-border py-20 md:py-24">
         <div class="container mx-auto px-4 md:px-6">
