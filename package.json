@@ -2,6 +2,7 @@
   "name": "funkmietwagen-ade-app",
   "type": "module",
   "private": true,
+  "packageManager": "pnpm@10.18.3+sha512.bbd16e6d7286fd7e01f6b3c0b3c932cda2965c06a908328f74663f10a9aea51f1129eea615134bf992831b009eabe167ecb7008b597f40ff9bc75946aadfb08d",
   "scripts": {
     "build": "nuxt build",
     "dev": "nuxt dev",
@@ -12,17 +13,16 @@
     "lint:fix": "eslint . --fix"
   },
   "dependencies": {
-    "motion-v": "^0.2.0",
     "@internationalized/date": "^3.5.5",
     "@pinia/nuxt": "^0.8.0",
     "@unocss/reset": "^66.5.9",
     "@vueuse/core": "^14.1.0",
+    "motion-v": "^0.2.0",
     "nuxt": "^4.2.1",
     "pinia": "^2.2.6",
     "reka-ui": "^2.6.0",
     "resend": "^6.5.2"
   },
-  "packageManager": "pnpm@10.18.3+sha512.bbd16e6d7286fd7e01f6b3c0b3c932cda2965c06a908328f74663f10a9aea51f1129eea615134bf992831b009eabe167ecb7008b597f40ff9bc75946aadfb08d",
   "devDependencies": {
     "@antfu/eslint-config": "^6.2.0",
     "@nuxt/icon": "^2.1.0",

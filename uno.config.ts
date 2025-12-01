@@ -2,12 +2,12 @@ import { defineConfig, transformerDirectives, transformerVariantGroup } from 'un
 import { extendTheme, presets, shortcuts, theme } from './app/assets/unocss/index'
 
 export default defineConfig({
-    shortcuts,
-    theme: theme,
-    extendTheme: extendTheme,
-    presets,
-    transformers: [
-        transformerDirectives(),
-        transformerVariantGroup(),
-    ],
+  shortcuts,
+  theme,
+  extendTheme,
+  presets,
+  transformers: [
+    transformerDirectives(),
+    transformerVariantGroup(),
+  ],
 })
