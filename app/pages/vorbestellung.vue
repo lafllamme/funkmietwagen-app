@@ -274,16 +274,15 @@ async function onSubmit() {
                         <UiInput id="pickup" name="pickup" required placeholder="Straße, Hausnummer, PLZ, Ort" />
                       </div>
 
-                      <div class="overflow-hidden">
+                      <div class="relative overflow-hidden">
                         <AnimatePresence :initial="false" mode="wait">
                           <Motion
                             :key="bookingType"
                             tag="div"
-                            layout
-                            :initial="{ opacity: 0, y: bookingType === 'route' ? -12 : 12 }"
-                            :animate="{ opacity: 1, y: 0 }"
-                            :exit="{ opacity: 0, y: bookingType === 'route' ? -12 : 12 }"
-                            :transition="{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }"
+                            :initial="{ opacity: 0, height: 0, y: bookingType === 'route' ? -12 : 12 }"
+                            :animate="{ opacity: 1, height: 'auto', y: 0 }"
+                            :exit="{ opacity: 0, height: 0, y: bookingType === 'route' ? -12 : 12 }"
+                            :transition="{ duration: 0.4, ease: 'easeInOut' }"
                           >
                             <template v-if="bookingType === 'route'">
                               <UiLabel for="destination">
@@ -296,7 +295,7 @@ async function onSubmit() {
                                 Stunden *
                               </UiLabel>
                               <div class="space-y-4">
-                                <div class="flex justify-between px-1 text-xs text-muted-foreground tracking-[0.2em] uppercase">
+                                <div class="flex justify-between px-1 text-xs text-muted-foreground tracking-[0.25em] uppercase">
                                   <span>1</span>
                                   <span>10</span>
                                 </div>
@@ -316,13 +315,13 @@ async function onSubmit() {
                                     v-for="n in 10"
                                     :key="n"
                                     class="text-center transition-all duration-300"
-                                    :class="hourlyHours === n ? 'text-foreground text-base font-medium' : 'text-muted-foreground text-[11px]'"
+                                    :class="hourlyHours === n ? 'text-foreground text-lg font-light' : 'text-muted-foreground text-[11px]'"
                                   >
                                     {{ n }}
                                   </span>
                                 </div>
                                 <div class="text-center">
-                                  <div class="text-4xl text-foreground font-light leading-none md:text-5xl">
+                                  <div class="text-5xl text-foreground font-light leading-none">
                                     {{ hourlyHours }}
                                   </div>
                                   <div class="mt-2 text-xs text-muted-foreground tracking-[0.2em] uppercase">
