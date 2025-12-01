@@ -44,9 +44,9 @@ function displaySegment(part: string, value: string) {
     v-model="timeValue"
     :locale="props.locale"
     granularity="minute"
-    hour-cycle="24"
+    :hour-cycle="24"
   >
-    <div class="relative h-11 w-full flex items-center justify-between gap-3 border rounded-sm border-solid bg-transparent px-3 py-2 text-base text-foreground font-light outline-none focus-within:ring-2 focus-within:ring-offset-0 focus-within:ring-pureWhite">
+    <div class="relative h-11 w-full flex items-center justify-between gap-3 border rounded-sm border-solid bg-transparent px-3 py-2 text-base text-foreground font-light tracking-widest outline-none focus-within:ring-2 focus-within:ring-offset-0 focus-within:ring-pureWhite">
       <div class="flex items-center">
         <template v-for="item in segments" :key="item.part">
           <TimeFieldInput
@@ -59,7 +59,7 @@ function displaySegment(part: string, value: string) {
           <TimeFieldInput
             v-else
             :part="item.part"
-            class="min-w-[1.6ch] text-left data-[placeholder]:text-muted-foreground focus:outline-none"
+            class="min-w-[1.6ch] px-1 text-left data-[placeholder]:text-muted-foreground focus:shadow-[0_0_0_2px] focus:shadow-pureWhite focus:outline-none"
           >
             {{ displaySegment(item.part, item.value) }}
           </TimeFieldInput>
