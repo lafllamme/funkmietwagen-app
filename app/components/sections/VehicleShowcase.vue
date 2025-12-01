@@ -50,7 +50,7 @@ function setExpanded(index: number) {
             class="absolute inset-0 flex items-end justify-center pb-6 md:pb-10 md:-translate-y-1/2"
           >
             <h3
-              class="md:vertical-rl text-center text-sm text-foreground/80 tracking-[0.2em] uppercase md:rotate-90 md:whitespace-nowrap md:text-xl md:tracking-[0.3em]"
+              class="md:vertical-rl animate-fade-in text-center text-sm text-foreground/80 tracking-[0.2em] uppercase md:rotate-90 md:whitespace-nowrap md:text-2xl md:tracking-[0.3em]"
             >
               {{ car.name }}
             </h3>
@@ -59,30 +59,31 @@ function setExpanded(index: number) {
           <div v-else class="absolute inset-0 flex items-end p-6 md:p-12">
             <NuxtLink
               :to="`/vorbestellung?vehicle=${car.id}`"
-              class="absolute right-3 top-3 inline-flex items-center gap-2 border border-foreground rounded-sm bg-foreground px-3 py-2 text-[11px] text-background tracking-widest uppercase transition-all md:right-4 md:top-4 hover:bg-transparent md:px-4 hover:text-foreground"
-              @click.stop="console.info('[VehicleShowcase] Reservieren clicked', car.id)"
+              class="absolute right-3 top-3 inline-flex items-center gap-2 border border-foreground rounded-sm bg-foreground px-3 py-2 text-[11px] text-background tracking-widest uppercase transition-all delay-50 md:right-4 md:top-4 hover:bg-transparent md:px-4 hover:text-foreground hover:backdrop-blur-sm"
             >
               Reservieren
               <Icon name="lucide:arrow-right" class="h-4 w-4" />
             </NuxtLink>
-            <div class="max-w-xl space-y-4">
-              <p class="text-[10px] text-muted-foreground tracking-[0.4em] uppercase">
-                {{ car.type }}
-              </p>
-              <h3 class="text-2xl text-foreground font-light tracking-wide md:text-4xl">
-                {{ car.name }}
-              </h3>
-              <p class="text-sm color-sand-2 leading-relaxed md:max-w-xl">
-                {{ car.description }}
-              </p>
-              <div class="flex flex-wrap gap-4 text-sm md:gap-6">
-                <div v-for="spec in car.specs" :key="spec.label">
-                  <p class="mb-1 text-[10px] text-muted-foreground tracking-[0.3em] uppercase">
-                    {{ spec.label }}
-                  </p>
-                  <p class="text-foreground">
-                    {{ spec.value }}
-                  </p>
+            <div class="animate-slide-in-bottom max-w-xl rounded-sm bg-pureBlack/60 backdrop-blur-sm">
+              <div class="p-2 space-y-2">
+                <p class="text-[10px] text-muted-foreground tracking-[0.4em] uppercase">
+                  {{ car.type }}
+                </p>
+                <h3 class="text-2xl color-pureWhite font-light tracking-wide md:text-4xl">
+                  {{ car.name }}
+                </h3>
+                <p class="text-sm color-sand-8 font-light leading-relaxed tracking-normal md:max-w-xl">
+                  {{ car.description }}
+                </p>
+                <div class="flex flex-wrap gap-4 text-sm md:gap-6">
+                  <div v-for="spec in car.specs" :key="spec.label">
+                    <p class="text-[10px] text-muted-foreground tracking-[0.3em] uppercase">
+                      {{ spec.label }}
+                    </p>
+                    <p class="text-foreground">
+                      {{ spec.value }}
+                    </p>
+                  </div>
                 </div>
               </div>
             </div>
@@ -105,3 +106,19 @@ function setExpanded(index: number) {
     </div>
   </section>
 </template>
+
+<style scoped>
+@keyframes slide-in-bottom {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.animate-slide-in-bottom {
+  animation: slide-in-bottom 0.9s cubic-bezier(0.76, 0, 0.24, 1) both;
+}
+</style>
