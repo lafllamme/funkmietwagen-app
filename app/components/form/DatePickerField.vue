@@ -39,6 +39,7 @@ const dateValue = computed<DateValue | null>({
   set: val => emit('update:modelValue', val),
 })
 
+const fieldRef = ref<InstanceType<typeof DatePickerField> | null>(null)
 const isoDate = computed(() => (dateValue.value ? formatDate(dateValue.value) : ''))
 const minDate = today(getLocalTimeZone())
 
@@ -57,6 +58,17 @@ function displaySegment(part: string, value: string) {
     return clean ? clean.padStart(4, '0').toUpperCase() : 'JJJJ'
   return clean.toUpperCase()
 }
+
+function focusInput() {
+  nextTick(() => {
+    const el = (fieldRef.value as any)?.$el as HTMLElement | null
+    const input = el?.querySelector('input')
+    if (input instanceof HTMLElement)
+      input.focus()
+  })
+}
+
+defineExpose({ focusInput })
 </script>
 
 <template>
@@ -68,7 +80,8 @@ function displaySegment(part: string, value: string) {
     <DatePickerField
       :id="props.id"
       v-slot="{ segments }"
-      class="relative h-11 w-full flex items-center justify-between gap-3 border rounded-sm border-solid bg-transparent px-3 py-2 text-base text-foreground font-light outline-none focus-within:ring-2 focus-within:ring-offset-0 focus-within:ring-pureWhite"
+      ref="fieldRef"
+      class="relative h-11 w-full flex items-center justify-between gap-3 border rounded-sm border-solid bg-transparent px-3 py-2 text-base text-foreground font-light tracking-widest outline-none focus-within:ring-2 focus-within:ring-offset-0 focus-within:ring-pureWhite"
     >
       <div class="flex items-center">
         <template v-for="item in segments" :key="item.part">
@@ -82,7 +95,7 @@ function displaySegment(part: string, value: string) {
           <DatePickerInput
             v-else
             :part="item.part"
-            class="min-w-[1.4ch] text-left data-[placeholder]:text-muted-foreground focus:outline-none"
+            class="min-w-[1.4ch] text-left data-[placeholder]:text-muted-foreground focus:shadow-[0_0_0_2px] focus:shadow-pureWhite focus:outline-none"
           >
             {{ displaySegment(item.part, item.value) }}
           </DatePickerInput>
