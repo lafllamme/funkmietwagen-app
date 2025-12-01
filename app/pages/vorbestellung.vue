@@ -107,7 +107,7 @@ async function onSubmit() {
   sending.value = true
   errorMessage.value = ''
 
-  // Prepare form data and send it to Netlify
+  // Prepare form data and send it
   const bodyContent = toFormBody(formRef.value)
   console.info('[Form] Sending form data to', FORM_ACTION, 'payload:', bodyContent)
 

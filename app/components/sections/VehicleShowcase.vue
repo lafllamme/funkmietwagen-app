@@ -4,11 +4,15 @@ import { NuxtLink } from '#components'
 import { computed, ref } from 'vue'
 import { vehicles } from './VehicleShowcase.model'
 
-const expanded = ref(0)
-const activeVehicle = computed<VehicleCard>(() => vehicles[expanded.value] ?? vehicles[0])
+const expanded = ref<string>(vehicles[0]?.id ?? '')
+const activeVehicle = computed<VehicleCard>(() => {
+  return vehicles.find(v => v.id === expanded.value) ?? vehicles[0]!
+})
 
-function setExpanded(index: number) {
-  expanded.value = index
+const isActive = (vehicle: VehicleCard) => vehicle.id === activeVehicle.value.id
+
+function setExpanded(vehicleId: string) {
+  expanded.value = vehicleId
 }
 </script>
 
@@ -24,29 +28,29 @@ function setExpanded(index: number) {
 
       <div class="flex flex-col gap-3 md:h-[70vh] md:flex-row md:gap-4">
         <div
-          v-for="(car, index) in vehicles"
+          v-for="car in vehicles"
           :key="car.id"
           class="bg-black relative cursor-pointer overflow-hidden border border-border rounded-sm transition-[flex,opacity,height] duration-500"
-          :class="expanded === index
+          :class="isActive(car)
             ? 'h-[420px] md:h-auto md:flex-[3]'
             : 'h-[260px] md:h-auto md:flex-1 opacity-90 md:opacity-70 md:hover:opacity-90'"
-          @click="setExpanded(index)"
+          @click="setExpanded(car.id)"
         >
           <img
             :src="car.image"
             :alt="car.name"
             class="h-full w-full object-cover transition-opacity duration-500"
-            :class="expanded === index ? 'opacity-85' : 'opacity-40 md:opacity-30'"
+            :class="isActive(car) ? 'opacity-85' : 'opacity-40 md:opacity-30'"
           >
           <div
             class="absolute inset-0 transition-colors duration-500"
-            :class="expanded === index
+            :class="isActive(car)
               ? 'bg-gradient-to-t from-black/85 via-black/70 to-black/30'
               : 'bg-gradient-to-t from-black/75 via-black/55 to-black/20'"
           />
 
           <div
-            v-if="expanded !== index"
+            v-if="!isActive(car)"
             class="absolute inset-0 flex items-end justify-center pb-6 md:pb-10 md:-translate-y-1/2"
           >
             <h3
@@ -93,12 +97,12 @@ function setExpanded(index: number) {
 
       <div class="mt-6 flex justify-center gap-3">
         <button
-          v-for="(car, index) in vehicles"
+          v-for="car in vehicles"
           :key="car.id"
           type="button"
           class="h-2 w-10 rounded-full bg-border transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-pureWhite"
-          :class="expanded === index ? 'bg-foreground w-12' : 'bg-border/70 hover:bg-border'"
-          @click="setExpanded(index)"
+          :class="isActive(car) ? 'bg-foreground w-12' : 'bg-border/70 hover:bg-border'"
+          @click="setExpanded(car.id)"
         >
           <span class="sr-only">{{ car.name }}</span>
         </button>
