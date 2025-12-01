@@ -125,8 +125,17 @@ async function onSubmit() {
     }
     console.info('[Form] Submission accepted by Netlify')
     markSubmitted()
-    if (typeof window !== 'undefined')
-      window.scrollTo({ top: 0, behavior: 'smooth' })
+    if (typeof window !== 'undefined') {
+      const scrollTop = () => {
+        window.scrollTo({ top: 0, behavior: 'smooth' })
+        document.documentElement.scrollTop = 0
+        document.body.scrollTop = 0
+      }
+      requestAnimationFrame(() => {
+        scrollTop()
+        setTimeout(scrollTop, 80)
+      })
+    }
   }
   catch (error) {
     console.error(error)
