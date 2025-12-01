@@ -3,6 +3,7 @@ import type { DestinationOption, DestinationSelectProps } from './DestinationSel
 import {
   ComboboxAnchor,
   ComboboxContent,
+  ComboboxEmpty,
   ComboboxInput,
   ComboboxItem,
   ComboboxItemIndicator,
@@ -13,6 +14,7 @@ import {
   useFilter,
 } from 'reka-ui'
 import { computed, ref, watch } from 'vue'
+
 import { destinationOptions, destinationSelectDefaults } from './DestinationSelect.model'
 
 const props = withDefaults(defineProps<DestinationSelectProps>(), {
@@ -22,24 +24,27 @@ const props = withDefaults(defineProps<DestinationSelectProps>(), {
 
 const emit = defineEmits<{
   'update:modelValue': [DestinationOption | null]
+  'selected': [DestinationOption]
 }>()
 
 const destinationValue = computed({
   get: () => props.modelValue ?? null,
   set: value => emit('update:modelValue', value),
 })
-
 const destinationInput = ref(destinationValue.value?.label ?? '')
 const destinationCode = ref(destinationValue.value?.code ?? '')
-const { contains } = useFilter({ sensitivity: 'base' })
+const inputRef = ref<HTMLInputElement | null>(null)
+const open = ref(false)
 
+const { contains } = useFilter({ sensitivity: 'base' })
 const customDestinations = ref<DestinationOption[]>([])
+
 const allDestinations = computed(() => [
   ...destinationOptions,
   ...customDestinations.value,
 ])
-const trimmedDestinationInput = computed(() => destinationInput.value.trim())
 
+const trimmedDestinationInput = computed(() => destinationInput.value.trim())
 const filteredDestinations = computed(() =>
   allDestinations.value.filter(option => contains(option.label, destinationInput.value)),
 )
@@ -49,13 +54,23 @@ const hasExactDestination = computed(() =>
   && allDestinations.value.some(option => option.label.toLowerCase() === trimmedDestinationInput.value.toLowerCase()),
 )
 
+const customDestinationOption = computed(() => {
+  if (!trimmedDestinationInput.value || hasExactDestination.value)
+    return null
+  return buildCustomDestination(trimmedDestinationInput.value)
+})
+const renderedDestinations = computed(() => {
+  if (!customDestinationOption.value)
+    return filteredDestinations.value
+
+  return [customDestinationOption.value, ...filteredDestinations.value]
+})
 function toSlug(label: string) {
   return label
     .toLowerCase()
     .replace(/[^a-z0-9]+/g, '-')
     .replace(/^-+|-+$/g, '') || 'ziel'
 }
-
 function buildCustomDestination(label: string): DestinationOption {
   const normalized = label.trim()
   return {
@@ -63,26 +78,19 @@ function buildCustomDestination(label: string): DestinationOption {
     label: normalized,
   }
 }
-
 function ensureCustomDestination(label: string) {
-  if (!label.trim() || hasExactDestination.value)
+  if (!label.trim() || hasExactDestination.value) {
     return
-
+  }
   const normalized = label.trim()
   const exists = allDestinations.value.some(
     option => option.label.toLowerCase() === normalized.toLowerCase(),
   )
-  if (exists)
+  if (exists) {
     return
-
+  }
   customDestinations.value.push(buildCustomDestination(normalized))
 }
-
-const customDestinationOption = computed(() => {
-  if (!trimmedDestinationInput.value || hasExactDestination.value)
-    return null
-  return buildCustomDestination(trimmedDestinationInput.value)
-})
 
 function handleDestinationEnter(event: KeyboardEvent) {
   if (customDestinationOption.value && !filteredDestinations.value.length) {
@@ -91,8 +99,16 @@ function handleDestinationEnter(event: KeyboardEvent) {
   }
 }
 
+function commitCustomDestination() {
+  if (!customDestinationOption.value)
+    return
+
+  destinationValue.value = customDestinationOption.value
+}
+
 watch(destinationValue, (val) => {
   if (!val) {
+    destinationInput.value = ''
     destinationCode.value = ''
     return
   }
@@ -100,6 +116,8 @@ watch(destinationValue, (val) => {
   destinationInput.value = val.label
   destinationCode.value = val.code
   ensureCustomDestination(val.label)
+  open.value = false
+  emit('selected', val)
 }, { immediate: true })
 
 watch(destinationInput, (val) => {
@@ -122,7 +140,11 @@ watch(destinationInput, (val) => {
   <div>
     <ComboboxRoot
       v-model="destinationValue"
+      v-model:open="open"
+      by="code"
       :ignore-filter="true"
+      :reset-search-term-on-blur="false"
+      :reset-search-term-on-select="false"
       :open-on-click="true"
       :open-on-focus="true"
       class="relative w-full focus-visible:outline-none"
@@ -130,13 +152,14 @@ watch(destinationInput, (val) => {
       <ComboboxAnchor class="relative block w-full">
         <ComboboxInput
           :id="inputId"
+          ref="inputRef"
           v-model="destinationInput"
           :name="inputName"
           :required="required"
           :placeholder="placeholder"
-          :display-value="val => (val ? val.label : '')"
           class="h-11 w-full border rounded-sm border-solid bg-transparent px-3 py-2 pr-10 text-base text-foreground font-light outline-none placeholder:color-gray-10 focus-visible:ring-2 focus-visible:ring-pureWhite focus-visible:ring-inset"
           @keydown.enter="handleDestinationEnter"
+          @blur="commitCustomDestination"
         />
         <ComboboxTrigger
           class="absolute right-3 top-1/2 text-muted-foreground -translate-y-1/2"
@@ -148,7 +171,7 @@ watch(destinationInput, (val) => {
 
       <ComboboxPortal>
         <ComboboxContent
-          class="z-50 mt-2 rounded-sm bg-background shadow-lg ring-2 ring-pureWhite ring-inset"
+          class="z-50 mt-2 border border-1 border-pureWhite rounded-sm border-solid bg-background shadow-lg"
           position="popper"
           side="bottom"
           :side-offset="4"
@@ -160,11 +183,11 @@ watch(destinationInput, (val) => {
         >
           <ComboboxViewport>
             <ComboboxItem
-              v-for="option in filteredDestinations"
+              v-for="option in renderedDestinations"
               :key="option.code"
               :value="option"
               :text-value="option.label"
-              class="cursor-pointer rounded-sm px-3 py-2 text-sm text-foreground font-semibold tracking-tighter capitalize data-[highlighted]:bg-gray-11 hover:bg-gray-11"
+              class="cursor-pointer rounded-sm px-3 py-2 text-sm text-foreground font-semibold tracking-tighter capitalize data-[highlighted]:bg-gray-11"
             >
               <div class="flex items-center gap-2">
                 <ComboboxItemIndicator class="h-4 w-4 flex items-center justify-center text-foreground">
@@ -173,21 +196,9 @@ watch(destinationInput, (val) => {
                 <span>{{ option.label }}</span>
               </div>
             </ComboboxItem>
-            <ComboboxItem
-              v-if="customDestinationOption && !filteredDestinations.length"
-              :key="customDestinationOption.code"
-              :value="customDestinationOption"
-              :text-value="customDestinationOption.label"
-              class="cursor-pointer rounded-sm px-3 py-2 text-sm text-foreground data-[highlighted]:bg-gray-11 hover:bg-gray-11"
-            >
-              <div class="flex items-center gap-2">
-                <Icon name="lucide:plus" class="h-4 w-4 text-muted-foreground" />
-                <span>{{ customDestinationOption.label }} hinzufügen</span>
-              </div>
-            </ComboboxItem>
-            <div v-else-if="!filteredDestinations.length" class="px-3 py-2 text-sm text-muted-foreground">
+            <ComboboxEmpty class="px-3 py-2 text-sm text-muted-foreground">
               Keine Treffer
-            </div>
+            </ComboboxEmpty>
           </ComboboxViewport>
         </ComboboxContent>
       </ComboboxPortal>
