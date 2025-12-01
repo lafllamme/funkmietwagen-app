@@ -173,6 +173,8 @@ watch(destinationInput, (val) => {
         <ComboboxContent
           class="z-50 mt-2 border border-1 border-pureWhite rounded-sm border-solid bg-background shadow-lg"
           position="popper"
+          position-strategy="fixed"
+          update-position-strategy="always"
           side="bottom"
           :side-offset="4"
           :side-flip="false"
