@@ -23,7 +23,7 @@ function select(value: BookingType) {
       v-for="option in bookingTypeOptions"
       :key="option.value"
       type="button"
-      class="rounded-full px-6 py-3 text-xs font-light tracking-[0.2em] uppercase transition-all duration-300"
+      class="rounded-full px-6 py-3 text-xs font-light tracking-[0.2em] uppercase transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)]"
       :class="modelValue === option.value
         ? 'bg-foreground text-background'
         : 'text-muted-foreground hover:text-foreground'"
