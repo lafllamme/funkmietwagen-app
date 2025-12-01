@@ -135,7 +135,7 @@ watch(destinationInput, (val) => {
           :required="required"
           :placeholder="placeholder"
           :display-value="val => (val ? val.label : '')"
-          class="h-11 w-full border rounded-sm border-solid bg-transparent px-3 py-2 pr-10 text-base text-foreground font-light outline-none placeholder:color-gray-10 focus-visible:ring-2 focus-visible:ring-offset-0 focus-visible:ring-pureWhite"
+          class="h-11 w-full border rounded-sm border-solid bg-transparent px-3 py-2 pr-10 text-base text-foreground font-light outline-none placeholder:color-gray-10 focus-visible:ring-2 focus-visible:ring-pureWhite focus-visible:ring-inset"
           @keydown.enter="handleDestinationEnter"
         />
         <ComboboxTrigger
@@ -148,7 +148,7 @@ watch(destinationInput, (val) => {
 
       <ComboboxPortal>
         <ComboboxContent
-          class="z-50 mt-2 rounded-sm bg-background shadow-lg ring-2 ring-pureWhite"
+          class="z-50 mt-2 rounded-sm bg-background shadow-lg ring-2 ring-pureWhite ring-inset"
           position="popper"
           side="bottom"
           :side-offset="4"

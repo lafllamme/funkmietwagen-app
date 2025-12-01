@@ -3,6 +3,7 @@ import type { DateValue, Time } from '@internationalized/date'
 import type { DestinationOption } from '@/components/form/DestinationSelect.model'
 import type { VehicleOption } from '@/components/form/VehicleRadioGroup.model'
 import { useRoute } from '#imports'
+import { AnimatePresence, Motion } from 'motion-v'
 import { computed, nextTick, ref, watch } from 'vue'
 import BookingTypeSwitch from '@/components/form/BookingTypeSwitch.vue'
 import DatePickerField from '@/components/form/DatePickerField.vue'
@@ -72,6 +73,11 @@ watch(
     lastScrolledVehicle.value = vehicleId
   },
 )
+
+watch(bookingType, (val) => {
+  if (val === 'hourly')
+    destinationValue.value = null
+})
 
 function toFormBody(form: HTMLFormElement) {
   const formData = new FormData(form)
@@ -268,37 +274,65 @@ async function onSubmit() {
                         <UiInput id="pickup" name="pickup" required placeholder="Straße, Hausnummer, PLZ, Ort" />
                       </div>
 
-                      <div class="space-y-2">
-                        <template v-if="bookingType === 'route'">
-                          <UiLabel for="destination">
-                            Ziel *
-                          </UiLabel>
-                          <DestinationSelect v-model="destinationValue" required />
-                        </template>
-                        <template v-else>
-                          <UiLabel for="hours">
-                            Stunden *
-                          </UiLabel>
-                          <div class="space-y-3">
-                            <input
-                              id="hours"
-                              v-model.number="hourlyHours"
-                              type="range"
-                              name="hours"
-                              min="1"
-                              max="10"
-                              step="1"
-                              class="w-full accent-foreground"
-                            >
-                            <div class="flex items-center justify-between text-sm text-muted-foreground">
-                              <span>1</span>
-                              <span>10</span>
-                            </div>
-                            <div class="text-center text-lg text-foreground font-light">
-                              {{ hourlyHours }} {{ hourlyHours === 1 ? 'Stunde' : 'Stunden' }}
-                            </div>
-                          </div>
-                        </template>
+                      <div class="overflow-hidden">
+                        <AnimatePresence :initial="false" mode="wait">
+                          <Motion
+                            :key="bookingType"
+                            tag="div"
+                            layout
+                            :initial="{ opacity: 0, y: bookingType === 'route' ? -12 : 12 }"
+                            :animate="{ opacity: 1, y: 0 }"
+                            :exit="{ opacity: 0, y: bookingType === 'route' ? -12 : 12 }"
+                            :transition="{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }"
+                          >
+                            <template v-if="bookingType === 'route'">
+                              <UiLabel for="destination">
+                                Ziel *
+                              </UiLabel>
+                              <DestinationSelect v-model="destinationValue" :required="bookingType === 'route'" />
+                            </template>
+                            <template v-else>
+                              <UiLabel for="hours">
+                                Stunden *
+                              </UiLabel>
+                              <div class="space-y-4">
+                                <div class="flex justify-between px-1 text-xs text-muted-foreground tracking-[0.2em] uppercase">
+                                  <span>1</span>
+                                  <span>10</span>
+                                </div>
+                                <input
+                                  id="hours"
+                                  v-model.number="hourlyHours"
+                                  type="range"
+                                  name="hours"
+                                  min="1"
+                                  max="10"
+                                  step="1"
+                                  class="hour-range w-full accent-foreground"
+                                  :required="bookingType === 'hourly'"
+                                >
+                                <div class="flex justify-between px-1">
+                                  <span
+                                    v-for="n in 10"
+                                    :key="n"
+                                    class="text-center transition-all duration-300"
+                                    :class="hourlyHours === n ? 'text-foreground text-base font-medium' : 'text-muted-foreground text-[11px]'"
+                                  >
+                                    {{ n }}
+                                  </span>
+                                </div>
+                                <div class="text-center">
+                                  <div class="text-4xl text-foreground font-light leading-none md:text-5xl">
+                                    {{ hourlyHours }}
+                                  </div>
+                                  <div class="mt-2 text-xs text-muted-foreground tracking-[0.2em] uppercase">
+                                    Stunden
+                                  </div>
+                                </div>
+                              </div>
+                            </template>
+                          </Motion>
+                        </AnimatePresence>
                       </div>
 
                       <div class="grid gap-6 sm:grid-cols-2">
@@ -349,7 +383,7 @@ async function onSubmit() {
                     :disabled="sending"
                     class="w-full flex items-center justify-center gap-3 border border-foreground bg-foreground px-8 py-5 text-sm text-background font-light tracking-widest uppercase transition-all hover:bg-transparent hover:text-foreground"
                   >
-                    <Icon name="lucide:send" class="h-4 w-4" />
+                    <Icon name="lucide:send" class="size-4" />
                     {{ sending ? 'Wird gesendet...' : 'Anfrage senden' }}
                   </button>
 
