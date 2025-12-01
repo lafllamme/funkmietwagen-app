@@ -13,10 +13,12 @@ interface ContactPayload {
   time?: string
   passengers?: string
   vehicle?: string
+  bookingType?: string
+  hours?: string
   notes?: string
 }
 
-const requiredFields: Array<keyof ContactPayload> = ['name', 'phone', 'email', 'pickup', 'destination', 'date', 'time', 'passengers', 'vehicle']
+const requiredFields: Array<keyof ContactPayload> = ['name', 'phone', 'email', 'pickup', 'date', 'time', 'passengers', 'vehicle', 'bookingType']
 
 function row(label: string, value?: string) {
   return `
@@ -47,7 +49,9 @@ function buildEmailHtml(data: ContactPayload) {
       ${row('Telefon', data.phone)}
       ${row('E-Mail', data.email)}
       ${row('Abholadresse', data.pickup)}
-      ${row('Ziel', data.destination)}
+      ${row('Buchungstyp', data.bookingType === 'hourly' ? 'Stunden' : 'Strecke')}
+      ${row('Ziel', data.bookingType === 'hourly' ? '—' : data.destination)}
+      ${row('Stunden', data.bookingType === 'hourly' ? data.hours : '—')}
       ${row('Datum', formatDateGerman(data.date))}
       ${row('Uhrzeit', data.time)}
       ${row('Passagiere', data.passengers)}
@@ -72,6 +76,11 @@ export default defineEventHandler(async (event) => {
     if (!body[field])
       throw createError({ statusCode: 400, statusMessage: `Missing field: ${field}` })
   }
+
+  if (body.bookingType === 'route' && !body.destination)
+    throw createError({ statusCode: 400, statusMessage: 'Missing field: destination' })
+  if (body.bookingType === 'hourly' && !body.hours)
+    throw createError({ statusCode: 400, statusMessage: 'Missing field: hours' })
 
   const formattedDate = formatDateGerman(body.date)
   const html = buildEmailHtml({

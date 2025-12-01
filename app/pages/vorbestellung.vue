@@ -4,6 +4,7 @@ import type { DestinationOption } from '@/components/form/DestinationSelect.mode
 import type { VehicleOption } from '@/components/form/VehicleRadioGroup.model'
 import { useRoute } from '#imports'
 import { computed, nextTick, ref, watch } from 'vue'
+import BookingTypeSwitch from '@/components/form/BookingTypeSwitch.vue'
 import DatePickerField from '@/components/form/DatePickerField.vue'
 import DestinationSelect from '@/components/form/DestinationSelect.vue'
 import PersonSelector from '@/components/form/PersonSelector.vue'
@@ -37,6 +38,8 @@ const dateValue = ref<DateValue | null>(null)
 const timeValue = ref<Time | null>(null)
 const passengers = ref(1)
 const vehicleValue = ref<VehicleOption | null>(null)
+const bookingType = ref<'route' | 'hourly'>('route')
+const hourlyHours = ref(4)
 const route = useRoute()
 const vehicleSectionRef = ref<HTMLElement | null>(null)
 const lastScrolledVehicle = ref<string | null>(null)
@@ -254,6 +257,10 @@ async function onSubmit() {
                     </h3>
 
                     <div class="space-y-6">
+                      <div class="space-y-4">
+                        <BookingTypeSwitch v-model="bookingType" />
+                        <input type="hidden" name="bookingType" :value="bookingType">
+                      </div>
                       <div class="space-y-2">
                         <UiLabel for="pickup">
                           Abholadresse *
@@ -262,10 +269,36 @@ async function onSubmit() {
                       </div>
 
                       <div class="space-y-2">
-                        <UiLabel for="destination">
-                          Ziel *
-                        </UiLabel>
-                        <DestinationSelect v-model="destinationValue" required />
+                        <template v-if="bookingType === 'route'">
+                          <UiLabel for="destination">
+                            Ziel *
+                          </UiLabel>
+                          <DestinationSelect v-model="destinationValue" required />
+                        </template>
+                        <template v-else>
+                          <UiLabel for="hours">
+                            Stunden *
+                          </UiLabel>
+                          <div class="space-y-3">
+                            <input
+                              id="hours"
+                              v-model.number="hourlyHours"
+                              type="range"
+                              name="hours"
+                              min="1"
+                              max="10"
+                              step="1"
+                              class="w-full accent-foreground"
+                            >
+                            <div class="flex items-center justify-between text-sm text-muted-foreground">
+                              <span>1</span>
+                              <span>10</span>
+                            </div>
+                            <div class="text-center text-lg text-foreground font-light">
+                              {{ hourlyHours }} {{ hourlyHours === 1 ? 'Stunde' : 'Stunden' }}
+                            </div>
+                          </div>
+                        </template>
                       </div>
 
                       <div class="grid gap-6 sm:grid-cols-2">
