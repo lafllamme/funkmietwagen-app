@@ -44,6 +44,8 @@ const hourlyHours = ref(4)
 const route = useRoute()
 const vehicleSectionRef = ref<HTMLElement | null>(null)
 const lastScrolledVehicle = ref<string | null>(null)
+const dateFieldWrapper = ref<HTMLElement | null>(null)
+const datePickerRef = ref<InstanceType<typeof DatePickerField> | null>(null)
 
 const vehicleQueryId = computed(() => {
   const value = route.query.vehicle
@@ -77,6 +79,19 @@ watch(
 watch(bookingType, (val) => {
   if (val === 'hourly')
     destinationValue.value = null
+})
+
+async function focusDateField() {
+  await nextTick()
+  datePickerRef.value?.focusInput?.()
+}
+
+watch(destinationValue, (val) => {
+  if (bookingType.value !== 'route')
+    return
+
+  if (val)
+    focusDateField()
 })
 
 function toFormBody(form: HTMLFormElement) {
@@ -288,7 +303,11 @@ async function onSubmit() {
                               <UiLabel for="destination">
                                 Ziel *
                               </UiLabel>
-                              <DestinationSelect v-model="destinationValue" :required="bookingType === 'route'" />
+                              <DestinationSelect
+                                v-model="destinationValue"
+                                :required="bookingType === 'route'"
+                                @selected="focusDateField"
+                              />
                             </template>
                             <template v-else>
                               <UiLabel for="hours">
@@ -335,11 +354,15 @@ async function onSubmit() {
                       </div>
 
                       <div class="grid gap-6 sm:grid-cols-2">
-                        <div class="space-y-2">
+                        <div ref="dateFieldWrapper" class="space-y-2">
                           <UiLabel for="date">
                             Datum *
                           </UiLabel>
-                          <DatePickerField v-model="dateValue" required />
+                          <DatePickerField
+                            ref="datePickerRef"
+                            v-model="dateValue"
+                            required
+                          />
                         </div>
                         <div class="space-y-2">
                           <UiLabel for="time">
