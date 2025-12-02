@@ -251,8 +251,16 @@ async function onSubmit() {
     console.info('[Form] Received response', response.status, response.statusText)
 
     if (!response.ok) {
-      const text = await response.text()
-      throw new Error(`[Form] Failed with status ${response.status}: ${text}`)
+      const rawText = await response.text().catch(() => '')
+      let serverMessage = rawText
+      try {
+        const parsed = rawText ? JSON.parse(rawText) : null
+        if (parsed && typeof parsed === 'object')
+          serverMessage = (parsed as any).message || (parsed as any).statusMessage || serverMessage
+      }
+      catch { }
+
+      throw new Error(serverMessage || `Anfrage fehlgeschlagen (${response.status})`)
     }
     console.info('[Form] Submission accepted by Netlify')
     markSubmitted()
@@ -265,7 +273,8 @@ async function onSubmit() {
   }
   catch (error) {
     console.error(error)
-    errorMessage.value = ERROR_MESSAGE
+    const serverMessage = error instanceof Error ? error.message : ''
+    errorMessage.value = serverMessage || ERROR_MESSAGE
   }
   finally {
     console.info('[Form] Submit finished')
@@ -284,21 +293,21 @@ async function onSubmit() {
     >
       <button
         type="button"
-        class="rounded-sm bg-foreground px-3 py-2 text-xs text-black shadow hover:opacity-90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-pureWhite"
+        class="text-black rounded-sm bg-foreground px-3 py-2 text-xs shadow hover:opacity-90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-pureWhite"
         @click="applyPreset('happy')"
       >
         Prefill: Happy
       </button>
       <button
         type="button"
-        class="bg-yellow-500 rounded-sm px-3 py-2 text-xs text-black shadow hover:opacity-90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-pureWhite"
+        class="bg-yellow-500 text-black rounded-sm px-3 py-2 text-xs shadow hover:opacity-90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-pureWhite"
         @click="applyPreset('invalid')"
       >
         Prefill: Invalid
       </button>
       <button
         type="button"
-        class="bg-red-600 rounded-sm px-3 py-2 text-xs text-black shadow hover:opacity-90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-pureWhite"
+        class="bg-red-600 text-black rounded-sm px-3 py-2 text-xs shadow hover:opacity-90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-pureWhite"
         @click="applyPreset('spam')"
       >
         Prefill: Spam
