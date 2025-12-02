@@ -45,7 +45,7 @@ export function useNativePickers() {
 
   // Client: run real detection
   const support = detectSupport()
-  const breakpoints = useBreakpoints(breakpointsTailwind, { ssrWidth: 768 })
+  const breakpoints = useBreakpoints(breakpointsTailwind)
   const isMobile = breakpoints.smaller('md')
 
   return {
