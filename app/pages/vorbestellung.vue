@@ -6,6 +6,7 @@ import type { FieldKey } from '@/composables/useFormValidation'
 import { useRoute } from '#imports'
 import { AnimatePresence, Motion } from 'motion-v'
 import { computed, nextTick, ref, watch } from 'vue'
+import { unrefElement } from '@vueuse/core'
 import BookingTypeSwitch from '@/components/form/BookingTypeSwitch.vue'
 import DatePickerField from '@/components/form/DatePickerField.vue'
 import DestinationSelect from '@/components/form/DestinationSelect.vue'
@@ -115,8 +116,15 @@ function scrollToField(key: FieldKey | null) {
     vehicle: () => vehicleSectionRef.value,
   }
 
-  const target = targetResolvers[key]?.()
-  target?.scrollIntoView({ behavior: 'smooth', block: 'center' })
+  const resolved = unrefElement(targetResolvers[key]?.())
+  if (!resolved)
+    return
+
+  resolved.scrollIntoView({ behavior: 'smooth', block: 'center' })
+  requestAnimationFrame(() => {
+    const focusable = resolved.querySelector<HTMLElement>('input, button, textarea, select, [role="combobox"], [tabindex]')
+    focusable?.focus()
+  })
 }
 
 watch(destinationValue, (val) => {
@@ -146,6 +154,7 @@ async function onSubmit() {
   })
 
   if (!validation.valid) {
+    await nextTick()
     scrollToField(validation.firstInvalid)
     return
   }
@@ -502,7 +511,7 @@ async function onSubmit() {
                       <div
                         ref="vehicleSectionRef"
                         class="space-y-2"
-                        :class="errors.vehicle ? 'ring-2 ring-red-10 rounded-sm ring-offset-2 ring-offset-background' : ''"
+                        :class="errors.vehicle ? 'ring-2 ring-red-10 rounded-sm ring-offset-12 ring-offset-background' : ''"
                       >
                         <UiLabel for="vehicle">
                           Fahrzeugklasse *
