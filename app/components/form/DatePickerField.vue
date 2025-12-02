@@ -105,6 +105,7 @@ defineExpose({ focusInput })
         type="date"
         :min="minDateString"
         :required="props.required"
+        :placeholder="props.placeholder"
         class="w-full bg-transparent text-foreground outline-none placeholder:text-muted-foreground/50"
       >
     </div>
