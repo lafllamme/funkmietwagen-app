@@ -18,6 +18,8 @@ import UiInput from '@/components/ui/Input.vue'
 import UiLabel from '@/components/ui/Label.vue'
 import UiTextarea from '@/components/ui/Textarea.vue'
 import { useBookingStore } from '@/stores/useBookingStore'
+import type { FieldKey } from '@/composables/useFormValidation'
+import { useFormValidation } from '@/composables/useFormValidation'
 
 definePageMeta({ scrollToTop: false })
 
@@ -34,6 +36,10 @@ const formRef = useTemplateRef('formRef')
 
 const sending = ref(false)
 const errorMessage = ref('')
+const nameValue = ref('')
+const phoneValue = ref('')
+const emailValue = ref('')
+const pickupValue = ref('')
 const destinationValue = ref<DestinationOption | null>(null)
 const dateValue = ref<DateValue | null>(null)
 const timeValue = ref<Time | null>(null)
@@ -46,6 +52,12 @@ const vehicleSectionRef = ref<HTMLElement | null>(null)
 const lastScrolledVehicle = ref<string | null>(null)
 const dateFieldWrapper = ref<HTMLElement | null>(null)
 const datePickerRef = ref<InstanceType<typeof DatePickerField> | null>(null)
+const timeFieldWrapper = ref<HTMLElement | null>(null)
+const destinationWrapper = ref<HTMLElement | null>(null)
+const nameInputRef = ref<HTMLInputElement | null>(null)
+const phoneInputRef = ref<HTMLInputElement | null>(null)
+const emailInputRef = ref<HTMLInputElement | null>(null)
+const pickupInputRef = ref<HTMLInputElement | null>(null)
 
 const vehicleQueryId = computed(() => {
   const value = route.query.vehicle
@@ -81,9 +93,30 @@ watch(bookingType, (val) => {
     destinationValue.value = null
 })
 
+const { errors, validate } = useFormValidation()
+
 async function focusDateField() {
   await nextTick()
   datePickerRef.value?.focusInput?.()
+}
+
+function scrollToField(key: FieldKey | null) {
+  if (!key)
+    return
+
+  const targetResolvers: Record<FieldKey, () => HTMLElement | null> = {
+    name: () => nameInputRef.value,
+    phone: () => phoneInputRef.value,
+    email: () => emailInputRef.value,
+    pickup: () => pickupInputRef.value,
+    destination: () => destinationWrapper.value,
+    date: () => dateFieldWrapper.value,
+    time: () => timeFieldWrapper.value,
+    vehicle: () => vehicleSectionRef.value,
+  }
+
+  const target = targetResolvers[key]?.()
+  target?.scrollIntoView({ behavior: 'smooth', block: 'center' })
 }
 
 watch(destinationValue, (val) => {
@@ -100,6 +133,23 @@ function toFormBody(form: HTMLFormElement) {
 }
 
 async function onSubmit() {
+  const validation = validate({
+    name: nameValue.value,
+    phone: phoneValue.value,
+    email: emailValue.value,
+    pickup: pickupValue.value,
+    destination: destinationValue.value,
+    date: dateValue.value,
+    time: timeValue.value,
+    vehicle: vehicleValue.value,
+    bookingType: bookingType.value,
+  })
+
+  if (!validation.valid) {
+    scrollToField(validation.firstInvalid)
+    return
+  }
+
   if (!formRef.value) {
     console.warn('[Form] No form ref found, aborting submit')
     return
@@ -259,20 +309,57 @@ async function onSubmit() {
                         <UiLabel for="name">
                           Name *
                         </UiLabel>
-                        <UiInput id="name" name="name" required placeholder="Ihr vollständiger Name" />
+                        <UiInput
+                          id="name"
+                          ref="nameInputRef"
+                          v-model="nameValue"
+                          name="name"
+                          required
+                          placeholder="Ihr vollständiger Name"
+                          :class="errors.name ? 'border-red-10 focus-visible:ring-red-10' : ''"
+                        />
+                        <p v-if="errors.name" class="text-xs text-red-10 font-light">
+                          {{ errors.name }}
+                        </p>
                       </div>
                       <div class="space-y-2">
                         <UiLabel for="phone">
                           Telefon *
                         </UiLabel>
-                        <UiInput id="phone" name="phone" type="tel" required placeholder="+49 123 456789" />
+                        <UiInput
+                          id="phone"
+                          ref="phoneInputRef"
+                          v-model="phoneValue"
+                          name="phone"
+                          type="tel"
+                          inputmode="tel"
+                          required
+                          placeholder="+49 123 456789"
+                          :class="errors.phone ? 'border-red-10 focus-visible:ring-red-10' : ''"
+                        />
+                        <p v-if="errors.phone" class="text-xs text-red-10 font-light">
+                          {{ errors.phone }}
+                        </p>
                       </div>
                     </div>
                     <div class="mt-6 space-y-2">
                       <UiLabel for="email">
                         E-Mail *
                       </UiLabel>
-                      <UiInput id="email" name="email" type="email" required placeholder="ihre.email@beispiel.de" />
+                      <UiInput
+                        id="email"
+                        ref="emailInputRef"
+                        v-model="emailValue"
+                        name="email"
+                        type="email"
+                        inputmode="email"
+                        required
+                        placeholder="ihre.email@beispiel.de"
+                        :class="errors.email ? 'border-red-10 focus-visible:ring-red-10' : ''"
+                      />
+                      <p v-if="errors.email" class="text-xs text-red-10 font-light">
+                        {{ errors.email }}
+                      </p>
                     </div>
                   </div>
 
@@ -290,7 +377,18 @@ async function onSubmit() {
                         <UiLabel for="pickup">
                           Abholadresse *
                         </UiLabel>
-                        <UiInput id="pickup" name="pickup" required placeholder="Straße, Hausnummer, PLZ, Ort" />
+                        <UiInput
+                          id="pickup"
+                          ref="pickupInputRef"
+                          v-model="pickupValue"
+                          name="pickup"
+                          required
+                          placeholder="Straße, Hausnummer, PLZ, Ort"
+                          :class="errors.pickup ? 'border-red-10 focus-visible:ring-red-10' : ''"
+                        />
+                        <p v-if="errors.pickup" class="text-xs text-red-10 font-light">
+                          {{ errors.pickup }}
+                        </p>
                       </div>
 
                       <div class="relative overflow-hidden">
@@ -304,14 +402,20 @@ async function onSubmit() {
                             :transition="{ duration: 0.4, ease: 'easeInOut' }"
                           >
                             <template v-if="bookingType === 'route'">
-                              <UiLabel for="destination">
-                                Ziel *
-                              </UiLabel>
-                              <DestinationSelect
-                                v-model="destinationValue"
-                                :required="bookingType === 'route'"
-                                @selected="focusDateField"
-                              />
+                              <div ref="destinationWrapper" class="space-y-2">
+                                <UiLabel for="destination">
+                                  Ziel *
+                                </UiLabel>
+                                <DestinationSelect
+                                  v-model="destinationValue"
+                                  :required="bookingType === 'route'"
+                                  :error="!!errors.destination"
+                                  @selected="focusDateField"
+                                />
+                                <p v-if="errors.destination" class="text-xs text-red-10 font-light">
+                                  {{ errors.destination }}
+                                </p>
+                              </div>
                             </template>
                             <template v-else>
                               <UiLabel for="hours">
@@ -366,13 +470,24 @@ async function onSubmit() {
                             ref="datePickerRef"
                             v-model="dateValue"
                             required
+                            :error="!!errors.date"
                           />
+                          <p v-if="errors.date" class="text-xs text-red-10 font-light">
+                            {{ errors.date }}
+                          </p>
                         </div>
-                        <div class="space-y-2">
+                        <div ref="timeFieldWrapper" class="space-y-2">
                           <UiLabel for="time">
                             Uhrzeit *
                           </UiLabel>
-                          <TimeField v-model="timeValue" required />
+                          <TimeField
+                            v-model="timeValue"
+                            required
+                            :error="!!errors.time"
+                          />
+                          <p v-if="errors.time" class="text-xs text-red-10 font-light">
+                            {{ errors.time }}
+                          </p>
                         </div>
                       </div>
 
@@ -383,11 +498,18 @@ async function onSubmit() {
                         <PersonSelector v-model="passengers" required />
                       </div>
 
-                      <div ref="vehicleSectionRef" class="space-y-2">
+                      <div
+                        ref="vehicleSectionRef"
+                        class="space-y-2"
+                        :class="errors.vehicle ? 'ring-2 ring-red-10 rounded-sm ring-offset-2 ring-offset-background' : ''"
+                      >
                         <UiLabel for="vehicle">
                           Fahrzeugklasse *
                         </UiLabel>
                         <VehicleRadioGroup v-model="vehicleValue" required />
+                        <p v-if="errors.vehicle" class="text-xs text-red-10 font-light">
+                          {{ errors.vehicle }}
+                        </p>
                       </div>
                     </div>
                   </div>
