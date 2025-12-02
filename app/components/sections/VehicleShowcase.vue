@@ -65,7 +65,7 @@ function setExpanded(vehicleId: string) {
               :to="`/vorbestellung?vehicle=${car.id}`"
               class="absolute right-3 top-3 inline-flex items-center gap-2 border border-foreground rounded-sm bg-foreground px-3 py-2 text-[11px] text-background tracking-widest uppercase transition-all delay-50 md:right-4 md:top-4 hover:bg-transparent md:px-4 hover:text-foreground hover:backdrop-blur-sm"
             >
-              Reservieren
+              Buchen
               <Icon name="lucide:arrow-right" class="h-4 w-4" />
             </NuxtLink>
             <div class="animate-slide-in-bottom max-w-xl rounded-sm bg-pureBlack/60 backdrop-blur-sm">

@@ -4,9 +4,9 @@ import type { DestinationOption } from '@/components/form/DestinationSelect.mode
 import type { VehicleOption } from '@/components/form/VehicleRadioGroup.model'
 import type { FieldKey } from '@/composables/useFormValidation'
 import { useRoute } from '#imports'
+import { unrefElement } from '@vueuse/core'
 import { AnimatePresence, Motion } from 'motion-v'
 import { computed, nextTick, ref, watch } from 'vue'
-import { unrefElement } from '@vueuse/core'
 import BookingTypeSwitch from '@/components/form/BookingTypeSwitch.vue'
 import DatePickerField from '@/components/form/DatePickerField.vue'
 import DestinationSelect from '@/components/form/DestinationSelect.vue'
@@ -84,7 +84,11 @@ watch(
     if (!process.client || !vehicleId || lastScrolledVehicle.value === vehicleId)
       return
     await nextTick()
-    vehicleSectionRef.value?.scrollIntoView({ behavior: 'smooth', block: 'center' })
+    requestAnimationFrame(() => {
+      setTimeout(() => {
+        vehicleSectionRef.value?.scrollIntoView({ behavior: 'smooth', block: 'center' })
+      }, 150)
+    })
     lastScrolledVehicle.value = vehicleId
   },
 )
