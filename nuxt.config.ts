@@ -18,5 +18,9 @@ export default defineNuxtConfig({
       EMAIL_TO: '',
       API_KEY: '',
     },
+    friendly: {
+      API_URL: '',
+      API_KEY: '',
+    },
   },
 })

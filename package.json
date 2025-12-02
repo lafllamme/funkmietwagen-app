@@ -13,6 +13,7 @@
     "lint:fix": "eslint . --fix"
   },
   "dependencies": {
+    "@friendlycaptcha/sdk": "^0.1.36",
     "@internationalized/date": "^3.5.5",
     "@pinia/nuxt": "^0.8.0",
     "@unocss/reset": "^66.5.9",

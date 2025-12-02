@@ -13,6 +13,7 @@ import DatePickerField from '@/components/form/DatePickerField.vue'
 import DestinationSelect from '@/components/form/DestinationSelect.vue'
 import PersonSelector from '@/components/form/PersonSelector.vue'
 import TimeField from '@/components/form/TimeField.vue'
+import FriendlyCaptcha from '@/components/form/FriendlyCaptcha.vue'
 import { vehicleOptions } from '@/components/form/VehicleRadioGroup.model'
 import VehicleRadioGroup from '@/components/form/VehicleRadioGroup.vue'
 import AppFooter from '@/components/layout/Footer.vue'
@@ -60,6 +61,8 @@ const nameInputRef = ref<HTMLInputElement | null>(null)
 const phoneInputRef = ref<HTMLInputElement | null>(null)
 const emailInputRef = ref<HTMLInputElement | null>(null)
 const pickupInputRef = ref<HTMLInputElement | null>(null)
+const FRIENDLY_CAPTCHA_SITEKEY = 'FCMTLRBFEIPI9PDC'
+const FRIENDLY_CAPTCHA_FIELD = 'frc-captcha-response'
 
 if (!dateValue.value)
   dateValue.value = today(getLocalTimeZone())
@@ -177,6 +180,37 @@ async function onSubmit() {
     console.warn('[Form] No form ref found, aborting submit')
     return
   }
+
+  const formData = new FormData(formRef.value)
+  const captchaResponse = formData.get(FRIENDLY_CAPTCHA_FIELD)?.toString() || ''
+  if (!captchaResponse) {
+    errorMessage.value = 'Bitte Captcha bestätigen.'
+    scrollToField('vehicle')
+    return
+  }
+
+  try {
+    console.info('[Form] Captcha verify:start')
+    const captchaVerify = await $fetch<{ success: boolean }>('/api/captcha/verify', {
+      method: 'POST',
+      body: {
+        response: captchaResponse,
+        sitekey: FRIENDLY_CAPTCHA_SITEKEY,
+      },
+    })
+
+    if (!captchaVerify?.success) {
+      errorMessage.value = 'Captcha ungültig. Bitte erneut versuchen.'
+      return
+    }
+    console.info('[Form] Captcha verify:success')
+  }
+  catch (err) {
+    console.error('[Form] Captcha verification failed', err)
+    errorMessage.value = 'Captcha-Prüfung fehlgeschlagen. Bitte erneut versuchen.'
+    return
+  }
+
   sending.value = true
   errorMessage.value = ''
 
@@ -558,6 +592,10 @@ async function onSubmit() {
                     <Icon name="lucide:send" class="size-4" />
                     {{ sending ? 'Wird gesendet...' : 'Anfrage senden' }}
                   </button>
+
+                  <div class="mt-4">
+                    <FriendlyCaptcha :site-key="FRIENDLY_CAPTCHA_SITEKEY" />
+                  </div>
 
                   <p v-if="errorMessage" class="text-red-500 text-center text-sm font-light">
                     {{ errorMessage }}
