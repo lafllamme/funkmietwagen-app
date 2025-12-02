@@ -20,6 +20,8 @@ interface ContactPayload {
 
 const requiredFields: Array<keyof ContactPayload> = ['name', 'phone', 'email', 'pickup', 'date', 'time', 'passengers', 'vehicle', 'bookingType']
 const FRIENDLY_DEFAULT_URL = 'https://global.frcapi.com/api/v2/captcha/siteverify'
+let spamScannerPromise: Promise<any | null> | null = null
+let spamScannerInstance: any | null = null
 
 function row(label: string, value?: string) {
   return `
@@ -61,6 +63,74 @@ function buildEmailHtml(data: ContactPayload) {
     </table>
   </div>
 `
+}
+
+function buildSpamScanSource(data: ContactPayload, recipient: string) {
+  const destination = data.destinationLabel || data.destination || data.destinationCode || '-'
+  return [
+    `From: ${data.email || 'website@funkmietwagen-ade.de'}`,
+    `To: ${recipient}`,
+    `Subject: Fahrtanfrage (${data.bookingType || 'unbekannt'})`,
+    '',
+    `Name: ${data.name || '-'}`,
+    `Telefon: ${data.phone || '-'}`,
+    `Abholadresse: ${data.pickup || '-'}`,
+    `Ziel: ${data.bookingType === 'hourly' ? 'Stundenfahrt' : destination}`,
+    `Stunden: ${data.bookingType === 'hourly' ? data.hours || '-' : '—'}`,
+    `Datum: ${data.date || '-'}`,
+    `Uhrzeit: ${data.time || '-'}`,
+    `Passagiere: ${data.passengers || '-'}`,
+    `Fahrzeugklasse: ${data.vehicle || '-'}`,
+    `Anmerkungen: ${data.notes || '-'}`,
+  ].join('\n')
+}
+
+async function getSpamScanner() {
+  if (spamScannerInstance)
+    return spamScannerInstance
+  if (!spamScannerPromise) {
+    spamScannerPromise = (async () => {
+      try {
+        const mod = await import('spamscanner')
+        const Scanner = (mod as any).default || mod
+        const scanner = new Scanner({
+          supportedLanguages: ['de', 'en'],
+          enablePerformanceMetrics: false,
+          enableMacroDetection: false,
+          timeout: 8000,
+        })
+        consola.info('[SpamScanner] Loaded')
+        return scanner
+      }
+      catch (error) {
+        consola.warn('[SpamScanner] Not available, falling back to heuristic check', error)
+        return null
+      }
+    })()
+  }
+  spamScannerInstance = await spamScannerPromise
+  return spamScannerInstance
+}
+
+function heuristicSpamCheck(data: ContactPayload) {
+  const content = [
+    data.name,
+    data.phone,
+    data.email,
+    data.pickup,
+    data.destinationLabel,
+    data.destination,
+    data.destinationCode,
+    data.notes,
+  ]
+    .filter(Boolean)
+    .join(' ')
+    .toLowerCase()
+
+  const urlMatches = content.match(/https?:\/\/|www\./g)?.length || 0
+  const keywordHits = ['viagra', 'casino', 'crypto', 'forex', 'loan', 'free', 'angebot', 'sex']
+    .some(keyword => content.includes(keyword))
+  return urlMatches >= 2 || keywordHits
 }
 
 export default defineEventHandler(async (event) => {
@@ -109,9 +179,26 @@ export default defineEventHandler(async (event) => {
     throw createError({ statusCode: 400, statusMessage: 'Missing field: hours' })
 
   const formattedDate = formatDateGerman(body.date)
+  const destination = body.destinationLabel || body.destination || body.destinationCode
+  const scanSource = buildSpamScanSource({ ...body, destination }, EMAIL_TO)
+  const spamScanner = await getSpamScanner()
+  if (spamScanner) {
+    const spamResult = await spamScanner.scan(scanSource).catch((error: unknown) => {
+      consola.error('[SpamScanner] Failed to scan submission', error)
+      throw createError({ statusCode: 500, statusMessage: 'Spam-Prüfung fehlgeschlagen' })
+    })
+    consola.info('[SpamScanner] Scan finished', { isSpam: spamResult.isSpam, message: spamResult.message })
+    if (spamResult.isSpam)
+      throw createError({ statusCode: 400, statusMessage: 'Ihre Anfrage wurde als Spam erkannt.' })
+  }
+  else if (heuristicSpamCheck(body)) {
+    consola.warn('[SpamScanner] Heuristic flagged submission as spam')
+    throw createError({ statusCode: 400, statusMessage: 'Ihre Anfrage wurde als Spam erkannt.' })
+  }
+
   const html = buildEmailHtml({
     ...body,
-    destination: body.destinationLabel || body.destination || body.destinationCode,
+    destination,
   })
   const subject = `FUNKMIETWAGEN // BESTELLUNG // ${formattedDate || body.date || ''}${body.time ? ` // ${body.time}` : ''}`.trim()
   consola.info('[Resend] Sending email', { to: EMAIL_TO, subject })
