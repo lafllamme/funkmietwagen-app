@@ -7,6 +7,7 @@ import { useRoute } from '#imports'
 import { unrefElement } from '@vueuse/core'
 import { AnimatePresence, Motion } from 'motion-v'
 import { computed, nextTick, ref, watch } from 'vue'
+import { getLocalTimeZone, now, parseTime, today } from '@internationalized/date'
 import BookingTypeSwitch from '@/components/form/BookingTypeSwitch.vue'
 import DatePickerField from '@/components/form/DatePickerField.vue'
 import DestinationSelect from '@/components/form/DestinationSelect.vue'
@@ -60,6 +61,11 @@ const phoneInputRef = ref<HTMLInputElement | null>(null)
 const emailInputRef = ref<HTMLInputElement | null>(null)
 const pickupInputRef = ref<HTMLInputElement | null>(null)
 
+if (!dateValue.value)
+  dateValue.value = today(getLocalTimeZone())
+if (!timeValue.value)
+  timeValue.value = parseTime('08:00')
+
 const vehicleQueryId = computed(() => {
   const value = route.query.vehicle
   return Array.isArray(value) ? value[0] : value ?? ''
@@ -96,6 +102,10 @@ watch(
 watch(bookingType, (val) => {
   if (val === 'hourly')
     destinationValue.value = null
+})
+
+watch(() => route.fullPath, () => {
+  lastScrolledVehicle.value = null
 })
 
 const { errors, validate } = useFormValidation()
