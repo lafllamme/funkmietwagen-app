@@ -7,6 +7,8 @@ export interface TimeFieldProps {
   placeholder?: string
   id?: string
   locale?: string
+  preferNative?: boolean
+  error?: boolean
 }
 
 export const timeFieldDefaults: Required<Omit<TimeFieldProps, 'modelValue'>> = {
@@ -15,4 +17,6 @@ export const timeFieldDefaults: Required<Omit<TimeFieldProps, 'modelValue'>> = {
   placeholder: 'HH:MM',
   id: 'time',
   locale: 'de',
+  preferNative: true,
+  error: false,
 }
