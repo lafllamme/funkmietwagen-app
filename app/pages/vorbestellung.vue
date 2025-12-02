@@ -4,16 +4,16 @@ import type { DestinationOption } from '@/components/form/DestinationSelect.mode
 import type { VehicleOption } from '@/components/form/VehicleRadioGroup.model'
 import type { FieldKey } from '@/composables/useFormValidation'
 import { useRoute } from '#imports'
+import { getLocalTimeZone, parseTime, today } from '@internationalized/date'
 import { unrefElement } from '@vueuse/core'
 import { AnimatePresence, Motion } from 'motion-v'
 import { computed, nextTick, ref, watch } from 'vue'
-import { getLocalTimeZone, now, parseTime, today } from '@internationalized/date'
 import BookingTypeSwitch from '@/components/form/BookingTypeSwitch.vue'
 import DatePickerField from '@/components/form/DatePickerField.vue'
 import DestinationSelect from '@/components/form/DestinationSelect.vue'
+import FriendlyCaptcha from '@/components/form/FriendlyCaptcha.vue'
 import PersonSelector from '@/components/form/PersonSelector.vue'
 import TimeField from '@/components/form/TimeField.vue'
-import FriendlyCaptcha from '@/components/form/FriendlyCaptcha.vue'
 import { vehicleOptions } from '@/components/form/VehicleRadioGroup.model'
 import VehicleRadioGroup from '@/components/form/VehicleRadioGroup.vue'
 import AppFooter from '@/components/layout/Footer.vue'
@@ -597,7 +597,7 @@ async function onSubmit() {
                     <FriendlyCaptcha :site-key="FRIENDLY_CAPTCHA_SITEKEY" />
                   </div>
 
-                  <p v-if="errorMessage" class="text-red-500 text-center text-sm font-light">
+                  <p v-if="errorMessage" class="text-center text-sm color-crimson-11 font-light">
                     {{ errorMessage }}
                   </p>
                   <p class="text-center text-xs text-muted-foreground font-light">

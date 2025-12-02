@@ -19,6 +19,7 @@ interface ContactPayload {
 }
 
 const requiredFields: Array<keyof ContactPayload> = ['name', 'phone', 'email', 'pickup', 'date', 'time', 'passengers', 'vehicle', 'bookingType']
+const FRIENDLY_DEFAULT_URL = 'https://global.frcapi.com/api/v2/captcha/siteverify'
 
 function row(label: string, value?: string) {
   return `
@@ -65,12 +66,37 @@ function buildEmailHtml(data: ContactPayload) {
 export default defineEventHandler(async (event) => {
   const config = useRuntimeConfig()
   const { EMAIL_FROM, EMAIL_TO, API_KEY } = config.resend
+  const friendlyApiUrl = config.friendly?.API_URL || FRIENDLY_DEFAULT_URL
+  const friendlyApiKey = config.friendly?.API_KEY || ''
 
   if (!EMAIL_FROM || !EMAIL_TO || !API_KEY)
     throw createError({ statusCode: 500, statusMessage: 'Resend config missing' })
 
   const body = (await readBody<ContactPayload>(event)) || {}
   consola.info('[Resend] Incoming payload', body)
+
+  const captchaResponse = (body as any)['frc-captcha-response'] as string | undefined
+  if (!captchaResponse)
+    throw createError({ statusCode: 400, statusMessage: 'Captcha missing' })
+
+  if (!friendlyApiKey) {
+    consola.warn('[Captcha] Missing API key; skipping verification')
+  }
+  else {
+    consola.info('[Captcha] verify:start', { hasResponse: !!captchaResponse })
+    const verifyRes = await fetch(friendlyApiUrl, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'X-API-Key': friendlyApiKey,
+      },
+      body: JSON.stringify({ response: captchaResponse }),
+    })
+    const verifyJson = await verifyRes.json() as { success?: boolean, error?: unknown }
+    consola.info('[Captcha] verify:response', { status: verifyRes.status, ok: verifyRes.ok, success: verifyJson?.success })
+    if (!verifyRes.ok || !verifyJson?.success)
+      throw createError({ statusCode: 400, statusMessage: 'Invalid captcha' })
+  }
 
   for (const field of requiredFields) {
     if (!body[field])
