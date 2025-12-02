@@ -157,8 +157,7 @@ watch(destinationInput, (val) => {
           :name="inputName"
           :required="required"
           :placeholder="placeholder"
-          :class="[
-            'h-11 w-full border rounded-sm border-solid bg-transparent px-3 py-2 pr-10 text-base text-foreground font-light outline-none placeholder:color-gray-10 focus-visible:ring-2 focus-visible:ring-inset',
+          class="h-11 w-full border rounded-sm border-solid bg-transparent px-3 py-2 pr-10 text-base text-foreground font-light outline-none placeholder:color-gray-10 focus-visible:ring-2 focus-visible:ring-inset" :class="[
             error ? 'border-red-10 focus-visible:ring-red-10' : 'border-solid focus-visible:ring-pureWhite',
           ]"
           @keydown.enter="handleDestinationEnter"

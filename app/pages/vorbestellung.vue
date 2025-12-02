@@ -2,6 +2,7 @@
 import type { DateValue, Time } from '@internationalized/date'
 import type { DestinationOption } from '@/components/form/DestinationSelect.model'
 import type { VehicleOption } from '@/components/form/VehicleRadioGroup.model'
+import type { FieldKey } from '@/composables/useFormValidation'
 import { useRoute } from '#imports'
 import { AnimatePresence, Motion } from 'motion-v'
 import { computed, nextTick, ref, watch } from 'vue'
@@ -17,9 +18,8 @@ import AppHeader from '@/components/layout/Header.vue'
 import UiInput from '@/components/ui/Input.vue'
 import UiLabel from '@/components/ui/Label.vue'
 import UiTextarea from '@/components/ui/Textarea.vue'
-import { useBookingStore } from '@/stores/useBookingStore'
-import type { FieldKey } from '@/composables/useFormValidation'
 import { useFormValidation } from '@/composables/useFormValidation'
+import { useBookingStore } from '@/stores/useBookingStore'
 
 definePageMeta({ scrollToTop: false })
 

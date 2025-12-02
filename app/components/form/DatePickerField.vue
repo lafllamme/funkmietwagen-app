@@ -23,8 +23,8 @@ import {
   DatePickerTrigger,
 } from 'reka-ui'
 import { computed, nextTick, ref } from 'vue'
-import { datePickerDefaults } from './DatePickerField.model'
 import { useNativePickers } from '@/composables/useNativePickers'
+import { datePickerDefaults } from './DatePickerField.model'
 
 const props = withDefaults(defineProps<DatePickerFieldProps>(), {
   modelValue: null,
@@ -94,18 +94,18 @@ defineExpose({ focusInput })
   <div class="w-full">
     <div
       v-if="useNativePicker"
-      class="relative h-11 w-full flex items-center rounded-sm border border-solid bg-transparent px-3 py-2 text-base text-foreground font-light tracking-widest outline-none focus-within:ring-2 focus-within:ring-offset-0 focus-within:ring-pureWhite"
+      class="relative h-11 w-full flex items-center border rounded-sm border-solid bg-transparent px-3 py-2 text-base text-foreground font-light tracking-widest outline-none focus-within:ring-2 focus-within:ring-offset-0 focus-within:ring-pureWhite"
       :class="errorClass"
     >
       <input
-        ref="nativeInputRef"
         :id="props.id"
+        ref="nativeInputRef"
         v-model="nativeDateValue"
         :name="props.name"
         type="date"
         :min="minDateString"
         :required="props.required"
-        class="w-full bg-transparent outline-none appearance-none text-foreground placeholder:text-muted-foreground/50"
+        class="w-full appearance-none bg-transparent text-foreground outline-none placeholder:text-muted-foreground/50"
       >
     </div>
 

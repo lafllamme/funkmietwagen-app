@@ -4,8 +4,8 @@ import type { TimeFieldProps } from './TimeField.model'
 import { parseTime } from '@internationalized/date'
 import { TimeFieldInput, TimeFieldRoot } from 'reka-ui'
 import { computed, nextTick, ref } from 'vue'
-import { timeFieldDefaults } from './TimeField.model'
 import { useNativePickers } from '@/composables/useNativePickers'
+import { timeFieldDefaults } from './TimeField.model'
 
 const props = withDefaults(defineProps<TimeFieldProps>(), {
   modelValue: null,
@@ -69,25 +69,25 @@ defineExpose({ focusInput })
   <div class="w-full">
     <div
       v-if="useNativePicker"
-      class="relative h-11 w-full flex items-center rounded-sm border border-solid bg-transparent px-3 py-2 text-base text-foreground font-light tracking-widest outline-none focus-within:ring-2 focus-within:ring-offset-0 focus-within:ring-pureWhite"
+      class="relative h-11 w-full flex items-center border rounded-sm border-solid bg-transparent px-3 py-2 text-base text-foreground font-light tracking-widest outline-none focus-within:ring-2 focus-within:ring-offset-0 focus-within:ring-pureWhite"
       :class="errorClass"
     >
       <input
-        ref="nativeInputRef"
         :id="props.id"
+        ref="nativeInputRef"
         v-model="nativeTimeValue"
         :name="props.name"
         type="time"
         step="60"
         :required="props.required"
-        class="w-full bg-transparent outline-none appearance-none text-foreground placeholder:text-muted-foreground/50"
+        class="w-full appearance-none bg-transparent text-foreground outline-none placeholder:text-muted-foreground/50"
       >
     </div>
 
     <TimeFieldRoot
       v-else
-      ref="rootRef"
       :id="props.id"
+      ref="rootRef"
       v-slot="{ segments }"
       v-model="timeValue"
       :locale="props.locale"
