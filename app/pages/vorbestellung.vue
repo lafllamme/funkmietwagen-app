@@ -298,6 +298,7 @@ async function onSubmit() {
                   class="space-y-8"
                   :method="FORM_METHOD"
                   :action="FORM_ACTION"
+                  novalidate
                   @submit.prevent="onSubmit"
                 >
                   <div class="border border-gray-5 border-solid p-8">
