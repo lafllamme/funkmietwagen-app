@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import type { DateValue, Time } from '@internationalized/date'
+import type { WidgetState } from '@friendlycaptcha/sdk'
 import type { DestinationOption } from '@/components/form/DestinationSelect.model'
 import type { VehicleOption } from '@/components/form/VehicleRadioGroup.model'
 import type { FieldKey } from '@/composables/useFormValidation'
@@ -65,7 +66,10 @@ const pickupInputRef = ref<HTMLInputElement | null>(null)
 const FRIENDLY_CAPTCHA_SITEKEY = 'FCMTLRBFEIPI9PDC'
 const FRIENDLY_CAPTCHA_FIELD = 'frc-captcha-response'
 const captchaRef = ref<InstanceType<typeof FriendlyCaptcha> | null>(null)
+const captchaReady = ref(false)
+const captchaResponse = ref('')
 const isDev = import.meta.dev
+const submitDisabled = computed(() => sending.value || !captchaReady.value || !captchaResponse.value)
 
 if (!dateValue.value)
   dateValue.value = today(getLocalTimeZone())
@@ -116,6 +120,28 @@ watch(() => route.fullPath, () => {
 
 const { errors, validate, clearErrors } = useFormValidation()
 
+function onCaptchaReady() {
+  captchaReady.value = true
+}
+
+function onCaptchaCompleted(payload: { response: string }) {
+  captchaReady.value = true
+  captchaResponse.value = payload.response
+  errorMessage.value = ''
+}
+
+function onCaptchaReset() {
+  captchaReady.value = false
+  captchaResponse.value = ''
+}
+
+function onCaptchaState(state: WidgetState) {
+  if (state === 'reset' || state === 'init' || state === 'unactivated' || state === 'expired' || state === 'error') {
+    captchaReady.value = false
+    captchaResponse.value = ''
+  }
+}
+
 async function focusDateField() {
   await nextTick()
   datePickerRef.value?.focusInput?.()
@@ -125,6 +151,8 @@ function applyPreset(preset: 'happy' | 'invalid' | 'spam') {
   clearErrors()
   errorMessage.value = ''
   captchaRef.value?.reset?.()
+  captchaReady.value = false
+  captchaResponse.value = ''
   bookingType.value = 'route'
   hourlyHours.value = 4
 
@@ -228,8 +256,8 @@ async function onSubmit() {
   }
 
   const formData = new FormData(formRef.value)
-  const captchaResponse = formData.get(FRIENDLY_CAPTCHA_FIELD)?.toString() || ''
-  if (!captchaResponse) {
+  const responseValue = captchaResponse.value || formData.get(FRIENDLY_CAPTCHA_FIELD)?.toString() || ''
+  if (!responseValue) {
     errorMessage.value = 'Bitte Captcha bestätigen.'
     scrollToField('vehicle')
     return
@@ -646,15 +674,22 @@ async function onSubmit() {
 
                   <button
                     type="submit"
-                    :disabled="sending"
-                    class="w-full flex items-center justify-center gap-3 border border-foreground bg-foreground px-8 py-5 text-sm text-background font-light tracking-widest uppercase transition-all hover:bg-transparent hover:text-foreground"
+                    :disabled="submitDisabled"
+                    class="w-full flex items-center justify-center gap-3 border border-foreground bg-foreground px-8 py-5 text-sm text-background font-light tracking-widest uppercase transition-all hover:bg-transparent hover:text-foreground disabled:opacity-60 disabled:cursor-not-allowed disabled:hover:bg-foreground disabled:hover:text-background"
                   >
                     <Icon name="lucide:send" class="size-4" />
                     {{ sending ? 'Wird gesendet...' : 'Anfrage senden' }}
                   </button>
 
                   <div class="mt-4">
-                    <FriendlyCaptcha :site-key="FRIENDLY_CAPTCHA_SITEKEY" />
+                    <FriendlyCaptcha
+                      ref="captchaRef"
+                      :site-key="FRIENDLY_CAPTCHA_SITEKEY"
+                      @ready="onCaptchaReady"
+                      @completed="onCaptchaCompleted"
+                      @reset="onCaptchaReset"
+                      @state="onCaptchaState"
+                    />
                   </div>
 
                   <p v-if="errorMessage" class="text-center text-sm color-crimson-11 font-light">
