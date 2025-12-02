@@ -33,6 +33,7 @@
     "animated-unocss": "^0.0.6",
     "eslint": "^9.39.1",
     "eslint-plugin-format": "^1.0.2",
+    "sass-embedded": "^1.93.3",
     "unocss": "^66.5.9",
     "unocss-preset-animations": "^1.3.0",
     "unocss-preset-radix": "^2.8.2"
