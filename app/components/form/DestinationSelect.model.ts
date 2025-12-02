@@ -11,6 +11,7 @@ export interface DestinationSelectProps {
   labelName?: string
   required?: boolean
   placeholder?: string
+  error?: boolean
 }
 
 export const destinationOptions: DestinationOption[] = [
@@ -26,4 +27,5 @@ export const destinationSelectDefaults: Required<Omit<DestinationSelectProps, 'm
   labelName: 'destinationLabel',
   required: false,
   placeholder: 'Eigenes Ziel eingeben oder wählen',
+  error: false,
 }
