@@ -125,16 +125,11 @@ async function onSubmit() {
     }
     console.info('[Form] Submission accepted by Netlify')
     markSubmitted()
-    if (typeof window !== 'undefined') {
-      const scrollTop = () => {
-        window.scrollTo({ top: 0, behavior: 'smooth' })
-        document.documentElement.scrollTop = 0
-        document.body.scrollTop = 0
+    if (import.meta.client) {
+      const scrollToTop = (behavior: ScrollBehavior = 'smooth') => {
+        window.scrollTo({ top: 0, behavior })
       }
-      requestAnimationFrame(() => {
-        scrollTop()
-        setTimeout(scrollTop, 80)
-      })
+      setTimeout(() => scrollToTop('smooth'), 150)
     }
   }
   catch (error) {
