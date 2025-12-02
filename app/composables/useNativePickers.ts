@@ -13,8 +13,7 @@ function detectSupport(): PickerSupport {
     return cachedSupport
 
   if (!import.meta.client) {
-    cachedSupport = { date: false, time: false }
-    return cachedSupport
+    return { date: false, time: false }
   }
 
   const supportsType = (type: 'date' | 'time', value: string) => {
