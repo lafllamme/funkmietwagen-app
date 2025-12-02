@@ -10,6 +10,7 @@ import { AnimatePresence, Motion } from 'motion-v'
 import { computed, nextTick, ref, watch } from 'vue'
 import BookingTypeSwitch from '@/components/form/BookingTypeSwitch.vue'
 import DatePickerField from '@/components/form/DatePickerField.vue'
+import { destinationOptions } from '@/components/form/DestinationSelect.model'
 import DestinationSelect from '@/components/form/DestinationSelect.vue'
 import FriendlyCaptcha from '@/components/form/FriendlyCaptcha.vue'
 import PersonSelector from '@/components/form/PersonSelector.vue'
@@ -63,6 +64,8 @@ const emailInputRef = ref<HTMLInputElement | null>(null)
 const pickupInputRef = ref<HTMLInputElement | null>(null)
 const FRIENDLY_CAPTCHA_SITEKEY = 'FCMTLRBFEIPI9PDC'
 const FRIENDLY_CAPTCHA_FIELD = 'frc-captcha-response'
+const captchaRef = ref<InstanceType<typeof FriendlyCaptcha> | null>(null)
+const isDev = import.meta.dev
 
 if (!dateValue.value)
   dateValue.value = today(getLocalTimeZone())
@@ -111,11 +114,54 @@ watch(() => route.fullPath, () => {
   lastScrolledVehicle.value = null
 })
 
-const { errors, validate } = useFormValidation()
+const { errors, validate, clearErrors } = useFormValidation()
 
 async function focusDateField() {
   await nextTick()
   datePickerRef.value?.focusInput?.()
+}
+
+function applyPreset(preset: 'happy' | 'invalid' | 'spam') {
+  clearErrors()
+  errorMessage.value = ''
+  captchaRef.value?.reset?.()
+  bookingType.value = 'route'
+  hourlyHours.value = 4
+
+  if (preset === 'happy') {
+    nameValue.value = 'Anna Schmidt'
+    phoneValue.value = '+49 221 1234567'
+    emailValue.value = 'anna.schmidt@mail.de'
+    pickupValue.value = 'Neusser Str. 72A, 50737 Köln'
+    destinationValue.value = destinationOptions[0]
+    dateValue.value = today(getLocalTimeZone())
+    timeValue.value = parseTime('09:00')
+    passengers.value = 2
+    vehicleValue.value = vehicleOptions[0]
+    destinationWrapper.value?.scrollIntoView({ behavior: 'smooth', block: 'center' })
+  }
+  else if (preset === 'invalid') {
+    nameValue.value = 'Test User'
+    phoneValue.value = '123'
+    emailValue.value = 'invalid-email'
+    pickupValue.value = ''
+    destinationValue.value = null
+    dateValue.value = today(getLocalTimeZone())
+    timeValue.value = null
+    passengers.value = 1
+    vehicleValue.value = null
+  }
+  else if (preset === 'spam') {
+    nameValue.value = 'Buy Free Cars'
+    phoneValue.value = '+49 221 9876543'
+    emailValue.value = 'offer@buyherefree.com'
+    pickupValue.value = 'buyherefree.com / 1337 Spam Street'
+    destinationValue.value = { code: 'spam-free-cars', label: 'free-cars.buyherefree.com' }
+    dateValue.value = today(getLocalTimeZone())
+    timeValue.value = parseTime('08:00')
+    passengers.value = 3
+    vehicleValue.value = vehicleOptions[1] || vehicleOptions[0]
+  }
 }
 
 function scrollToField(key: FieldKey | null) {
@@ -189,28 +235,6 @@ async function onSubmit() {
     return
   }
 
-  try {
-    console.info('[Form] Captcha verify:start')
-    const captchaVerify = await $fetch<{ success: boolean }>('/api/captcha/verify', {
-      method: 'POST',
-      body: {
-        response: captchaResponse,
-        sitekey: FRIENDLY_CAPTCHA_SITEKEY,
-      },
-    })
-
-    if (!captchaVerify?.success) {
-      errorMessage.value = 'Captcha ungültig. Bitte erneut versuchen.'
-      return
-    }
-    console.info('[Form] Captcha verify:success')
-  }
-  catch (err) {
-    console.error('[Form] Captcha verification failed', err)
-    errorMessage.value = 'Captcha-Prüfung fehlgeschlagen. Bitte erneut versuchen.'
-    return
-  }
-
   sending.value = true
   errorMessage.value = ''
 
@@ -253,6 +277,33 @@ async function onSubmit() {
 <template>
   <div class="min-h-screen flex flex-col bg-background">
     <AppHeader />
+
+    <div
+      v-if="isDev"
+      class="fixed right-4 top-24 z-[60] flex flex-col gap-2"
+    >
+      <button
+        type="button"
+        class="rounded-sm bg-foreground px-3 py-2 text-xs text-black shadow hover:opacity-90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-pureWhite"
+        @click="applyPreset('happy')"
+      >
+        Prefill: Happy
+      </button>
+      <button
+        type="button"
+        class="bg-yellow-500 rounded-sm px-3 py-2 text-xs text-black shadow hover:opacity-90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-pureWhite"
+        @click="applyPreset('invalid')"
+      >
+        Prefill: Invalid
+      </button>
+      <button
+        type="button"
+        class="bg-red-600 rounded-sm px-3 py-2 text-xs text-black shadow hover:opacity-90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-pureWhite"
+        @click="applyPreset('spam')"
+      >
+        Prefill: Spam
+      </button>
+    </div>
 
     <main class="flex-1 py-12 md:py-20">
       <div class="container mx-auto px-4 md:px-6">
