@@ -4,11 +4,11 @@ import type { DateValue, Time } from '@internationalized/date'
 import type { DestinationOption } from '@/components/form/DestinationSelect.model'
 import type { VehicleOption } from '@/components/form/VehicleRadioGroup.model'
 import type { FieldKey } from '@/composables/useFormValidation'
-import { useRoute } from '#imports'
 import { getLocalTimeZone, parseTime, today } from '@internationalized/date'
 import { unrefElement } from '@vueuse/core'
 import { AnimatePresence, Motion } from 'motion-v'
-import { computed, nextTick, ref, watch } from 'vue'
+import { computed, nextTick, onMounted, ref, watch } from 'vue'
+import { useRoute } from '#imports'
 import BookingTypeSwitch from '@/components/form/BookingTypeSwitch.vue'
 import DatePickerField from '@/components/form/DatePickerField.vue'
 import { destinationOptions } from '@/components/form/DestinationSelect.model'
@@ -23,10 +23,10 @@ import AppHeader from '@/components/layout/Header.vue'
 import UiInput from '@/components/ui/Input.vue'
 import UiLabel from '@/components/ui/Label.vue'
 import UiTextarea from '@/components/ui/Textarea.vue'
-import { useFormValidation } from '@/composables/useFormValidation'
 import { useBookingStore } from '@/stores/useBookingStore'
+import { useFormValidation } from '@/composables/useFormValidation'
 
-definePageMeta({ scrollToTop: false })
+definePageMeta({ scrollToTop: true })
 
 const FORM_HEADERS = { 'Content-Type': 'application/json' }
 const FORM_ACTION = '/api/contact'
@@ -101,18 +101,31 @@ watch(vehicleQueryId, (vehicleId) => {
 
 watch(
   () => vehicleValue.value?.id,
-  async (vehicleId) => {
-    if (!process.client || !vehicleId || lastScrolledVehicle.value === vehicleId)
-      return
-    await nextTick()
+  vehicleId => scrollToVehicle(vehicleId),
+)
+
+function scrollToVehicle(vehicleId?: string | null, force = false) {
+  if (!process.client || !vehicleId)
+    return
+  if (!force && lastScrolledVehicle.value === vehicleId)
+    return
+  nextTick(() => {
     requestAnimationFrame(() => {
       setTimeout(() => {
         vehicleSectionRef.value?.scrollIntoView({ behavior: 'smooth', block: 'center' })
+        lastScrolledVehicle.value = vehicleId
       }, 150)
     })
-    lastScrolledVehicle.value = vehicleId
-  },
-)
+  })
+}
+
+onMounted(() => {
+  if (!process.client)
+    return
+  window.scrollTo({ top: 0, behavior: 'auto' })
+  if (vehicleQueryId.value)
+    scrollToVehicle(vehicleQueryId.value, true)
+})
 
 watch(bookingType, (val) => {
   if (val === 'hourly')

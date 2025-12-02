@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { NuxtLink } from '#components'
 import { useElementVisibility } from '@vueuse/core'
 import { Motion } from 'motion-v'
 import { computed, ref } from 'vue'
@@ -49,13 +50,17 @@ const airports = [
               Transparente Preise ohne versteckte Kosten. Qualität, auf die Sie sich verlassen können.
             </p>
             <Motion
-              tag="a"
-              href="/vorbestellung"
-              class="group inline-flex items-center gap-2 text-xs color-pureWhite/60 tracking-widest uppercase transition-colors hover:color-pureWhite"
+              tag="div"
+              class="inline-flex"
               :while-hover="{ x: 4 }"
             >
-              Fahrt arrangieren
-              <Icon name="lucide:arrow-up-right" class="h-3 w-3 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+              <NuxtLink
+                to="/vorbestellung"
+                class="group inline-flex items-center gap-2 text-xs color-pureWhite/60 tracking-widest uppercase transition-colors hover:color-pureWhite"
+              >
+                Verfügbarkeit prüfen
+                <Icon name="lucide:arrow-up-right" class="h-3 w-3 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+              </NuxtLink>
             </Motion>
           </div>
         </Motion>
