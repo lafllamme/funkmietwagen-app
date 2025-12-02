@@ -1,5 +1,5 @@
 import { breakpointsTailwind, useBreakpoints } from '@vueuse/core'
-import { computed } from 'vue'
+import { computed, onMounted, ref, watch } from 'vue'
 
 interface PickerSupport {
   date: boolean
@@ -48,9 +48,22 @@ export function useNativePickers() {
   const breakpoints = useBreakpoints(breakpointsTailwind)
   const isMobile = breakpoints.smaller('md')
 
+  const date = ref(false)
+  const time = ref(false)
+
+  const update = () => {
+    date.value = support.date && isMobile.value
+    time.value = support.time && isMobile.value
+  }
+
+  onMounted(() => {
+    update()
+    watch(isMobile, update)
+  })
+
   return {
-    date: computed(() => support.date && isMobile.value),
-    time: computed(() => support.time && isMobile.value),
+    date: computed(() => date.value),
+    time: computed(() => time.value),
     isMobile,
   }
 }
