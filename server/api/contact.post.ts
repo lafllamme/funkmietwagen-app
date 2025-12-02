@@ -20,8 +20,13 @@ interface ContactPayload {
 
 const requiredFields: Array<keyof ContactPayload> = ['name', 'phone', 'email', 'pickup', 'date', 'time', 'passengers', 'vehicle', 'bookingType']
 const FRIENDLY_DEFAULT_URL = 'https://global.frcapi.com/api/v2/captcha/siteverify'
-let spamScannerPromise: Promise<any | null> | null = null
-let spamScannerInstance: any | null = null
+
+interface SpamScannerInstance {
+  scan: (source: string) => Promise<{ isSpam: boolean, message?: string }>
+}
+
+let spamScannerPromise: Promise<SpamScannerInstance | null> | null = null
+let spamScannerInstance: SpamScannerInstance | null = null
 
 function row(label: string, value?: string) {
   return `
@@ -93,7 +98,7 @@ async function getSpamScanner() {
       try {
         const mod = await import('spamscanner')
         const Scanner = (mod as any).default || mod
-        const scanner = new Scanner({
+        const scanner: SpamScannerInstance = new Scanner({
           supportedLanguages: ['de', 'en'],
           enablePerformanceMetrics: false,
           enableMacroDetection: false,

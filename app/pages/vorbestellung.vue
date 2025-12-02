@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import type { DateValue, Time } from '@internationalized/date'
 import type { WidgetState } from '@friendlycaptcha/sdk'
+import type { DateValue, Time } from '@internationalized/date'
 import type { DestinationOption } from '@/components/form/DestinationSelect.model'
 import type { VehicleOption } from '@/components/form/VehicleRadioGroup.model'
 import type { FieldKey } from '@/composables/useFormValidation'
@@ -71,6 +71,11 @@ const captchaResponse = ref('')
 const isDev = import.meta.dev
 const submitDisabled = computed(() => sending.value || !captchaReady.value || !captchaResponse.value)
 
+function resetCaptchaState() {
+  captchaReady.value = false
+  captchaResponse.value = ''
+}
+
 if (!dateValue.value)
   dateValue.value = today(getLocalTimeZone())
 if (!timeValue.value)
@@ -114,10 +119,6 @@ watch(bookingType, (val) => {
     destinationValue.value = null
 })
 
-watch(() => route.fullPath, () => {
-  lastScrolledVehicle.value = null
-})
-
 const { errors, validate, clearErrors } = useFormValidation()
 
 function onCaptchaReady() {
@@ -131,14 +132,12 @@ function onCaptchaCompleted(payload: { response: string }) {
 }
 
 function onCaptchaReset() {
-  captchaReady.value = false
-  captchaResponse.value = ''
+  resetCaptchaState()
 }
 
 function onCaptchaState(state: WidgetState) {
   if (state === 'reset' || state === 'init' || state === 'unactivated' || state === 'expired' || state === 'error') {
-    captchaReady.value = false
-    captchaResponse.value = ''
+    resetCaptchaState()
   }
 }
 
@@ -151,8 +150,7 @@ function applyPreset(preset: 'happy' | 'invalid' | 'spam') {
   clearErrors()
   errorMessage.value = ''
   captchaRef.value?.reset?.()
-  captchaReady.value = false
-  captchaResponse.value = ''
+  resetCaptchaState()
   bookingType.value = 'route'
   hourlyHours.value = 4
 
@@ -675,7 +673,7 @@ async function onSubmit() {
                   <button
                     type="submit"
                     :disabled="submitDisabled"
-                    class="w-full flex items-center justify-center gap-3 border border-foreground bg-foreground px-8 py-5 text-sm text-background font-light tracking-widest uppercase transition-all hover:bg-transparent hover:text-foreground disabled:opacity-60 disabled:cursor-not-allowed disabled:hover:bg-foreground disabled:hover:text-background"
+                    class="w-full flex items-center justify-center gap-3 border border-foreground bg-foreground px-8 py-5 text-sm text-background font-light tracking-widest uppercase transition-all disabled:cursor-not-allowed hover:bg-transparent hover:text-foreground disabled:opacity-60 disabled:hover:bg-foreground disabled:hover:text-background"
                   >
                     <Icon name="lucide:send" class="size-4" />
                     {{ sending ? 'Wird gesendet...' : 'Anfrage senden' }}

@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import { onBeforeUnmount, onMounted, ref } from 'vue'
-
 import type { FRCWidgetCompleteEvent, FRCWidgetResetEvent, FRCWidgetStateChangeEvent, WidgetState } from '@friendlycaptcha/sdk'
+
+import { onBeforeUnmount, onMounted, ref } from 'vue'
 
 const props = defineProps<{
   siteKey: string
