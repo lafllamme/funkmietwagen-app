@@ -7,6 +7,8 @@ export interface DatePickerFieldProps {
   placeholder?: string
   id?: string
   locale?: string
+  preferNative?: boolean
+  error?: boolean
 }
 
 export const datePickerDefaults: Required<Omit<DatePickerFieldProps, 'modelValue'>> = {
@@ -15,4 +17,6 @@ export const datePickerDefaults: Required<Omit<DatePickerFieldProps, 'modelValue
   placeholder: 'TT.MM.JJJJ',
   id: 'date',
   locale: 'de',
+  preferNative: true,
+  error: false,
 }
