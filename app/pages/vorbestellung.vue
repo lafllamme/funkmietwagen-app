@@ -500,6 +500,19 @@ async function onSubmit() {
                         <BookingTypeSwitch v-model="bookingType" />
                         <input type="hidden" name="bookingType" :value="bookingType">
                       </div>
+                      <div
+                        ref="vehicleSectionRef"
+                        class="space-y-2"
+                        :class="errors.vehicle ? 'ring-2 ring-red-10 rounded-sm ring-offset-12 ring-offset-background' : ''"
+                      >
+                        <UiLabel for="vehicle">
+                          Fahrzeugklasse *
+                        </UiLabel>
+                        <VehicleRadioGroup v-model="vehicleValue" required />
+                        <p v-if="errors.vehicle" class="text-xs text-red-10 font-light">
+                          {{ errors.vehicle }}
+                        </p>
+                      </div>
                       <div class="space-y-2">
                         <UiLabel for="pickup">
                           Abholadresse *
@@ -625,19 +638,6 @@ async function onSubmit() {
                         <PersonSelector v-model="passengers" required />
                       </div>
 
-                      <div
-                        ref="vehicleSectionRef"
-                        class="space-y-2"
-                        :class="errors.vehicle ? 'ring-2 ring-red-10 rounded-sm ring-offset-12 ring-offset-background' : ''"
-                      >
-                        <UiLabel for="vehicle">
-                          Fahrzeugklasse *
-                        </UiLabel>
-                        <VehicleRadioGroup v-model="vehicleValue" required />
-                        <p v-if="errors.vehicle" class="text-xs text-red-10 font-light">
-                          {{ errors.vehicle }}
-                        </p>
-                      </div>
                     </div>
                   </div>
 
