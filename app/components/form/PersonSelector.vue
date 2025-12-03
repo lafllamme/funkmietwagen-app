@@ -54,11 +54,11 @@ function setValue(n: number) {
       <button
         type="button"
         :disabled="value <= props.min"
-        class="touch-manipulation text-xl text-muted-foreground transition-colors hover:text-foreground disabled:opacity-40 disabled:hover:text-muted-foreground"
+        class="touch-manipulation h-10 w-10 flex items-center justify-center rounded-full border border-pureWhite/15 bg-pureWhite/[0.06] text-lg leading-none text-muted-foreground transition-colors hover:border-pureWhite/30 hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-pureWhite disabled:opacity-40 disabled:hover:border-pureWhite/15 disabled:hover:text-muted-foreground"
         aria-label="Weniger Personen"
         @click="dec"
       >
-        −
+        <Icon name="lucide:minus" class="size-4" />
       </button>
       <div class="h-8 w-10 flex items-center justify-center overflow-hidden text-center text-lg tabular-nums">
         <Transition name="slide" mode="out-in">
@@ -70,11 +70,11 @@ function setValue(n: number) {
       <button
         type="button"
         :disabled="value >= props.max"
-        class="touch-manipulation text-xl text-muted-foreground transition-colors hover:text-foreground disabled:opacity-40 disabled:hover:text-muted-foreground"
+        class="touch-manipulation h-10 w-10 flex items-center justify-center rounded-full border border-pureWhite/15 bg-pureWhite/[0.06] text-lg leading-none text-muted-foreground transition-colors hover:border-pureWhite/30 hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-pureWhite disabled:opacity-40 disabled:hover:border-pureWhite/15 disabled:hover:text-muted-foreground"
         aria-label="Mehr Personen"
         @click="inc"
       >
-        +
+        <Icon name="lucide:plus" class="size-4" />
       </button>
     </div>
 
