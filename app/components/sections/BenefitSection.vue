@@ -25,7 +25,7 @@ import { benefits } from './BenefitSection.model'
           <h3 class="text-base color-pureWhite font-light md:text-lg">
             {{ benefit.title }}
           </h3>
-          <p class="hidden translate-y-4 text-xs color-pureWhite/60 font-light leading-relaxed opacity-0 transition-all duration-500 delay-100 md:block group-hover:translate-y-0 group-hover:opacity-100">
+          <p class="hidden translate-y-4 text-xs color-pureWhite/60 font-light leading-relaxed opacity-0 transition-all duration-500 delay-100 md:block group-hover:translate-y-0 group-hover:opacity-100 !<md:group-focus:block">
             {{ benefit.description }}
           </p>
         </div>
