@@ -2,6 +2,7 @@
 import ContactButtons from '@/components/ContactButtons.vue'
 import AppFooter from '@/components/layout/Footer.vue'
 import AppHeader from '@/components/layout/Header.vue'
+import BenefitSection from '@/components/sections/BenefitSection.vue'
 import PriceHero from '@/components/sections/PriceHero.vue'
 import VehicleShowcase from '@/components/sections/VehicleShowcase.vue'
 
@@ -79,33 +80,7 @@ useHead({
       <VehicleShowcase />
       <PriceHero />
 
-      <section class="border-y border-border py-20 md:py-24">
-        <div class="container mx-auto px-4 md:px-6">
-          <p class="mb-12 text-center text-xs text-muted-foreground font-light tracking-[0.4em] uppercase">
-            Warum Funkmietwagen ADE
-          </p>
-          <div class="grid gap-px bg-border lg:grid-cols-4 md:grid-cols-2">
-            <div
-              v-for="(feature, i) in [
-                { icon: 'lucide:clock', title: 'Pünktlichkeit', desc: 'Zuverlässig und immer rechtzeitig' },
-                { icon: 'lucide:car', title: 'Komfort', desc: 'Moderne, gepflegte Fahrzeuge' },
-                { icon: 'lucide:shield', title: 'Sicherheit', desc: 'Erfahrene professionelle Fahrer' },
-                { icon: 'lucide:star', title: 'Exzellenz', desc: 'Erstklassiger persönlicher Service' },
-              ]"
-              :key="i"
-              class="flex flex-col items-center bg-background p-12 text-center"
-            >
-              <Icon :name="feature.icon" class="mb-6 h-8 w-8 text-foreground" />
-              <h3 class="mb-2 text-lg text-foreground font-medium font-serif">
-                {{ feature.title }}
-              </h3>
-              <p class="text-sm text-muted-foreground font-light">
-                {{ feature.desc }}
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
+      <BenefitSection />
 
       <section class="py-20 md:py-24">
         <div class="container mx-auto px-4 md:px-6">
