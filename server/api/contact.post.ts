@@ -1,3 +1,4 @@
+import type { H3Event } from 'h3'
 import { consola } from 'consola'
 import { getHeader, getRequestIP } from 'h3'
 import { Resend } from 'resend'
