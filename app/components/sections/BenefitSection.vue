@@ -12,8 +12,7 @@ import { benefits } from './BenefitSection.model'
       <div
         v-for="(benefit, i) in benefits"
         :key="i"
-        class="group [aspect-ratio:3/4] relative flex flex-col overflow-hidden border border-pureWhite/10 rounded-3xl from-pureWhite/[0.06] to-transparent bg-gradient-to-br p-8 transition-all duration-700 lg:[aspect-ratio:3/4] sm:[aspect-ratio:1/1] lg:h-full lg:max-h-none sm:max-h-[320px] hover:border-pureWhite/25 hover:from-pureWhite/[0.14]"
-        :class="i % 2 === 0 ? 'lg:translate-y-8' : ''"
+        class="group [aspect-ratio:3/4] relative flex flex-col overflow-hidden border border-pureWhite/10 rounded-3xl from-pureWhite/[0.06] to-transparent bg-gradient-to-br p-8 transition-all duration-700 lg:[aspect-ratio:3/4] sm:[aspect-ratio:1/1] lg:h-full lg:max-h-none sm:max-h-[320px] hover:border-pureWhite/25 hover:from-pureWhite/[0.14] lg:hover:-translate-y-8"
       >
         <div class="absolute left-0 top-0 h-px w-full from-transparent via-pureWhite/30 to-transparent bg-gradient-to-r opacity-0 transition-opacity duration-700 group-hover:opacity-100" />
         <Icon
