@@ -6,7 +6,6 @@ import { computed, ref } from 'vue'
 
 const sectionRef = ref<HTMLElement | null>(null)
 const isVisible = useElementVisibility(sectionRef, { threshold: 0.25 })
-
 const heroVisible = computed(() => isVisible.value)
 const cardInitial = { opacity: 0, y: 30 }
 const cardVisible = { opacity: 1, y: 0 }

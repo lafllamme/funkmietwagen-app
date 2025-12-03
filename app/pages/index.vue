@@ -2,8 +2,8 @@
 import ContactButtons from '@/components/ContactButtons.vue'
 import AppFooter from '@/components/layout/Footer.vue'
 import AppHeader from '@/components/layout/Header.vue'
-import VehicleShowcase from '@/components/sections/VehicleShowcase.vue'
 import PriceHero from '@/components/sections/PriceHero.vue'
+import VehicleShowcase from '@/components/sections/VehicleShowcase.vue'
 
 useSeoMeta({
   title: 'Funkmietwagen ADE – Premium Chauffeur Service',

@@ -1,3 +1,4 @@
+import { consola } from 'consola'
 import { defineEventHandler, readBody } from 'h3'
 
 export default defineEventHandler(async (event) => {
@@ -14,7 +15,7 @@ export default defineEventHandler(async (event) => {
     return { success: false, error: { message: 'captcha_api_key_missing' } }
 
   try {
-    console.info('[Captcha] verify:start', { hasResponse: !!response, sitekey })
+    consola.info('[Captcha] verify:start', { hasResponse: !!response, sitekey })
     const verifyRes = await fetch(apiUrl, {
       method: 'POST',
       headers: {
@@ -25,14 +26,14 @@ export default defineEventHandler(async (event) => {
     })
 
     const data = await verifyRes.json() as { success?: boolean, error?: unknown }
-    console.info('[Captcha] verify:response', { status: verifyRes.status, ok: verifyRes.ok, bodySuccess: data?.success })
+    consola.info('[Captcha] verify:response', { status: verifyRes.status, ok: verifyRes.ok, bodySuccess: data?.success })
     if (verifyRes.ok && data?.success)
       return { success: true }
 
     return { success: false, error: data?.error || { message: 'captcha_invalid' } }
   }
   catch (error) {
-    console.error('[Captcha] verification failed', error)
+    consola.error('[Captcha] verification failed', error)
     return { success: false, error: { message: 'captcha_error' } }
   }
 })

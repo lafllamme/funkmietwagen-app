@@ -1,6 +1,6 @@
 import { consola } from 'consola'
+import { getHeader, getRequestIP } from 'h3'
 import { Resend } from 'resend'
-import { getRequestIP, getHeader } from 'h3'
 
 interface ContactPayload {
   name?: string
@@ -23,9 +23,9 @@ const requiredFields: Array<keyof ContactPayload> = ['name', 'phone', 'email', '
 const FRIENDLY_DEFAULT_URL = 'https://global.frcapi.com/api/v2/captcha/siteverify'
 
 function validatePayload(body: ContactPayload) {
-  const urlLike = /(https?:\/\/|www\.)/i
-  const domainLike = /\b[a-z0-9.-]+\.(com|net|org|info|biz|ru|xyz|top|shop|online|site|club|vip|link)\b/i
-  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+  const urlLike = /https?:\/\/|www\./i
+  const domainLike = /\b[a-z0-9.-]+\.(?:com|net|org|info|biz|ru|xyz|top|shop|online|site|club|vip|link)\b/i
+  const emailRegex = /^[^\s@]+@[^\s@][^\s.@]*\.[^\s@]+$/
   const phoneRegex = /^[+()\d\s-]{6,}$/u
   const bookingTypes = new Set(['route', 'hourly'])
 
