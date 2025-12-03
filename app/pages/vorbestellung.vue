@@ -21,6 +21,7 @@ import { vehicleOptions } from '@/components/form/VehicleRadioGroup.model'
 import VehicleRadioGroup from '@/components/form/VehicleRadioGroup.vue'
 import AppFooter from '@/components/layout/Footer.vue'
 import AppHeader from '@/components/layout/Header.vue'
+import NextSteps from '@/components/sections/NextSteps.vue'
 import UiInput from '@/components/ui/Input.vue'
 import UiLabel from '@/components/ui/Label.vue'
 import UiTextarea from '@/components/ui/Textarea.vue'
@@ -412,50 +413,8 @@ async function onSubmit() {
 
             <div class="grid gap-12 lg:grid-cols-3">
               <div class="lg:col-span-1">
-                <div class="sticky top-28 border border-gray-5 border-solid p-8">
-                  <h3 class="mb-6 text-xs text-muted-foreground font-light tracking-[0.3em] uppercase">
-                    Preisübersicht
-                  </h3>
-
-                  <div class="mb-8">
-                    <h4 class="mb-4 text-lg text-foreground font-medium font-serif">
-                      Flughafentransfers
-                    </h4>
-                    <p class="mb-4 text-xs text-muted-foreground">
-                      Ab Köln
-                    </p>
-                    <ul class="text-sm space-y-3">
-                      <li class="flex justify-between font-light">
-                        <span class="text-muted-foreground">Köln/Bonn</span>
-                        <span class="text-foreground">ab 45 €</span>
-                      </li>
-                      <li class="flex justify-between font-light">
-                        <span class="text-muted-foreground">Düsseldorf</span>
-                        <span class="text-foreground">ab 85 €</span>
-                      </li>
-                      <li class="flex justify-between font-light">
-                        <span class="text-muted-foreground">Frankfurt</span>
-                        <span class="text-foreground">ab 149 €</span>
-                      </li>
-                    </ul>
-                  </div>
-
-                  <div class="border-t border-gray-5 border-solid pt-6">
-                    <h4 class="mb-4 text-lg text-foreground font-medium font-serif">
-                      Stundenfahrt
-                    </h4>
-                    <p class="text-sm text-muted-foreground font-light">
-                      ab 55 € / Stunde
-                      <br>
-                      <span class="text-xs">(mind. 2 Stunden)</span>
-                    </p>
-                  </div>
-
-                  <div class="mt-8 border-t border-gray-5 border-solid pt-6">
-                    <p class="text-xs text-muted-foreground font-light">
-                      Die Preise sind Richtwerte. Ihr individuelles Angebot erhalten Sie nach der Anfrage.
-                    </p>
-                  </div>
+                <div class="sticky top-28">
+                  <NextSteps />
                 </div>
               </div>
 
