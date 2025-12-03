@@ -50,14 +50,14 @@ const isActive = (index: number) => index < activeCount.value
           class="relative flex items-start gap-5"
         >
           <div
-            class="relative z-10 flex h-8 w-8 items-center justify-center rounded-full text-xs transition-colors bg-foreground text-background"
+            class="relative z-10 h-8 w-8 flex items-center justify-center rounded-full bg-foreground text-xs text-background transition-colors"
             :class="isActive(index) ? 'md:bg-foreground md:text-background' : 'md:bg-border md:text-muted-foreground'"
           >
             {{ step.step }}
           </div>
           <div class="flex-1 pt-1">
             <h4
-              class="text-sm transition-colors text-foreground"
+              class="text-sm text-foreground transition-colors"
               :class="isActive(index) ? 'md:text-foreground' : 'md:text-muted-foreground'"
             >
               {{ step.title }}
