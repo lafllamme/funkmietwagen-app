@@ -35,8 +35,8 @@ function setValue(n: number) {
 </script>
 
 <template>
-  <div class="flex flex-col gap-3">
-    <div class="flex items-center justify-center gap-1">
+  <div class="flex flex-col items-center gap-4 md:flex-row md:items-center md:justify-between">
+    <div class="flex items-center gap-1 justify-center md:justify-start">
       <button
         v-for="n in props.max"
         :key="n"
@@ -50,7 +50,7 @@ function setValue(n: number) {
         <Icon name="bxs:user" class="size-6" />
       </button>
     </div>
-    <div class="flex items-center justify-center gap-4 text-foreground">
+    <div class="flex items-center gap-4 justify-center text-foreground md:justify-end">
       <button
         type="button"
         :disabled="value <= props.min"
