@@ -12,9 +12,8 @@ import { benefits } from './BenefitSection.model'
       <div
         v-for="(benefit, i) in benefits"
         :key="i"
-        class="group relative h-full flex flex-col overflow-hidden border border-pureWhite/10 rounded-3xl from-pureWhite/[0.06] to-transparent bg-gradient-to-br p-8 transition-all duration-700 hover:border-pureWhite/25 hover:from-pureWhite/[0.14]"
+        class="group [aspect-ratio:3/4] relative flex flex-col overflow-hidden border border-pureWhite/10 rounded-3xl from-pureWhite/[0.06] to-transparent bg-gradient-to-br p-8 transition-all duration-700 lg:[aspect-ratio:3/4] sm:[aspect-ratio:1/1] lg:h-full lg:max-h-none sm:max-h-[320px] hover:border-pureWhite/25 hover:from-pureWhite/[0.14]"
         :class="i % 2 === 0 ? 'lg:translate-y-8' : ''"
-        style="aspect-ratio: 3 / 4"
       >
         <div class="absolute left-0 top-0 h-px w-full from-transparent via-pureWhite/30 to-transparent bg-gradient-to-r opacity-0 transition-opacity duration-700 group-hover:opacity-100" />
         <Icon
@@ -25,7 +24,7 @@ import { benefits } from './BenefitSection.model'
           <h3 class="text-base color-pureWhite font-light md:text-lg">
             {{ benefit.title }}
           </h3>
-          <p class="hidden translate-y-4 text-xs color-pureWhite/60 font-light leading-relaxed opacity-0 transition-all duration-500 delay-100 md:block group-hover:translate-y-0 group-hover:opacity-100 !<md:group-focus:block">
+          <p class="hidden translate-y-4 text-xs color-pureWhite/60 font-light leading-relaxed opacity-0 transition-all duration-500 delay-100 sm:block group-hover:translate-y-0 <lg:text-base group-hover:opacity-100 !<md:group-focus:block">
             {{ benefit.description }}
           </p>
         </div>
