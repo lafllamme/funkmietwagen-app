@@ -44,7 +44,7 @@ const isAutoActive = (index: number) => !userInteracting.value && autoIndex.valu
 
 <template>
   <section class="px-4 py-24 md:px-6">
-    <h2 class="mb-20 text-center text-xs color-pureWhite/40 tracking-[0.4em]">
+    <h2 class="mb-10 text-center text-2xl color-pureWhite font-thin tracking-widest font-serif md:mb-20 md:text-4xl">
       WARUM FUNKMIETWAGEN ADE
     </h2>
     <div class="grid grid-cols-2 mx-auto max-w-7xl gap-4 lg:grid-cols-4 lg:gap-6">

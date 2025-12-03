@@ -100,10 +100,10 @@ const airports = [
                 :animate="heroVisible ? { opacity: 1 } : { opacity: 0 }"
                 :transition="{ delay: 0.35 + i * 0.1 }"
               >
-                <span class="text-sm color-pureWhite/50 tracking-normal transition-colors group-hover:color-pureWhite/70">
+                <span class="text-sm color-pureWhite/50 tracking-normal transition-colors group-hover:color-pureWhite">
                   {{ item.city }}
                 </span>
-                <div class="flex items-baseline gap-2">
+                <div class="flex items-baseline gap-2 transition-transform duration-300 ease-out group-hover:scale-115">
                   <span class="text-xs color-pureWhite/30">ab</span>
                   <span class="text-2xl color-pureWhite font-light tabular-nums">{{ item.price }}</span>
                   <span class="text-sm color-pureWhite/20">€</span>
@@ -131,14 +131,14 @@ const airports = [
               <span class="text-6xl color-pureWhite font-extralight tracking-tighter">55</span>
               <span class="pb-2 text-lg color-pureWhite/40">€ / Stunde</span>
             </div>
-            <p class="text-xs color-pureWhite/30 tracking-wide">
+            <p class="text-xs color-gray-11 tracking-wide">
               Mindestens 2 Stunden · Ideal für Geschäftstermine
             </p>
           </Motion>
 
           <Motion
             tag="p"
-            class="pt-4 text-right text-xs color-pureWhite/20"
+            class="font-geist pt-4 text-right text-xs color-pureWhite/30"
             :initial="{ opacity: 0 }"
             :animate="heroVisible ? { opacity: 1 } : { opacity: 0 }"
             :transition="{ delay: 0.55, duration: 0.8 }"
