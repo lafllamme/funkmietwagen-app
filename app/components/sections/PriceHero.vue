@@ -31,7 +31,7 @@ const airports = [
   >
     <Motion
       tag="div"
-      class="container mx-auto max-w-7xl px-4 py-20 md:py-28"
+      class="container mx-auto px-4 py-20 md:py-28"
       :initial="{ opacity: 0 }"
       :animate="heroVisible ? { opacity: 1 } : { opacity: 0 }"
       :transition="{ duration: 0.8 }"

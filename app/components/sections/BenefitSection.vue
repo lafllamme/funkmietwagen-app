@@ -1,33 +1,33 @@
 <script setup lang="ts">
+import { Icon } from '#components'
 import { useIntervalFn } from '@vueuse/core'
 import { onBeforeUnmount, onMounted, ref } from 'vue'
-import { Icon } from '#components'
 import { benefits } from './BenefitSection.model'
 
 const autoIndex = ref(0)
 const userInteracting = ref(false)
 let resumeTimer: ReturnType<typeof setTimeout> | null = null
 
-function scheduleResume() {
-  if (resumeTimer)
-    clearTimeout(resumeTimer)
-  resumeTimer = setTimeout(() => {
-    userInteracting.value = false
-    resume()
-  }, 5000)
-}
-
-function markInteraction() {
-  userInteracting.value = true
-  pause()
-  scheduleResume()
-}
-
 const { pause, resume } = useIntervalFn(() => {
   if (userInteracting.value)
     return
   autoIndex.value = (autoIndex.value + 1) % benefits.length
 }, 2400, { immediate: false })
+
+function scheduleResume() {
+  if (resumeTimer) {
+    clearTimeout(resumeTimer)
+  }
+  resumeTimer = setTimeout(() => {
+    userInteracting.value = false
+    resume()
+  }, 5000)
+}
+function markInteraction() {
+  userInteracting.value = true
+  pause()
+  scheduleResume()
+}
 
 onMounted(() => {
   resumeTimer = setTimeout(() => resume(), 800)
@@ -47,11 +47,11 @@ const isAutoActive = (index: number) => !userInteracting.value && autoIndex.valu
     <h2 class="mb-20 text-center text-xs color-pureWhite/40 tracking-[0.4em]">
       WARUM FUNKMIETWAGEN ADE
     </h2>
-    <div class="grid grid-cols-2 mx-auto max-w-5xl gap-4 lg:grid-cols-4 lg:gap-6">
+    <div class="grid grid-cols-2 mx-auto max-w-7xl gap-4 lg:grid-cols-4 lg:gap-6">
       <div
         v-for="(benefit, i) in benefits"
         :key="i"
-        class="benefit-card group [aspect-ratio:3/4] relative flex flex-col overflow-hidden border border-pureWhite/10 rounded-3xl from-pureWhite/[0.06] to-transparent bg-gradient-to-br p-8 transition-all duration-700 lg:[aspect-ratio:3/4] sm:[aspect-ratio:1/1] lg:h-full lg:max-h-none sm:max-h-[320px] hover:border-pureWhite/25 hover:from-pureWhite/[0.14] lg:hover:-translate-y-8"
+        class="benefit-card group [aspect-ratio:3/4] relative flex flex-col overflow-hidden border border-pureWhite/10 rounded-3xl from-pureWhite/[0.06] to-transparent bg-gradient-to-br p-8 transition-all duration-700 lg:aspect-3/4 sm:aspect-unset lg:h-full lg:max-h-none sm:min-h-[320px] hover:border-pureWhite/25 hover:from-pureWhite/[0.14] lg:hover:-translate-y-8"
         :class="[isAutoActive(i) ? 'is-auto-active border-pureWhite/25 from-pureWhite/[0.14] lg:-translate-y-8' : '']"
         @pointerenter="markInteraction"
         @pointerdown="markInteraction"
@@ -67,11 +67,11 @@ const isAutoActive = (index: number) => !userInteracting.value && autoIndex.valu
           :class="isAutoActive(i) ? 'scale-110 color-pureWhite/80' : ''"
         />
         <div class="mt-4 md:mt-8 space-y-2">
-          <h3 class="text-base color-pureWhite font-light md:text-lg">
+          <h3 class="text-base color-pureWhite font-light lg:text-2xl md:text-lg">
             {{ benefit.title }}
           </h3>
           <p
-            class="benefit-desc hidden translate-y-4 text-xs color-pureWhite/60 font-light leading-relaxed opacity-0 transition-all duration-500 delay-100 sm:block group-hover:translate-y-0 <lg:text-base group-hover:opacity-100"
+            class="benefit-desc hidden translate-y-4 text-xs color-pureWhite/60 font-light leading-relaxed opacity-0 transition-all duration-500 delay-100 sm:block group-hover:translate-y-0 lg:text-xs sm:text-base xl:text-base group-hover:opacity-100"
             :class="isAutoActive(i) ? 'translate-y-0 opacity-100' : ''"
           >
             {{ benefit.description }}
