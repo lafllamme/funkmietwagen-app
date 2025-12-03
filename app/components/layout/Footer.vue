@@ -1,7 +1,7 @@
 <template>
   <footer class="border-t border-border bg-foreground py-16 text-background">
     <div class="container mx-auto px-4 md:px-6">
-      <div class="grid gap-12 md:grid-cols-3">
+      <div class="grid gap-12 md:grid-cols-4">
         <div>
           <div class="mb-6 flex items-center gap-3">
             <div class="h-11 w-11 flex items-center justify-center border-2 border-pureBlack border-solid">
@@ -50,6 +50,29 @@
             <li>Stundenfahrten</li>
             <li>Geschäftsreisen</li>
             <li>Individuelle Transfers</li>
+          </ul>
+        </div>
+
+        <div>
+          <h3 class="mb-6 text-xs text-background/60 font-light tracking-[0.3em] uppercase">
+            Rechtliches
+          </h3>
+          <ul class="text-sm text-background/70 font-light space-y-3">
+            <li>
+              <NuxtLink to="/impressum" class="transition-colors hover:text-background/90">
+                Impressum
+              </NuxtLink>
+            </li>
+            <li>
+              <NuxtLink to="/datenschutz" class="transition-colors hover:text-background/90">
+                Datenschutz
+              </NuxtLink>
+            </li>
+            <li>
+              <NuxtLink to="/nutzungsbedingungen" class="transition-colors hover:text-background/90">
+                Nutzungsbedingungen
+              </NuxtLink>
+            </li>
           </ul>
         </div>
       </div>
