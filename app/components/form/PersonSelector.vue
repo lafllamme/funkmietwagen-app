@@ -36,7 +36,7 @@ function setValue(n: number) {
 
 <template>
   <div class="flex flex-col items-center gap-4 md:flex-row md:items-center md:justify-between">
-    <div class="flex items-center gap-1 justify-center md:justify-start">
+    <div class="flex items-center justify-center gap-1 md:justify-start">
       <button
         v-for="n in props.max"
         :key="n"
@@ -50,15 +50,15 @@ function setValue(n: number) {
         <Icon name="bxs:user" class="size-6" />
       </button>
     </div>
-    <div class="flex items-center gap-4 justify-center text-foreground md:justify-end">
+    <div class="flex items-center justify-center gap-4 text-foreground md:justify-end">
       <button
         type="button"
         :disabled="value <= props.min"
-        class="touch-manipulation h-10 w-10 flex items-center justify-center rounded-full border border-pureWhite/15 bg-pureWhite/[0.06] text-lg leading-none text-muted-foreground transition-colors hover:border-pureWhite/30 hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-pureWhite disabled:opacity-40 disabled:hover:border-pureWhite/15 disabled:hover:text-muted-foreground"
+        class="group size-10 flex touch-manipulation items-center justify-center border border-pureWhite/15 rounded-full bg-pureWhite/[0.06] text-lg text-muted-foreground leading-none transition-colors focus:border-pureWhite/80 hover:border-pureWhite/30 hover:text-foreground disabled:opacity-40 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-pureWhite disabled:hover:border-pureWhite/15 disabled:hover:text-muted-foreground"
         aria-label="Weniger Personen"
         @click="dec"
       >
-        <Icon name="lucide:minus" class="size-4" />
+        <Icon name="lucide:minus" class="size-4 group-focus:color-pureWhite" />
       </button>
       <div class="h-8 w-10 flex items-center justify-center overflow-hidden text-center text-lg tabular-nums">
         <Transition name="slide" mode="out-in">
@@ -70,11 +70,11 @@ function setValue(n: number) {
       <button
         type="button"
         :disabled="value >= props.max"
-        class="touch-manipulation h-10 w-10 flex items-center justify-center rounded-full border border-pureWhite/15 bg-pureWhite/[0.06] text-lg leading-none text-muted-foreground transition-colors hover:border-pureWhite/30 hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-pureWhite disabled:opacity-40 disabled:hover:border-pureWhite/15 disabled:hover:text-muted-foreground"
+        class="group size-10 flex touch-manipulation items-center justify-center border border-pureWhite/15 rounded-full bg-pureWhite/[0.06] text-lg text-muted-foreground leading-none transition-colors focus:border-pureWhite/80 hover:border-pureWhite/30 hover:text-foreground disabled:opacity-40 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-pureWhite disabled:hover:border-pureWhite/15 disabled:hover:text-muted-foreground"
         aria-label="Mehr Personen"
         @click="inc"
       >
-        <Icon name="lucide:plus" class="size-4" />
+        <Icon name="lucide:plus" class="size-4 group-focus:color-pureWhite" />
       </button>
     </div>
 
