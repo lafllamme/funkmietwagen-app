@@ -13,12 +13,12 @@ export const steps: StepItem[] = [
   {
     step: '2',
     title: 'Angebot erhalten',
-    description: 'In der Regel innerhalb von 2 Stunden.',
+    description: 'Direkte Preisermittlung für Ihre Wunschfahrt.',
   },
   {
     step: '3',
     title: 'Buchung bestätigen',
-    description: 'Einfach per E-Mail bestätigen.',
+    description: 'Einfach per E-Mail oder telefonisch bestätigen.',
   },
   {
     step: '4',

@@ -70,10 +70,10 @@ const isActive = (index: number) => index < activeCount.value
       </div>
     </div>
 
-    <div class="mt-8 border-t border-border pt-6">
+    <div class="mt-8 border-t border-gray-12 border-solid pt-6">
       <div class="flex items-center justify-between text-[11px]">
         <span class="text-muted-foreground">Durchschnittliche Antwortzeit</span>
-        <span class="text-foreground">1 Std. 30 Min.</span>
+        <span class="text-foreground">2 Std.</span>
       </div>
     </div>
   </div>
