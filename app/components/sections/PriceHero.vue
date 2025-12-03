@@ -2,11 +2,17 @@
 import { NuxtLink } from '#components'
 import { useElementVisibility } from '@vueuse/core'
 import { Motion } from 'motion-v'
-import { computed, ref } from 'vue'
+import { computed, onMounted, ref } from 'vue'
 
 const sectionRef = ref<HTMLElement | null>(null)
 const isVisible = useElementVisibility(sectionRef, { threshold: 0.25 })
-const heroVisible = computed(() => isVisible.value)
+const mounted = ref(false)
+
+onMounted(() => {
+  mounted.value = true
+})
+
+const heroVisible = computed(() => mounted.value && isVisible.value)
 const cardInitial = { opacity: 0, y: 30 }
 const cardVisible = { opacity: 1, y: 0 }
 
@@ -18,7 +24,11 @@ const airports = [
 </script>
 
 <template>
-  <section ref="sectionRef" class="bg-black border-y border-border">
+  <section
+    ref="sectionRef"
+    class="bg-black border-y border-border transition-opacity duration-500"
+    :class="heroVisible ? 'opacity-100' : 'opacity-0'"
+  >
     <Motion
       tag="div"
       class="container mx-auto max-w-7xl px-4 py-20 md:py-28"
