@@ -1,0 +1,73 @@
+<script setup lang="ts">
+import AppFooter from '@/components/layout/Footer.vue'
+import AppHeader from '@/components/layout/Header.vue'
+</script>
+
+<template>
+  <div class="min-h-screen flex flex-col bg-background text-foreground">
+    <AppHeader />
+    <main class="flex-1 py-12 md:py-20">
+      <div class="container mx-auto px-4 md:px-6 max-w-4xl space-y-10">
+        <div class="space-y-3">
+          <p class="text-xs text-muted-foreground tracking-[0.35em] uppercase">
+            Rechtliches
+          </p>
+          <h1 class="text-3xl md:text-4xl font-serif font-medium">
+            Impressum
+          </h1>
+        </div>
+
+        <div class="space-y-6 text-sm leading-relaxed text-muted-foreground">
+          <section class="space-y-1">
+            <h2 class="text-foreground font-medium">Angaben gemäß § 5 TMG</h2>
+            <p>Funkmietwagen ADE<br>Musterstraße 1<br>50667 Köln<br>Deutschland</p>
+          </section>
+
+          <section class="space-y-1">
+            <h2 class="text-foreground font-medium">Kontakt</h2>
+            <p>
+              Telefon: +49 123 456789<br>
+              E-Mail: info@funkmietwagen-ade.de
+            </p>
+          </section>
+
+          <section class="space-y-1">
+            <h2 class="text-foreground font-medium">Vertreten durch</h2>
+            <p>Alexander Demir</p>
+          </section>
+
+          <section class="space-y-1">
+            <h2 class="text-foreground font-medium">Umsatzsteuer-ID</h2>
+            <p>USt-IdNr.: DE999999999</p>
+          </section>
+
+          <section class="space-y-2">
+            <h2 class="text-foreground font-medium">Berufshaftpflichtversicherung</h2>
+            <p>
+              AXA Versicherung AG<br>
+              Colonia-Allee 10-20<br>
+              51067 Köln<br>
+              Räumlicher Geltungsbereich: Deutschland
+            </p>
+          </section>
+
+          <section class="space-y-2">
+            <h2 class="text-foreground font-medium">EU-Streitschlichtung</h2>
+            <p>
+              Die Europäische Kommission stellt eine Plattform zur Online-Streitbeilegung (OS) bereit:
+              <a class="underline hover:text-foreground" href="https://ec.europa.eu/consumers/odr" target="_blank" rel="noopener">https://ec.europa.eu/consumers/odr</a>.
+            </p>
+          </section>
+
+          <section class="space-y-2">
+            <h2 class="text-foreground font-medium">Verbraucherstreitbeilegung</h2>
+            <p>
+              Wir sind nicht verpflichtet und nicht bereit, an Streitbeilegungsverfahren vor einer Verbraucherschlichtungsstelle teilzunehmen.
+            </p>
+          </section>
+        </div>
+      </div>
+    </main>
+    <AppFooter />
+  </div>
+</template>
