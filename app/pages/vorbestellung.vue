@@ -7,6 +7,7 @@ import type { FieldKey } from '@/composables/useFormValidation'
 import { getLocalTimeZone, parseTime, today } from '@internationalized/date'
 import { unrefElement } from '@vueuse/core'
 import { AnimatePresence, Motion } from 'motion-v'
+import { consola } from 'consola'
 import { computed, nextTick, onMounted, ref, watch } from 'vue'
 import { useRoute } from '#imports'
 import BookingTypeSwitch from '@/components/form/BookingTypeSwitch.vue'
@@ -74,6 +75,11 @@ const submitDisabled = computed(() => sending.value || !captchaReady.value || !c
 function resetCaptchaState() {
   captchaReady.value = false
   captchaResponse.value = ''
+}
+
+function resetCaptcha() {
+  resetCaptchaState()
+  captchaRef.value?.reset?.()
 }
 
 if (!dateValue.value)
@@ -262,7 +268,7 @@ async function onSubmit() {
   }
 
   if (!formRef.value) {
-    console.warn('[Form] No form ref found, aborting submit')
+    consola.warn('[Form] No form ref found, aborting submit')
     return
   }
 
@@ -279,7 +285,7 @@ async function onSubmit() {
 
   // Prepare form data and send it
   const bodyContent = toFormBody(formRef.value)
-  console.info('[Form] Sending form data to', FORM_ACTION, 'payload:', bodyContent)
+  consola.info('[Form] Sending form data to', FORM_ACTION, 'payload:', bodyContent)
 
   try {
     const response = await fetch(FORM_ACTION, {
@@ -287,7 +293,7 @@ async function onSubmit() {
       headers: FORM_HEADERS,
       body: bodyContent,
     })
-    console.info('[Form] Received response', response.status, response.statusText)
+    consola.info('[Form] Received response', response.status, response.statusText)
 
     if (!response.ok) {
       const rawText = await response.text().catch(() => '')
@@ -299,9 +305,12 @@ async function onSubmit() {
       }
       catch { }
 
+      if (response.status === 400 && typeof serverMessage === 'string' && serverMessage.toLowerCase().includes('captcha'))
+        resetCaptcha()
+
       throw new Error(serverMessage || `Anfrage fehlgeschlagen (${response.status})`)
     }
-    console.info('[Form] Submission accepted by Netlify')
+    consola.info('[Form] Submission accepted by Netlify')
     markSubmitted()
     if (import.meta.client) {
       const scrollToTop = (behavior: ScrollBehavior = 'smooth') => {
@@ -311,12 +320,14 @@ async function onSubmit() {
     }
   }
   catch (error) {
-    console.error(error)
+    consola.error(error)
     const serverMessage = error instanceof Error ? error.message : ''
     errorMessage.value = serverMessage || ERROR_MESSAGE
+    if (serverMessage.toLowerCase().includes('captcha'))
+      resetCaptcha()
   }
   finally {
-    console.info('[Form] Submit finished')
+    consola.info('[Form] Submit finished')
     sending.value = false
   }
 }

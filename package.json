@@ -23,7 +23,7 @@
     "pinia": "^2.2.6",
     "reka-ui": "^2.6.0",
     "resend": "^6.5.2",
-    "spamscanner": "^5.1.5"
+    "consola": "^3.2.3"
   },
   "devDependencies": {
     "@antfu/eslint-config": "^6.2.0",

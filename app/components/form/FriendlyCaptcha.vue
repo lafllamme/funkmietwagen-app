@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type { FRCWidgetCompleteEvent, FRCWidgetResetEvent, FRCWidgetStateChangeEvent, WidgetState } from '@friendlycaptcha/sdk'
-
+import { consola } from 'consola'
 import { onBeforeUnmount, onMounted, ref } from 'vue'
 
 const props = defineProps<{
@@ -70,12 +70,12 @@ onMounted(async () => {
         widget?.destroy?.()
       }
       catch (error) {
-        console.warn('[FriendlyCaptcha] destroy failed', error)
+        consola.warn('[FriendlyCaptcha] destroy failed', error)
       }
     })
   }
   catch (error) {
-    console.error('[FriendlyCaptcha] load/init failed', error)
+    consola.error('[FriendlyCaptcha] load/init failed', error)
   }
 })
 
@@ -84,7 +84,7 @@ function reset() {
     widget?.reset?.()
   }
   catch (error) {
-    console.warn('[FriendlyCaptcha] reset failed', error)
+    consola.warn('[FriendlyCaptcha] reset failed', error)
   }
 }
 

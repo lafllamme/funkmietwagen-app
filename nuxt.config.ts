@@ -22,5 +22,9 @@ export default defineNuxtConfig({
       API_URL: '',
       API_KEY: '',
     },
+    akismet: {
+      API_KEY: '',
+      BLOG_URL: '',
+    },
   },
 })

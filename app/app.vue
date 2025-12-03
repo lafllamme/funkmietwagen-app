@@ -1,3 +1,9 @@
+<script setup lang="ts">
+import { consola } from 'consola'
+
+consola.level = import.meta.dev ? 0 : 0
+</script>
+
 <template>
   <div>
     <NuxtLoadingIndicator />
