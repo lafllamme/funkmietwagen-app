@@ -6,6 +6,9 @@ export default defineNuxtConfig({
   pages: true,
   routeRules: {
     '/vorbestellung': { prerender: true },
+    '/impressum': { prerender: true },
+    '/datenschutz': { prerender: true },
+    '/nutzungsbedingungen': { prerender: true },
   },
   // Global CSS
   css: [
