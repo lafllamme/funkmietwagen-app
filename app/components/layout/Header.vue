@@ -28,7 +28,6 @@ function navClass(path: string, extra = '') {
 
       <nav class="flex items-center gap-3 md:gap-4">
         <NuxtLink
-          class="hidden md:inline-flex"
           to="/"
           :class="navClass('/')"
         >
