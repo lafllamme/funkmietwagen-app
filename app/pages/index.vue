@@ -45,8 +45,8 @@ useHead({
 
 const heroImages = [
   'https://wallpaper.forfun.com/fetch/2c/2c78aac5d291ad657d766200ffb4217e.jpeg',
-  'https://images.cdn.autocar.co.uk/sites/autocar.co.uk/files/mercedes-benz-v-class-2025-review-front-static-0059.jpg',
-  'https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1800&q=80&sat=-25',
+  'https://i.imgur.com/trCAL0C.jpeg',
+  'https://i.imgur.com/ZF11z4H.jpeg',
 ]
 </script>
 
