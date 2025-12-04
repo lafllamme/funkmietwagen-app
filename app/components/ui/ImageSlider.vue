@@ -17,19 +17,19 @@ const props = defineProps({
   },
   imageClass: {
     type: String,
-    default: 'h-full w-full object-cover select-none pointer-events-none',
+    default: 'slider-img h-full w-full object-cover select-none pointer-events-none',
   },
   enterFromClass: {
     type: String,
-    default: 'opacity-0 blur-[10px] brightness-[0.55] scale-[1.03]',
+    default: 'slider-enter-from',
   },
   enterActiveClass: {
     type: String,
-    default: 'transition-[opacity,filter,transform] duration-1200 ease-[cubic-bezier(0.33,1,0.68,1)]',
+    default: 'slider-enter-active',
   },
   leaveActiveClass: {
     type: String,
-    default: 'transition-[opacity,filter,transform] duration-1100 ease-[cubic-bezier(0.4,0,0.2,1)]',
+    default: 'slider-leave-active',
   },
   autoplay: {
     type: [Boolean, Number, String],
@@ -170,18 +170,14 @@ function unlockViewport() {
     resume()
 }
 
-const transitionProps = computed(() => {
-  const bind: Record<string, any> = {
-    enterActiveClass: props.enterActiveClass,
-    leaveActiveClass: props.leaveActiveClass,
-    enterFromClass: props.enterFromClass,
-    leaveToClass: 'opacity-0 blur-[12px] brightness-[0.5] scale-[0.98]',
-    onBeforeLeave: lockViewport,
-    onAfterEnter: unlockViewport,
-  }
-
-  return bind
-})
+const transitionProps = computed(() => ({
+  enterActiveClass: props.enterActiveClass,
+  leaveActiveClass: props.leaveActiveClass,
+  enterFromClass: props.enterFromClass,
+  leaveToClass: 'slider-leave-to',
+  onBeforeLeave: lockViewport,
+  onAfterEnter: unlockViewport,
+}))
 </script>
 
 <template>
@@ -226,3 +222,49 @@ const transitionProps = computed(() => {
     </div>
   </div>
 </template>
+
+<style scoped>
+.slider-leave-to {
+  opacity: 0;
+  filter: blur(12px) brightness(0.18);
+  transform: scale(0.985);
+  mask-image:
+    radial-gradient(circle at 20% 30%, black 0%, black 32%, transparent 58%),
+    radial-gradient(circle at 75% 20%, black 0%, black 28%, transparent 55%),
+    radial-gradient(circle at 40% 70%, black 0%, black 30%, transparent 60%),
+    radial-gradient(circle at 85% 70%, black 0%, black 26%, transparent 52%);
+  -webkit-mask-image:
+    radial-gradient(circle at 20% 30%, black 0%, black 32%, transparent 58%),
+    radial-gradient(circle at 75% 20%, black 0%, black 28%, transparent 55%),
+    radial-gradient(circle at 40% 70%, black 0%, black 30%, transparent 60%),
+    radial-gradient(circle at 85% 70%, black 0%, black 26%, transparent 52%);
+  mask-repeat: no-repeat;
+  -webkit-mask-repeat: no-repeat;
+  mask-size: 140% 140%;
+  -webkit-mask-size: 140% 140%;
+}
+
+.slider-enter-from {
+  opacity: 0;
+  filter: blur(18px) brightness(0.25);
+  transform: scale(1.035);
+}
+
+.slider-enter-active {
+  transition:
+    opacity 1200ms cubic-bezier(0.33, 1, 0.68, 1) 180ms,
+    filter 1200ms cubic-bezier(0.33, 1, 0.68, 1) 180ms,
+    transform 1200ms cubic-bezier(0.33, 1, 0.68, 1) 180ms;
+}
+
+.slider-leave-active {
+  transition:
+    opacity 1400ms cubic-bezier(0.4, 0, 0.2, 1),
+    filter 1400ms cubic-bezier(0.4, 0, 0.2, 1),
+    transform 1400ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.slider-img {
+  will-change: opacity, filter, transform;
+}
+</style>

@@ -62,8 +62,8 @@ const heroImages = [
               :images="heroImages"
               autoplay="6500"
               direction="horizontal"
-              overlay-class="bg-gradient-to-b from-black/75 via-black/65 to-black/80 backdrop-blur-sm"
-              image-class="h-full w-full object-cover brightness-[0.75] blur-[0.5px]"
+              overlay-class="bg-gradient-to-b from-black/78 via-black/68 to-black/82"
+              image-class="h-full w-full object-cover brightness-[0.75]"
               class="min-h-[70vh]"
             >
               <div class="relative z-10 h-full flex flex-col items-center justify-center px-6 py-16 lg:px-16 md:px-12">
@@ -74,7 +74,7 @@ const heroImages = [
                   <h1 class="text-4xl text-foreground font-medium tracking-tight font-serif lg:text-6xl md:text-5xl">
                     Exzellenz in Bewegung
                   </h1>
-                  <p class="mx-auto max-w-2xl text-lg text-muted-foreground font-light leading-relaxed">
+                  <p class="mx-auto max-w-2xl text-lg color-gray-8 font-light leading-relaxed">
                     Erleben Sie erstklassigen Transferservice mit höchstem Komfort und absoluter Zuverlässigkeit.
                     Kontaktieren Sie uns für Ihre Fahrt.
                   </p>
