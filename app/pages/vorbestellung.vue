@@ -54,6 +54,8 @@ const dateValue = ref<DateValue | null>(null)
 const timeValue = ref<Time | null>(null)
 const passengers = ref(1)
 const vehicleValue = ref<VehicleOption | null>(null)
+const passengerMax = computed(() => vehicleValue.value?.capacity ?? 7)
+let passengerClampTimer: ReturnType<typeof setInterval> | null = null
 const bookingType = ref<'route' | 'hourly'>('route')
 const hourlyHours = ref(4)
 const route = useRoute()
@@ -108,10 +110,23 @@ watch(vehicleQueryId, (vehicleId) => {
   vehicleValue.value = match
 }, { immediate: true })
 
-watch(
-  () => vehicleValue.value?.id,
-  vehicleId => scrollToVehicle(vehicleId),
-)
+watch(passengerMax, (max) => {
+  if (passengers.value <= max)
+    return
+
+  if (passengerClampTimer)
+    clearInterval(passengerClampTimer)
+
+  // Smoothly step down to the new max for a softer transition
+  passengerClampTimer = setInterval(() => {
+    if (passengers.value <= max) {
+      clearInterval(passengerClampTimer!)
+      passengerClampTimer = null
+      return
+    }
+    passengers.value = Math.max(max, passengers.value - 1)
+  }, 80)
+})
 
 function scrollToVehicle(vehicleId?: string | null, force = false) {
   if (!process.client || !vehicleId)
@@ -625,7 +640,7 @@ async function onSubmit() {
                         <UiLabel for="passengers">
                           Passagiere *
                         </UiLabel>
-                        <PersonSelector v-model="passengers" required />
+                        <PersonSelector v-model="passengers" :max="passengerMax" required />
                       </div>
                     </div>
                   </div>

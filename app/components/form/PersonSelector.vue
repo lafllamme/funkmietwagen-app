@@ -36,7 +36,11 @@ function setValue(n: number) {
 
 <template>
   <div class="flex flex-col items-center gap-4 md:flex-row md:items-center md:justify-between">
-    <div class="flex items-center justify-center gap-1 md:justify-start">
+    <TransitionGroup
+      name="person-icon"
+      tag="div"
+      class="flex items-center justify-center gap-1 md:justify-start"
+    >
       <button
         v-for="n in props.max"
         :key="n"
@@ -49,7 +53,7 @@ function setValue(n: number) {
       >
         <Icon name="bxs:user" class="size-6" />
       </button>
-    </div>
+    </TransitionGroup>
     <div class="flex items-center justify-center gap-4 text-foreground md:justify-end">
       <button
         type="button"
@@ -94,5 +98,18 @@ function setValue(n: number) {
 .slide-leave-to {
   opacity: 0;
   transform: translateY(10px);
+}
+
+.person-icon-enter-active,
+.person-icon-leave-active {
+  transition: all 0.2s ease;
+}
+.person-icon-enter-from {
+  opacity: 0;
+  transform: translateY(-6px) scale(0.9);
+}
+.person-icon-leave-to {
+  opacity: 0;
+  transform: translateY(6px) scale(0.9);
 }
 </style>
