@@ -10,14 +10,15 @@ import { unrefElement } from '@vueuse/core'
 import { consola } from 'consola'
 import { AnimatePresence, Motion } from 'motion-v'
 import { computed, nextTick, onMounted, ref, watch } from 'vue'
+import SuccessOverlay from '@/components/feedback/SuccessOverlay.vue'
 import BookingTypeSwitch from '@/components/form/BookingTypeSwitch.vue'
 import DatePickerField from '@/components/form/DatePickerField.vue'
 import { destinationOptions } from '@/components/form/DestinationSelect.model'
 import DestinationSelect from '@/components/form/DestinationSelect.vue'
 import FriendlyCaptcha from '@/components/form/FriendlyCaptcha.vue'
 import PersonSelector from '@/components/form/PersonSelector.vue'
-import TimeField from '@/components/form/TimeField.vue'
 import { defaultTimeValue } from '@/components/form/TimeField.model'
+import TimeField from '@/components/form/TimeField.vue'
 import { vehicleOptions } from '@/components/form/VehicleRadioGroup.model'
 import VehicleRadioGroup from '@/components/form/VehicleRadioGroup.vue'
 import AppFooter from '@/components/layout/Footer.vue'
@@ -345,21 +346,21 @@ async function onSubmit() {
     >
       <button
         type="button"
-        class="text-black rounded-sm bg-foreground px-3 py-2 text-xs shadow hover:opacity-90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-pureWhite"
+        class="rounded-sm bg-jade-11 px-3 py-2 text-xs color-pureWhite shadow hover:opacity-90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-pureWhite"
         @click="applyPreset('happy')"
       >
         Prefill: Happy
       </button>
       <button
         type="button"
-        class="bg-yellow-500 text-black rounded-sm px-3 py-2 text-xs shadow hover:opacity-90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-pureWhite"
+        class="rounded-sm bg-amber-11 px-3 py-2 text-xs color-pureWhite shadow hover:opacity-90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-pureWhite"
         @click="applyPreset('invalid')"
       >
         Prefill: Invalid
       </button>
       <button
         type="button"
-        class="bg-red-600 text-black rounded-sm px-3 py-2 text-xs shadow hover:opacity-90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-pureWhite"
+        class="rounded-sm bg-crimson-11 px-3 py-2 text-xs color-pureWhite shadow hover:opacity-90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-pureWhite"
         @click="applyPreset('spam')"
       >
         Prefill: Spam
@@ -368,24 +369,14 @@ async function onSubmit() {
 
     <main class="flex-1 py-12 md:py-20">
       <div class="container mx-auto px-4 md:px-6">
-        <div v-if="submitted" class="min-h-[60vh] flex flex-col items-center justify-center py-24 text-center">
-          <div class="mb-8 flex justify-center">
-            <div class="h-20 w-20 flex items-center justify-center border-2 border-gray-5 border-solid">
-              <Icon name="lucide:check" class="h-8 w-8 text-foreground" />
-            </div>
-          </div>
-          <h2 class="mb-4 text-3xl text-foreground font-medium font-serif">
-            Anfrage erhalten
-          </h2>
-          <p class="mb-8 text-muted-foreground font-light">
-            Vielen Dank für Ihre Anfrage. Wir werden uns schnellstmöglich bei Ihnen melden.
-          </p>
-          <NuxtLink
-            to="/"
-            class="inline-flex items-center justify-center border border-gray-5 border-solid bg-foreground px-8 py-4 text-sm text-background font-light tracking-widest uppercase transition-all hover:bg-transparent hover:text-foreground"
-          >
-            Zur Startseite
-          </NuxtLink>
+        <div v-if="submitted" class="py-24">
+          <SuccessOverlay
+            label="Bestätigung"
+            title="Vielen Dank"
+            description="Ihre Anfrage wurde erfolgreich übermittelt. Wir kontaktieren Sie in Kürze."
+            cta-label="Zur Startseite"
+            cta-to="/"
+          />
         </div>
 
         <div v-else>
@@ -638,7 +629,6 @@ async function onSubmit() {
                         </UiLabel>
                         <PersonSelector v-model="passengers" required />
                       </div>
-
                     </div>
                   </div>
 
