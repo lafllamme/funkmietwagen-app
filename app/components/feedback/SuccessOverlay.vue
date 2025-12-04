@@ -83,7 +83,7 @@ onBeforeUnmount(() => {
     />
 
     <p
-      class="font-geist mb-12 max-w-md color-gray-10 font-medium leading-relaxed tracking-wide transition-all duration-1400"
+      class="font-geist mb-12 max-w-md color-gray-10 font-light leading-relaxed tracking-wide transition-all duration-1400"
       :class="stage >= 3 ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-2'"
       style="transition-delay: 220ms"
     >
