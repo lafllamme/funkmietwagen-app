@@ -87,7 +87,7 @@ const heroImages = [
                       to="/vorbestellung"
                       class="group max-w-xs w-full inline-flex items-center justify-center gap-3 border-b-2 border-pureWhite border-solid pb-2 text-sm text-foreground font-light tracking-widest uppercase transition-all sm:max-w-none sm:w-auto hover:gap-5"
                     >
-                      Fahrt reservieren
+                      Fahrt anfragen
                       <Icon name="lucide:arrow-right" class="h-4 w-4 transition-transform group-hover:translate-x-1" />
                     </NuxtLink>
                   </div>

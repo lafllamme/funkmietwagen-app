@@ -7,34 +7,34 @@
         </div>
         <div class="hidden sm:block">
           <span class="block text-xl text-foreground font-medium tracking-wide font-serif">Funkmietwagen</span>
-          <span class="block text-xs text-muted-foreground tracking-[0.3em] uppercase">ADE</span>
+          <span class="font-geist block text-xs text-muted-foreground tracking-[0.3em] uppercase">ADE</span>
         </div>
       </NuxtLink>
 
       <nav class="flex items-center gap-6 md:gap-8">
         <NuxtLink
           to="/"
-          class="text-sm text-muted-foreground font-light tracking-widest uppercase transition-colors hover:text-foreground"
+          class="font-geist text-sm text-muted-foreground font-light tracking-widest uppercase transition-colors hover:text-foreground"
         >
           Start
         </NuxtLink>
         <NuxtLink
           to="/impressum"
-          class="hidden text-sm text-muted-foreground font-light tracking-widest uppercase transition-colors hover:text-foreground xl:inline"
+          class="font-geist hidden text-sm text-muted-foreground font-light tracking-widest uppercase transition-colors xl:inline hover:text-foreground"
         >
           Impressum
         </NuxtLink>
         <NuxtLink
           to="/datenschutz"
-          class="hidden text-sm text-muted-foreground font-light tracking-widest uppercase transition-colors hover:text-foreground xl:inline"
+          class="font-geist hidden text-sm text-muted-foreground font-light tracking-widest uppercase transition-colors xl:inline hover:text-foreground"
         >
           Datenschutz
         </NuxtLink>
         <NuxtLink
           to="/vorbestellung"
-          class="text-sm text-muted-foreground font-light tracking-widest uppercase transition-colors hover:text-foreground"
+          class="font-geist text-sm text-muted-foreground font-light tracking-widest uppercase transition-colors hover:text-foreground"
         >
-          Anfragen
+          Reservieren
         </NuxtLink>
         <a
           href="tel:+49123456789"
