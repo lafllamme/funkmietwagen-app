@@ -19,10 +19,22 @@
           Start
         </NuxtLink>
         <NuxtLink
+          to="/impressum"
+          class="hidden text-sm text-muted-foreground font-light tracking-widest uppercase transition-colors hover:text-foreground xl:inline"
+        >
+          Impressum
+        </NuxtLink>
+        <NuxtLink
+          to="/datenschutz"
+          class="hidden text-sm text-muted-foreground font-light tracking-widest uppercase transition-colors hover:text-foreground xl:inline"
+        >
+          Datenschutz
+        </NuxtLink>
+        <NuxtLink
           to="/vorbestellung"
           class="text-sm text-muted-foreground font-light tracking-widest uppercase transition-colors hover:text-foreground"
         >
-          Reservieren
+          Anfragen
         </NuxtLink>
         <a
           href="tel:+49123456789"
