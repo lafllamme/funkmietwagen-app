@@ -55,9 +55,9 @@ const heroImages = [
     <AppHeader />
 
     <main class="flex-1">
-      <section class="relative py-0 sm:py-8 md:py-12 lg:py-16">
-        <div class="container mx-auto px-0 sm:px-4 md:px-6">
-          <div class="bg-black/80 relative overflow-hidden border border-white/10 rounded-none sm:rounded-[30px] shadow-[0_40px_120px_-60px_rgba(0,0,0,0.8)]">
+      <section class="relative py-0 lg:py-16 md:py-12 sm:py-8">
+        <div class="container mx-auto px-0 md:px-6 sm:px-4">
+          <div class="bg-black/80 border-white/10 relative overflow-hidden border rounded-none shadow-[0_40px_120px_-60px_rgba(0,0,0,0.8)] sm:rounded-[30px]">
             <ImageSlider
               :images="heroImages"
               autoplay="6500"
@@ -66,26 +66,26 @@ const heroImages = [
               image-class="h-full w-full object-cover brightness-[0.75]"
               class="min-h-screen sm:min-h-[70vh]"
             >
-              <div class="relative z-10 h-full flex flex-col items-center justify-center px-5 py-16 sm:px-6 md:px-12 lg:px-16 sm:py-16">
+              <div class="relative z-10 h-full flex flex-col items-center justify-center px-5 py-16 lg:px-16 md:px-12 sm:px-6 sm:py-16">
                 <div class="pointer-events-none absolute inset-0 from-pureBlack/70 via-pureBlack/45 to-transparent bg-gradient-to-t" />
-                <div class="relative mx-auto max-w-3xl text-center space-y-5 md:max-w-4xl md:space-y-6">
+                <div class="relative mx-auto max-w-3xl text-center md:max-w-4xl space-y-5 md:space-y-6">
                   <p class="text-[11px] text-muted-foreground font-light tracking-[0.35em] uppercase md:text-xs md:tracking-[0.4em]">
                     Premium Chauffeur Service
                   </p>
-                  <h1 class="text-3xl text-foreground font-medium tracking-tight font-serif md:text-5xl lg:text-6xl">
+                  <h1 class="text-3xl text-foreground font-medium tracking-tight font-serif lg:text-6xl md:text-5xl">
                     Exzellenz in Bewegung
                   </h1>
                   <p class="mx-auto max-w-2xl text-base color-gray-8 font-light leading-relaxed md:text-lg">
                     Erleben Sie erstklassigen Transferservice mit höchstem Komfort und absoluter Zuverlässigkeit.
                     Kontaktieren Sie uns für Ihre Fahrt.
                   </p>
-                  <div class="flex flex-col items-center gap-6 md:gap-8 w-full">
-                    <div class="w-full max-w-md sm:max-w-none sm:w-auto">
+                  <div class="w-full flex flex-col items-center gap-6 md:gap-8">
+                    <div class="max-w-md w-full sm:max-w-none sm:w-auto">
                       <ContactButtons class="w-full sm:w-auto" />
                     </div>
                     <NuxtLink
                       to="/vorbestellung"
-                      class="group inline-flex w-full max-w-xs items-center justify-center gap-3 border-b-2 border-pureWhite border-solid pb-2 text-sm text-foreground font-light tracking-widest uppercase transition-all hover:gap-5 sm:w-auto sm:max-w-none"
+                      class="group max-w-xs w-full inline-flex items-center justify-center gap-3 border-b-2 border-pureWhite border-solid pb-2 text-sm text-foreground font-light tracking-widest uppercase transition-all sm:max-w-none sm:w-auto hover:gap-5"
                     >
                       Fahrt reservieren
                       <Icon name="lucide:arrow-right" class="h-4 w-4 transition-transform group-hover:translate-x-1" />

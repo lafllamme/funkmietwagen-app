@@ -1,6 +1,7 @@
 <script setup lang="ts">
-import { useIntervalFn, onKeyStroke, useSwipe } from '@vueuse/core'
-import { computed, defineModel, onBeforeUnmount, onMounted, ref, watch, type PropType, type Ref } from 'vue'
+import type { PropType, Ref } from 'vue'
+import { onKeyStroke, useIntervalFn, useSwipe } from '@vueuse/core'
+import { computed, defineModel, onBeforeUnmount, onMounted, ref, watch } from 'vue'
 
 const props = defineProps({
   images: {
@@ -184,7 +185,7 @@ const transitionProps = computed(() => ({
   <div
     ref="sliderRef"
     tabindex="0"
-    class="relative flex size-full items-center justify-center overflow-hidden transition-colors focus:outline-none focus:ring-1 focus:ring-pureWhite/30"
+    class="relative size-full flex items-center justify-center overflow-hidden transition-colors focus:outline-none focus:ring-1 focus:ring-pureWhite/30"
     :style="{ perspective: props.perspective, borderRadius: 'inherit' }"
     @mouseenter="pause"
     @mouseleave="resume"
@@ -200,7 +201,7 @@ const transitionProps = computed(() => ({
           :src="currentImage"
           :alt="`Slide ${currentIndex + 1}`"
           :class="props.imageClass"
-        />
+        >
       </div>
     </Transition>
 
