@@ -62,8 +62,8 @@ const heroImages = [
               :images="heroImages"
               autoplay="6500"
               direction="horizontal"
-              overlay-class="bg-gradient-to-b from-black/85 via-black/70 to-black/80"
-              image-class="h-full w-full object-cover brightness-[0.75]"
+              overlay-class="bg-gradient-to-b from-black/75 via-black/65 to-black/80 backdrop-blur-sm"
+              image-class="h-full w-full object-cover brightness-[0.75] blur-[0.5px]"
               class="min-h-[70vh]"
             >
               <div class="relative z-10 h-full flex flex-col items-center justify-center px-6 py-16 lg:px-16 md:px-12">

@@ -21,15 +21,15 @@ const props = defineProps({
   },
   enterFromClass: {
     type: String,
-    default: 'scale-95 opacity-0',
+    default: 'opacity-0 blur-sm scale-[1.02]',
   },
   enterActiveClass: {
     type: String,
-    default: 'transition-all duration-600 ease-out',
+    default: 'transition-all duration-900 ease-[cubic-bezier(0.33,1,0.68,1)]',
   },
   leaveActiveClass: {
     type: String,
-    default: 'transition-all duration-600 ease-in',
+    default: 'transition-all duration-900 ease-[cubic-bezier(0.4,0,0.2,1)]',
   },
   autoplay: {
     type: [Boolean, Number, String],
@@ -175,24 +175,9 @@ const transitionProps = computed(() => {
     enterActiveClass: props.enterActiveClass,
     leaveActiveClass: props.leaveActiveClass,
     enterFromClass: props.enterFromClass,
-    leaveToClass: '',
+    leaveToClass: 'opacity-0 blur-sm scale-[0.98]',
     onBeforeLeave: lockViewport,
     onAfterEnter: unlockViewport,
-  }
-
-  switch (currentDirection.value) {
-    case 'up':
-      bind.leaveToClass = '-translate-y-full opacity-0'
-      break
-    case 'down':
-      bind.leaveToClass = 'translate-y-full opacity-0'
-      break
-    case 'left':
-      bind.leaveToClass = '-translate-x-full opacity-0'
-      break
-    case 'right':
-      bind.leaveToClass = 'translate-x-full opacity-0'
-      break
   }
 
   return bind
