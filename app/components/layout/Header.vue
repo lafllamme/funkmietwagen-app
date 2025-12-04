@@ -1,3 +1,19 @@
+<script setup lang="ts">
+import { useRoute } from '#imports'
+
+const route = useRoute()
+
+const baseNav =
+  'inline-flex items-center gap-2 rounded-full border border-transparent px-4 py-2 text-sm text-muted-foreground font-light tracking-widest uppercase transition-colors duration-300 ease-[cubic-bezier(0.33,1,0.68,1)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-pureWhite focus-visible:ring-offset-pureBlack'
+const hoverNav = 'hover:bg-pureWhite hover:text-pureBlack'
+const activeNav = 'bg-pureWhite text-pureBlack border-pureWhite/60'
+
+function navClass(path: string, extra = '') {
+  const isActive = route.path === path
+  return [baseNav, extra, isActive ? activeNav : hoverNav]
+}
+</script>
+
 <template>
   <header class="sticky top-0 z-50 w-full border-b border-gray-12 border-solid bg-pureBlack/60 backdrop-blur-md supports-[backdrop-filter]:bg-pureBlack/60">
     <div class="container mx-auto h-20 flex items-center justify-between px-4 md:px-6">
@@ -14,25 +30,25 @@
       <nav class="flex items-center gap-3 md:gap-4">
         <NuxtLink
           to="/"
-          class="inline-flex items-center gap-2 border border-transparent rounded-full px-4 py-2 text-sm text-muted-foreground font-light tracking-widest uppercase transition-all duration-200 hover:bg-pureWhite hover:text-pureBlack focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-pureWhite focus-visible:ring-offset-pureBlack"
+          :class="navClass('/')"
         >
           Start
         </NuxtLink>
         <NuxtLink
           to="/impressum"
-          class="hidden items-center gap-2 border border-transparent rounded-full px-4 py-2 text-sm text-muted-foreground font-light tracking-widest uppercase transition-all duration-200 xl:inline-flex hover:bg-pureWhite hover:text-pureBlack focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-pureWhite focus-visible:ring-offset-pureBlack"
+          :class="navClass('/impressum', 'hidden xl:inline-flex')"
         >
           Impressum
         </NuxtLink>
         <NuxtLink
           to="/datenschutz"
-          class="hidden items-center gap-2 border border-transparent rounded-full px-4 py-2 text-sm text-muted-foreground font-light tracking-widest uppercase transition-all duration-200 xl:inline-flex hover:bg-pureWhite hover:text-pureBlack focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-pureWhite focus-visible:ring-offset-pureBlack"
+          :class="navClass('/datenschutz', 'hidden xl:inline-flex')"
         >
           Datenschutz
         </NuxtLink>
         <NuxtLink
           to="/vorbestellung"
-          class="inline-flex items-center gap-2 border border-transparent rounded-full px-4 py-2 text-sm text-muted-foreground font-light tracking-widest uppercase transition-all duration-200 hover:bg-pureWhite hover:text-pureBlack focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-pureWhite focus-visible:ring-offset-pureBlack"
+          :class="navClass('/vorbestellung')"
         >
           Anfragen
         </NuxtLink>
