@@ -21,15 +21,15 @@ const props = defineProps({
   },
   enterFromClass: {
     type: String,
-    default: 'opacity-0 blur-sm scale-[1.02]',
+    default: 'opacity-0 blur-[10px] brightness-[0.55] scale-[1.03]',
   },
   enterActiveClass: {
     type: String,
-    default: 'transition-all duration-900 ease-[cubic-bezier(0.33,1,0.68,1)]',
+    default: 'transition-[opacity,filter,transform] duration-1200 ease-[cubic-bezier(0.33,1,0.68,1)]',
   },
   leaveActiveClass: {
     type: String,
-    default: 'transition-all duration-900 ease-[cubic-bezier(0.4,0,0.2,1)]',
+    default: 'transition-[opacity,filter,transform] duration-1100 ease-[cubic-bezier(0.4,0,0.2,1)]',
   },
   autoplay: {
     type: [Boolean, Number, String],
@@ -175,7 +175,7 @@ const transitionProps = computed(() => {
     enterActiveClass: props.enterActiveClass,
     leaveActiveClass: props.leaveActiveClass,
     enterFromClass: props.enterFromClass,
-    leaveToClass: 'opacity-0 blur-sm scale-[0.98]',
+    leaveToClass: 'opacity-0 blur-[12px] brightness-[0.5] scale-[0.98]',
     onBeforeLeave: lockViewport,
     onAfterEnter: unlockViewport,
   }
@@ -189,7 +189,7 @@ const transitionProps = computed(() => {
     ref="sliderRef"
     tabindex="0"
     class="relative flex size-full items-center justify-center overflow-hidden transition-colors focus:outline-none focus:ring-1 focus:ring-pureWhite/30"
-    :style="{ perspective: props.perspective }"
+    :style="{ perspective: props.perspective, borderRadius: 'inherit' }"
     @mouseenter="pause"
     @mouseleave="resume"
   >
@@ -197,7 +197,8 @@ const transitionProps = computed(() => {
       <div
         v-if="currentImage"
         :key="currentImage"
-        class="absolute inset-0"
+        class="absolute inset-0 overflow-hidden"
+        :style="{ borderRadius: 'inherit' }"
       >
         <img
           :src="currentImage"
