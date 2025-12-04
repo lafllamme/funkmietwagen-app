@@ -47,7 +47,7 @@ function navClass(path: string, extra = '') {
         </NuxtLink>
         <NuxtLink
           to="/ueber-uns"
-          :class="navClass('/ueber-uns')"
+          :class="navClass('/ueber-uns', 'hidden xl:inline-flex')"
         >
           Über uns
         </NuxtLink>
