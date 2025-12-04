@@ -11,28 +11,28 @@
         </div>
       </NuxtLink>
 
-      <nav class="flex items-center gap-6 md:gap-8">
+      <nav class="flex items-center gap-3 md:gap-4">
         <NuxtLink
           to="/"
-          class="font-geist text-sm text-muted-foreground font-light tracking-widest uppercase transition-colors hover:text-foreground"
+          class="inline-flex items-center gap-2 border border-transparent rounded-full px-4 py-2 text-sm text-muted-foreground font-light tracking-widest uppercase transition-all duration-200 hover:bg-pureWhite hover:text-pureBlack focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-pureWhite focus-visible:ring-offset-pureBlack"
         >
           Start
         </NuxtLink>
         <NuxtLink
           to="/impressum"
-          class="font-geist hidden text-sm text-muted-foreground font-light tracking-widest uppercase transition-colors xl:inline hover:text-foreground"
+          class="hidden items-center gap-2 border border-transparent rounded-full px-4 py-2 text-sm text-muted-foreground font-light tracking-widest uppercase transition-all duration-200 xl:inline-flex hover:bg-pureWhite hover:text-pureBlack focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-pureWhite focus-visible:ring-offset-pureBlack"
         >
           Impressum
         </NuxtLink>
         <NuxtLink
           to="/datenschutz"
-          class="font-geist hidden text-sm text-muted-foreground font-light tracking-widest uppercase transition-colors xl:inline hover:text-foreground"
+          class="hidden items-center gap-2 border border-transparent rounded-full px-4 py-2 text-sm text-muted-foreground font-light tracking-widest uppercase transition-all duration-200 xl:inline-flex hover:bg-pureWhite hover:text-pureBlack focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-pureWhite focus-visible:ring-offset-pureBlack"
         >
           Datenschutz
         </NuxtLink>
         <NuxtLink
           to="/vorbestellung"
-          class="font-geist text-sm text-muted-foreground font-light tracking-widest uppercase transition-colors hover:text-foreground"
+          class="inline-flex items-center gap-2 border border-transparent rounded-full px-4 py-2 text-sm text-muted-foreground font-light tracking-widest uppercase transition-all duration-200 hover:bg-pureWhite hover:text-pureBlack focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-pureWhite focus-visible:ring-offset-pureBlack"
         >
           Anfragen
         </NuxtLink>
