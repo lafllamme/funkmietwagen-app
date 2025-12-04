@@ -308,8 +308,7 @@ async function onSubmit() {
       }
       catch { }
 
-      if (response.status === 400 && typeof serverMessage === 'string' && serverMessage.toLowerCase().includes('captcha'))
-        resetCaptcha()
+      resetCaptcha()
 
       throw new Error(serverMessage || `Anfrage fehlgeschlagen (${response.status})`)
     }
@@ -326,8 +325,7 @@ async function onSubmit() {
     consola.error(error)
     const serverMessage = error instanceof Error ? error.message : ''
     errorMessage.value = serverMessage || ERROR_MESSAGE
-    if (serverMessage.toLowerCase().includes('captcha'))
-      resetCaptcha()
+    resetCaptcha()
   }
   finally {
     consola.info('[Form] Submit finished')
