@@ -5,6 +5,7 @@ import AppHeader from '@/components/layout/Header.vue'
 import BenefitSection from '@/components/sections/BenefitSection.vue'
 import PriceHero from '@/components/sections/PriceHero.vue'
 import VehicleShowcase from '@/components/sections/VehicleShowcase.vue'
+import ImageSlider from '@/components/ui/ImageSlider.vue'
 
 useSeoMeta({
   title: 'Funkmietwagen ADE – Premium Chauffeur Service',
@@ -41,6 +42,12 @@ useHead({
     },
   ],
 })
+
+const heroImages = [
+  'https://wallpaper.forfun.com/fetch/2c/2c78aac5d291ad657d766200ffb4217e.jpeg',
+  'https://images.cdn.autocar.co.uk/sites/autocar.co.uk/files/mercedes-benz-v-class-2025-review-front-static-0059.jpg',
+  'https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1800&q=80&sat=-25',
+]
 </script>
 
 <template>
@@ -48,31 +55,42 @@ useHead({
     <AppHeader />
 
     <main class="flex-1">
-      <section class="relative py-24 lg:py-40 md:py-32">
+      <section class="relative py-10 lg:py-20 md:py-16">
         <div class="container mx-auto px-4 md:px-6">
-          <div class="mx-auto max-w-4xl text-center">
-            <p class="mb-4 text-xs text-muted-foreground font-light tracking-[0.4em] uppercase">
-              Premium Chauffeur Service
-            </p>
-            <h1 class="mb-6 text-4xl text-foreground font-medium tracking-tight font-serif lg:text-6xl md:text-5xl">
-              Exzellenz in Bewegung
-            </h1>
-            <p class="mx-auto mb-12 max-w-2xl text-lg text-muted-foreground font-light leading-relaxed">
-              Erleben Sie erstklassigen Transferservice mit höchstem Komfort und absoluter Zuverlässigkeit.
-              Kontaktieren Sie uns für Ihre Fahrt.
-            </p>
-
-            <div class="mb-12">
-              <ContactButtons />
-            </div>
-
-            <NuxtLink
-              to="/vorbestellung"
-              class="group inline-flex items-center gap-3 border-b-2 border-pureWhite border-solid pb-2 text-sm text-foreground font-light tracking-widest uppercase transition-all hover:gap-5"
+          <div class="border-white/10 bg-black/80 relative overflow-hidden border rounded-[30px] shadow-[0_40px_120px_-60px_rgba(0,0,0,0.8)]">
+            <ImageSlider
+              :images="heroImages"
+              autoplay="6500"
+              direction="horizontal"
+              overlay-class="bg-gradient-to-b from-black/85 via-black/70 to-black/80"
+              image-class="h-full w-full object-cover brightness-[0.75]"
+              class="min-h-[70vh]"
             >
-              Fahrt reservieren
-              <Icon name="lucide:arrow-right" class="h-4 w-4 transition-transform group-hover:translate-x-1" />
-            </NuxtLink>
+              <div class="relative z-10 h-full flex flex-col items-center justify-center px-6 py-16 lg:px-16 md:px-12">
+                <div class="mx-auto max-w-4xl text-center space-y-6">
+                  <p class="text-xs text-muted-foreground font-light tracking-[0.4em] uppercase">
+                    Premium Chauffeur Service
+                  </p>
+                  <h1 class="text-4xl text-foreground font-medium tracking-tight font-serif lg:text-6xl md:text-5xl">
+                    Exzellenz in Bewegung
+                  </h1>
+                  <p class="mx-auto max-w-2xl text-lg text-muted-foreground font-light leading-relaxed">
+                    Erleben Sie erstklassigen Transferservice mit höchstem Komfort und absoluter Zuverlässigkeit.
+                    Kontaktieren Sie uns für Ihre Fahrt.
+                  </p>
+                  <div class="flex flex-col items-center gap-8">
+                    <ContactButtons />
+                    <NuxtLink
+                      to="/vorbestellung"
+                      class="group inline-flex items-center gap-3 border-b-2 border-pureWhite border-solid pb-2 text-sm text-foreground font-light tracking-widest uppercase transition-all hover:gap-5"
+                    >
+                      Fahrt reservieren
+                      <Icon name="lucide:arrow-right" class="h-4 w-4 transition-transform group-hover:translate-x-1" />
+                    </NuxtLink>
+                  </div>
+                </div>
+              </div>
+            </ImageSlider>
           </div>
         </div>
       </section>

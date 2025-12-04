@@ -106,10 +106,10 @@ function setValue(n: number) {
 }
 .person-icon-enter-from {
   opacity: 0;
-  transform: translateY(-6px) scale(0.9);
+  transform: translateX(-10px) scale(0.9);
 }
 .person-icon-leave-to {
   opacity: 0;
-  transform: translateY(6px) scale(0.9);
+  transform: translateX(10px) scale(0.9);
 }
 </style>

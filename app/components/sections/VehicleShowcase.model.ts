@@ -34,7 +34,7 @@ export const vehicles: VehicleCard[] = [
     description:
       'Elegante Limousine für exklusive Einzelfahrten. Höchster Komfort und Diskretion für anspruchsvolle Kunden.',
     specs: [
-      { label: 'PASSAGIERE', value: 'Bis zu 3' },
+      { label: 'PASSAGIERE', value: 'Bis zu 4' },
       { label: 'GEPÄCK', value: 'Standard' },
       { label: 'KLASSE', value: 'Executive' },
     ],

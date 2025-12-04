@@ -104,9 +104,9 @@ const airports = [
                   {{ item.city }}
                 </span>
                 <div class="flex items-baseline gap-2 transition-transform duration-300 ease-out group-hover:scale-115">
-                  <span class="text-xs color-pureWhite/30">ab</span>
+                  <span class="text-xs color-gray-10">ab</span>
                   <span class="text-2xl color-pureWhite font-light tabular-nums">{{ item.price }}</span>
-                  <span class="text-sm color-pureWhite/20">€</span>
+                  <span class="text-sm color-gray-11">€</span>
                 </div>
               </Motion>
             </div>
