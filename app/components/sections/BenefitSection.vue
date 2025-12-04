@@ -43,15 +43,15 @@ const isAutoActive = (index: number) => !userInteracting.value && autoIndex.valu
 </script>
 
 <template>
-  <section class="px-4 py-24 md:px-6">
-    <h2 class="mb-10 text-center text-2xl color-pureWhite font-thin tracking-widest font-serif md:mb-20 md:text-4xl">
-      WARUM FUNKMIETWAGEN ADE
+  <section class="px-4 py-24 antialiased md:px-6">
+    <h2 class="mb-10 text-center text-2xl color-pureWhite font-extralight tracking-normal font-serif md:mb-20 md:text-4xl">
+      Ihr Weg. Unser <span class="italic">Service.</span>
     </h2>
     <div class="grid grid-cols-2 mx-auto max-w-7xl gap-4 lg:grid-cols-4 lg:gap-6">
       <div
         v-for="(benefit, i) in benefits"
         :key="i"
-        class="benefit-card group [aspect-ratio:3/4] relative flex flex-col overflow-hidden border border-pureWhite/10 rounded-3xl from-pureWhite/[0.06] to-transparent bg-gradient-to-br p-8 transition-all duration-700 lg:aspect-3/4 sm:aspect-unset lg:h-full lg:max-h-none sm:min-h-[320px] hover:border-pureWhite/25 hover:from-pureWhite/[0.14] lg:hover:-translate-y-8"
+        class="benefit-card group [aspect-ratio:3/4] relative flex flex-col items-center overflow-hidden border border-pureWhite/10 rounded-3xl from-pureWhite/[0.06] to-transparent bg-gradient-to-br p-8 transition-all duration-700 lg:aspect-3/4 sm:aspect-unset lg:h-full lg:max-h-none sm:min-h-[320px] <sm:justify-center hover:border-pureWhite/25 hover:from-pureWhite/[0.14] lg:hover:-translate-y-8"
         :class="[isAutoActive(i) ? 'is-auto-active border-pureWhite/25 from-pureWhite/[0.14] lg:-translate-y-8' : '']"
         @pointerenter="markInteraction"
         @pointerdown="markInteraction"
@@ -66,12 +66,15 @@ const isAutoActive = (index: number) => !userInteracting.value && autoIndex.valu
           class="benefit-icon size-6 color-pureWhite/50 transition-all duration-500 md:size-8 group-hover:scale-110 group-hover:color-pureWhite/80"
           :class="isAutoActive(i) ? 'scale-110 color-pureWhite/80' : ''"
         />
-        <div class="mt-4 md:mt-8 space-y-2">
-          <h3 class="text-base color-pureWhite font-light lg:text-2xl md:text-lg">
+        <div class="font-geist mt-4 md:mt-8 space-y-2">
+          <h3
+            class="mb-8 text-center text-base font-light lg:text-2xl md:text-lg group-hover:color-pureWhite"
+            :class="isAutoActive(i) ? 'color-pureWhite' : 'color-gray-9'"
+          >
             {{ benefit.title }}
           </h3>
           <p
-            class="benefit-desc hidden translate-y-4 text-xs color-pureWhite/60 font-light leading-relaxed opacity-0 transition-all duration-500 delay-100 sm:block group-hover:translate-y-0 lg:text-xs sm:text-base xl:text-base group-hover:opacity-100"
+            class="benefit-desc hidden translate-y-4 text-xs color-pureWhite/60 font-extralight leading-relaxed opacity-0 transition-all duration-500 delay-100 sm:block group-hover:translate-y-0 lg:text-xs sm:text-base xl:text-base group-hover:opacity-100"
             :class="isAutoActive(i) ? 'translate-y-0 opacity-100' : ''"
           >
             {{ benefit.description }}

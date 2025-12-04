@@ -6,12 +6,12 @@ export interface BenefitItem {
 
 export const benefits: BenefitItem[] = [
   {
-    icon: 'ph:clock',
+    icon: 'lucide:calendar-clock',
     title: 'Planbar auf die Minute',
     description: 'Verlässliche Abholzeiten mit aktivem Monitoring von Verkehr und Flugplänen.',
   },
   {
-    icon: 'ph:car-profile',
+    icon: 'ph:car-profile-light',
     title: 'Komfortable Flotte',
     description: 'Gepflegte Business- und First-Class Fahrzeuge mit leiser Fahrt und diskretem Auftreten.',
   },
