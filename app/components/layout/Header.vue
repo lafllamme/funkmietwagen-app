@@ -3,8 +3,7 @@ import { useRoute } from '#imports'
 
 const route = useRoute()
 
-const baseNav =
-  'inline-flex items-center gap-2 rounded-full border border-transparent px-4 py-2 text-sm text-muted-foreground font-light tracking-widest uppercase transition-colors duration-300 ease-[cubic-bezier(0.33,1,0.68,1)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-pureWhite focus-visible:ring-offset-pureBlack'
+const baseNav = 'inline-flex items-center gap-2 rounded-full border border-transparent px-4 py-2 text-sm text-muted-foreground font-light tracking-widest uppercase transition-colors duration-300 ease-[cubic-bezier(0.33,1,0.68,1)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-pureWhite focus-visible:ring-offset-pureBlack'
 const hoverNav = 'hover:bg-pureWhite hover:text-pureBlack'
 const activeNav = 'bg-pureWhite text-pureBlack border-pureWhite/60'
 
