@@ -65,6 +65,20 @@ const isTransitioning = ref(false)
 const loadedImages: Ref<string[]> = ref([])
 const currentImage = computed(() => loadedImages.value[currentIndex.value])
 
+const autoplayInterval = computed(() => {
+  if (props.autoplay === false)
+    return 0
+  if (props.autoplay === true)
+    return 5000
+  if (typeof props.autoplay === 'string')
+    return Number(props.autoplay)
+  return props.autoplay
+})
+
+const { pause, resume, isActive } = useIntervalFn(() => {
+  onNext()
+}, autoplayInterval)
+
 function loadImages() {
   isLoading.value = true
   const promises = props.images.map(imageSrc =>
@@ -139,20 +153,6 @@ watch(isSwiping, (v) => {
   else
     resume()
 })
-
-const autoplayInterval = computed(() => {
-  if (props.autoplay === false)
-    return 0
-  if (props.autoplay === true)
-    return 5000
-  if (typeof props.autoplay === 'string')
-    return Number(props.autoplay)
-  return props.autoplay
-})
-
-const { pause, resume, isActive } = useIntervalFn(() => {
-  onNext()
-}, autoplayInterval)
 
 watch(isLoading, (v) => {
   if (v)
