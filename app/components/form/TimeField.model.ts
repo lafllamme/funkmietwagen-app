@@ -1,4 +1,5 @@
 import type { Time } from '@internationalized/date'
+import { parseTime } from '@internationalized/date'
 
 export interface TimeFieldProps {
   modelValue?: Time | null
@@ -20,3 +21,5 @@ export const timeFieldDefaults: Required<Omit<TimeFieldProps, 'modelValue'>> = {
   preferNative: true,
   error: false,
 }
+
+export const defaultTimeValue: Time = parseTime('11:11')

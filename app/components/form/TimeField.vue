@@ -5,7 +5,7 @@ import { parseTime } from '@internationalized/date'
 import { TimeFieldInput, TimeFieldRoot } from 'reka-ui'
 import { computed, nextTick, ref } from 'vue'
 import { useNativePickers } from '@/composables/useNativePickers'
-import { timeFieldDefaults } from './TimeField.model'
+import { defaultTimeValue, timeFieldDefaults } from './TimeField.model'
 
 const props = withDefaults(defineProps<TimeFieldProps>(), {
   modelValue: null,
@@ -20,8 +20,8 @@ const rootRef = ref<InstanceType<typeof TimeFieldRoot> | null>(null)
 const nativeInputRef = ref<HTMLInputElement | null>(null)
 
 const timeValue = computed<Time | null>({
-  get: () => props.modelValue ?? null,
-  set: val => emit('update:modelValue', val),
+  get: () => props.modelValue ?? defaultTimeValue,
+  set: val => emit('update:modelValue', val ?? defaultTimeValue),
 })
 
 const { time: canUseNativeTime } = useNativePickers()

@@ -17,6 +17,7 @@ import DestinationSelect from '@/components/form/DestinationSelect.vue'
 import FriendlyCaptcha from '@/components/form/FriendlyCaptcha.vue'
 import PersonSelector from '@/components/form/PersonSelector.vue'
 import TimeField from '@/components/form/TimeField.vue'
+import { defaultTimeValue } from '@/components/form/TimeField.model'
 import { vehicleOptions } from '@/components/form/VehicleRadioGroup.model'
 import VehicleRadioGroup from '@/components/form/VehicleRadioGroup.vue'
 import AppFooter from '@/components/layout/Footer.vue'
@@ -86,7 +87,7 @@ function resetCaptcha() {
 if (!dateValue.value)
   dateValue.value = today(getLocalTimeZone())
 if (!timeValue.value)
-  timeValue.value = parseTime('08:00')
+  timeValue.value = defaultTimeValue
 
 const vehicleQueryId = computed(() => {
   const value = route.query.vehicle
