@@ -34,7 +34,7 @@
           to="/vorbestellung"
           class="font-geist text-sm text-muted-foreground font-light tracking-widest uppercase transition-colors hover:text-foreground"
         >
-          Reservieren
+          Anfragen
         </NuxtLink>
         <a
           href="tel:+49123456789"
