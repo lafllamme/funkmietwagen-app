@@ -35,17 +35,21 @@ function navClass(path: string, extra = '') {
         </NuxtLink>
         <NuxtLink
           to="/impressum"
-          class="hidden md:inline-flex"
           :class="navClass('/impressum', 'hidden xl:inline-flex')"
         >
           Impressum
         </NuxtLink>
         <NuxtLink
-          class="hidden md:inline-flex"
           to="/datenschutz"
           :class="navClass('/datenschutz', 'hidden xl:inline-flex')"
         >
           Datenschutz
+        </NuxtLink>
+        <NuxtLink
+          to="/ueber-uns"
+          :class="navClass('/ueber-uns')"
+        >
+          Über uns
         </NuxtLink>
         <NuxtLink
           to="/vorbestellung"
@@ -55,7 +59,7 @@ function navClass(path: string, extra = '') {
         </NuxtLink>
         <a
           href="tel:+49123456789"
-          class="flex items-center gap-2 border border-pureWhite border-solid px-4 py-2 text-sm text-foreground font-light tracking-widest uppercase transition-all hover:bg-foreground hover:text-background"
+          class="flex items-center gap-2 border border-pureWhite border-solid px-5 py-2.5 text-sm text-foreground font-light tracking-widest uppercase transition-all hover:bg-foreground hover:text-background"
         >
           <Icon name="lucide:phone" class="h-4 w-4" />
           <span class="hidden md:inline">Anrufen</span>
