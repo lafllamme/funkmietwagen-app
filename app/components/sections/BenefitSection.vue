@@ -43,11 +43,12 @@ const isAutoActive = (index: number) => !userInteracting.value && autoIndex.valu
 </script>
 
 <template>
-  <section class="px-4 py-24 antialiased md:px-6">
-    <h2 class="mb-10 text-center text-2xl color-pureWhite font-extralight tracking-normal font-serif md:mb-20 md:text-4xl">
-      Ihr Weg. Unser <span class="italic">Service.</span>
-    </h2>
-    <div class="grid grid-cols-2 mx-auto max-w-7xl gap-4 lg:grid-cols-4 lg:gap-6">
+  <section class="py-24 antialiased">
+    <div class="container mx-auto px-4 md:px-6">
+      <h2 class="mb-10 text-center text-2xl color-pureWhite font-extralight tracking-normal font-serif md:mb-20 md:text-4xl">
+        Ihr Weg. Unser <span class="italic">Service.</span>
+      </h2>
+      <div class="grid grid-cols-2 mx-auto max-w-7xl gap-4 lg:grid-cols-4 lg:gap-6">
       <div
         v-for="(benefit, i) in benefits"
         :key="i"
@@ -89,6 +90,7 @@ const isAutoActive = (index: number) => !userInteracting.value && autoIndex.valu
           <Icon name="lucide:arrow-right" class="size-3" />
         </NuxtLink>
       </div>
+    </div>
     </div>
   </section>
 </template>

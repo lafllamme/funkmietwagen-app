@@ -377,7 +377,7 @@ async function onSubmit() {
     </div>
 
     <section class="overflow-x-hidden py-12 md:py-16">
-      <div class="container mx-auto max-w-full px-4 md:px-6">
+      <div class="container mx-auto px-4 md:px-6">
         <div v-if="submitted" class="py-12 md:py-16">
           <SuccessOverlay
             label="Bestätigung"
@@ -399,7 +399,7 @@ async function onSubmit() {
             </NuxtLink>
           </div>
 
-          <div class="mx-auto">
+          <div class="mx-auto max-w-6xl">
             <div class="mb-14 text-center md:mb-16">
               <p class="mb-4 text-xs text-muted-foreground font-light tracking-[0.4em] uppercase">
                 Reservierung

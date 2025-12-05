@@ -100,7 +100,7 @@ const heroImages = [
 
     <section class="py-20 md:py-24">
       <div class="container mx-auto px-4 md:px-6">
-        <div class="mx-auto max-w-4xl">
+        <div class="mx-auto max-w-6xl">
           <p class="mb-4 text-center text-xs text-muted-foreground font-light tracking-[0.4em] uppercase">
             Unsere Leistungen
           </p>
