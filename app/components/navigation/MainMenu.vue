@@ -43,8 +43,8 @@ function isActive(link: MainMenuLink) {
   <!-- Overlay wird direkt auf body gelegt, nicht im Header -->
   <Teleport v-if="isMounted" to="body">
     <div
-      v-show="open"
       class="fixed inset-0 z-40 transition-all duration-500"
+      :class="open ? 'visible' : 'invisible'"
     >
       <!-- Backdrop hinter dem Header, da Header z-50 hat -->
       <div
