@@ -55,7 +55,7 @@ function isActive(link: MainMenuLink) {
 
       <!-- Panel: startet unterhalb des Headers -->
       <div
-        class="absolute left-0 right-0 bg-pureBlack bg-sky-9 text-foreground shadow-[0_30px_120px_-60px_rgba(255,255,255,0.6)]"
+        class="absolute left-0 right-0 bg-pureBlack bg-pureBlack text-foreground shadow-[0_30px_120px_-60px_rgba(255,255,255,0.25)]"
         :style="{
           top: props.offset || '80px', // exakt unter Header
           transform: open ? 'translateY(0)' : 'translateY(-105%)',
@@ -66,9 +66,9 @@ function isActive(link: MainMenuLink) {
         <div
           class="px-6 pb-10 lg:px-20 md:px-12"
         >
-          <div class="grid mx-auto max-w-6xl gap-10 lg:grid-cols-3 lg:mt-10 lg:gap-16">
+          <div class="grid mx-auto max-w-6xl gap-10 lg:grid-cols-3 lg:mt-12 lg:gap-16">
             <!-- Navigation Block -->
-            <nav class="mt-20 lg:col-span-2">
+            <nav class="lg:col-span-2">
               <p
                 class="mb-6 text-xs text-muted-foreground font-light tracking-[0.4em] uppercase"
                 :style="{
