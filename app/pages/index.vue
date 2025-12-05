@@ -51,7 +51,7 @@ const heroImages = [
 <template>
   <main class="flex-1">
     <section class="relative py-0 lg:py-16 md:py-12 sm:py-8">
-      <div class="container mx-auto px-0 md:px-6 sm:px-4">
+      <div class="container mx-auto px-0 md:px-6 sm:px-4 <sm:-mt-5">
         <div class="bg-black/80 border-white/10 relative overflow-hidden border rounded-none shadow-[0_40px_120px_-60px_rgba(0,0,0,0.8)] sm:rounded-[30px]">
           <ImageSlider
             :images="heroImages"
