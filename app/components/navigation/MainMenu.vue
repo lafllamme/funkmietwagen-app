@@ -40,7 +40,7 @@ function toggleSubmenu(label: string) {
 
       <!-- Panel: startet unterhalb des Headers -->
       <div
-        class="absolute left-0 right-0 bg-pureBlack bg-pureBlack text-foreground shadow-[0_30px_120px_-60px_rgba(0,0,0,0.7)]"
+        class="absolute left-0 right-0 bg-pureBlack bg-sky-9 text-foreground shadow-[0_30px_120px_-60px_rgba(0,0,0,0.7)]"
         :style="{
           top: props.offset || '80px', // exakt unter Header
           transform: open ? 'translateY(0)' : 'translateY(-100%)',
@@ -123,7 +123,7 @@ function toggleSubmenu(label: string) {
 
             <!-- Kontaktkarte -->
             <div
-              class="border-white/10 bg-white/5 border rounded-2xl p-6"
+              class="border-white/10 bg-white/5 border rounded-2xl bg-red-10 p-6"
               :style="{
                 opacity: open ? 1 : 0,
                 transform: open ? 'translateY(0)' : 'translateY(30px)',
@@ -157,26 +157,6 @@ function toggleSubmenu(label: string) {
                   {{ contact.address }}
                 </p>
               </div>
-
-              <div class="flex gap-4">
-                <a
-                  v-for="link in social"
-                  :key="link.label"
-                  :href="link.href"
-                  class="border-white/20 h-10 w-10 flex items-center justify-center border rounded-full bg-pureBlack/40 text-xs text-muted-foreground font-medium transition-all hover:border-pureWhite hover:bg-pureWhite hover:text-pureBlack"
-                >
-                  {{ link.label.charAt(0) }}
-                </a>
-              </div>
-
-              <button
-                type="button"
-                class="mt-6 inline-flex items-center gap-2 text-xs text-muted-foreground tracking-[0.25em] uppercase transition-colors hover:text-foreground"
-                @click="close"
-              >
-                Schliessen
-                <Icon name="lucide:chevron-up" class="h-4 w-4" />
-              </button>
             </div>
           </div>
         </div>

@@ -399,7 +399,7 @@ async function onSubmit() {
             </NuxtLink>
           </div>
 
-          <div class="mx-auto max-w-5xl">
+          <div class="mx-auto">
             <div class="mb-16 text-center">
               <p class="mb-4 text-xs text-muted-foreground font-light tracking-[0.4em] uppercase">
                 Reservierung
