@@ -1,12 +1,14 @@
 <script setup lang="ts">
 import { Icon } from '#components'
 import { useRoute } from '#imports'
-import { computed, ref } from 'vue'
+import { computed, onBeforeUnmount, ref } from 'vue'
 import { mainMenuContact, mainMenuItems, mainMenuSocial } from '@/components/navigation/MainMenu.model'
 import MainMenu from '@/components/navigation/MainMenu.vue'
 
 const route = useRoute()
-const isMenuOpen = ref(false)
+const isPanelOpen = ref(false)
+const isHeaderSolid = ref(false)
+let closeTimer: ReturnType<typeof setTimeout> | null = null
 
 const baseNav
   = '[@media(min-width:400px)]:text-sm [@media(max-width:400px)]:mr-3 text-xs items-center gap-2 rounded-full border border-transparent px-4 py-2 text-muted-foreground font-light tracking-widest uppercase transition-colors duration-300 ease-[cubic-bezier(0.33,1,0.68,1)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-pureWhite focus-visible:ring-offset-pureBlack'
@@ -19,18 +21,39 @@ function navClass(path: string, extra = '') {
 }
 
 const headerBase
-  = 'fixed top-0 left-0 right-0 z-50 w-full border-b border-gray-12 border-solid transition-colors duration-300'
+  = 'fixed top-0 left-0 right-0 z-50 w-full border-b border-gray-12 border-solid'
 
 const headerClosed
   = 'bg-pureBlack/60 backdrop-blur-md supports-[backdrop-filter]:bg-pureBlack/60'
 
 const headerOpen
-  = 'bg-pureBlack supports-[backdrop-filter]:bg-pureBlack'
+  = 'bg-pureBlack supports-[backdrop-filter]:bg-pureBlack transition-none'
 
 const headerClasses = computed(() => [
   headerBase,
-  isMenuOpen.value ? headerOpen : headerClosed,
+  isHeaderSolid.value ? headerOpen : `${headerClosed} transition-colors duration-300`,
 ])
+
+function openMenu() {
+  if (closeTimer) {
+    clearTimeout(closeTimer)
+    closeTimer = null
+  }
+  isHeaderSolid.value = true
+  isPanelOpen.value = true
+}
+
+function closeMenu() {
+  isPanelOpen.value = false
+  closeTimer = setTimeout(() => {
+    isHeaderSolid.value = false
+  }, 420)
+}
+
+onBeforeUnmount(() => {
+  if (closeTimer)
+    clearTimeout(closeTimer)
+})
 </script>
 
 <template>
@@ -67,7 +90,7 @@ const headerClasses = computed(() => [
         <button
           type="button"
           class="flex items-center gap-2 border border-pureWhite border-solid px-4 py-2 text-sm text-foreground font-light tracking-widest uppercase transition-all hover:bg-foreground hover:text-background"
-          @click="isMenuOpen = !isMenuOpen"
+          @click="isPanelOpen ? closeMenu() : openMenu()"
         >
           <Icon name="lucide:menu" class="h-4 w-4" />
           <span class="hidden md:inline">
@@ -80,11 +103,11 @@ const headerClasses = computed(() => [
 
   <!-- Overlay Menu, komplett entkoppelt vom Header, aber gesteuert ueber isMenuOpen -->
   <MainMenu
-    :open="isMenuOpen"
+    :open="isPanelOpen"
     :items="mainMenuItems"
     :contact="mainMenuContact"
     :social="mainMenuSocial"
     offset="80px"
-    @close="isMenuOpen = false"
+    @close="closeMenu()"
   />
 </template>

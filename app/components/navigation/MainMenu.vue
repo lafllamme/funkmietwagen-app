@@ -33,9 +33,20 @@ function toggleSubmenu(label: string) {
     >
       <!-- Backdrop hinter dem Header, da Header z-50 hat -->
       <div
-        class="absolute inset-0 bg-pureBlack/50 backdrop-blur-sm transition-opacity duration-500"
-        :class="open ? 'opacity-100' : 'opacity-0'"
+        class="absolute inset-0 bg-pureBlack/60 transition-opacity"
+        :class="open ? 'opacity-100 duration-0' : 'opacity-0 duration-300'"
         @click="close"
+      />
+
+      <!-- Sofortige schwarze Fläche unterhalb des Headers, verhindert Durchblitzen -->
+      <div
+        class="absolute left-0 right-0 bg-pureBlack"
+        :style="{
+          top: props.offset || '80px',
+          bottom: 0,
+          opacity: open ? 1 : 0,
+          transition: open ? 'opacity 0ms' : 'opacity 220ms ease',
+        }"
       />
 
       <!-- Panel: startet unterhalb des Headers -->
@@ -43,9 +54,9 @@ function toggleSubmenu(label: string) {
         class="absolute left-0 right-0 bg-pureBlack bg-sky-9 text-foreground shadow-[0_30px_120px_-60px_rgba(255,255,255,0.6)]"
         :style="{
           top: props.offset || '80px', // exakt unter Header
-          transform: open ? 'translateY(0)' : 'translateY(-100%)',
+          transform: open ? 'translateY(0)' : 'translateY(-105%)',
           opacity: open ? 1 : 0,
-          transition: 'transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.35s ease',
+          transition: 'transform 0.55s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.2s ease',
         }"
       >
         <div
