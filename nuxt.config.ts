@@ -32,10 +32,4 @@ export default defineNuxtConfig({
       BLOG_URL: '',
     },
   },
-  nitro: {
-    logLevel: process.env.NITRO_LOG_LEVEL || 'debug',
-    prerender: {
-      concurrency: 1,
-    },
-  },
 })
