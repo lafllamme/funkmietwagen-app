@@ -92,5 +92,16 @@ defineExpose({ reset })
 </script>
 
 <template>
-  <div ref="containerRef" class="frc-captcha w-full" />
+  <div
+    ref="containerRef"
+    class="frc-captcha captcha-wrapper w-full"
+  />
 </template>
+
+<style scoped>
+.frc-captcha {
+  border-radius: 0 !important;
+  border: none !important;
+  box-shadow: none !important;
+}
+</style>
