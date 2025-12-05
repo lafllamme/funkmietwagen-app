@@ -2,6 +2,7 @@
 import type { MainMenuContact, MainMenuLink, MainMenuSocial } from './MainMenu.model'
 import { Icon } from '#components'
 import { ref } from 'vue'
+import { useRoute } from '#imports'
 
 const props = defineProps<{
   open: boolean
@@ -18,9 +19,18 @@ function close() {
 }
 
 const activeSubmenu = ref<string | null>(null)
+const route = useRoute()
 
 function toggleSubmenu(label: string) {
   activeSubmenu.value = activeSubmenu.value === label ? null : label
+}
+
+function isActive(link: MainMenuLink) {
+  if (link.href && route.path === link.href)
+    return true
+  if (link.submenu)
+    return link.submenu.some(sub => sub.href === route.path)
+  return false
 }
 </script>
 
@@ -85,10 +95,22 @@ function toggleSubmenu(label: string) {
                     transition: `all 0.5s cubic-bezier(0.16, 1, 0.3, 1) ${index * 0.07 + 0.3}s`,
                   }"
                 >
+                  <NuxtLink
+                    v-if="item.href && !item.submenu"
+                    :to="item.href"
+                    class="group w-full flex items-center justify-between py-3 text-2xl font-light transition-colors md:text-3xl hover:text-pureWhite"
+                    :class="isActive(item) ? 'text-pureWhite' : ''"
+                    @click="close"
+                  >
+                    <span>{{ item.label }}</span>
+                  </NuxtLink>
+
                   <button
+                    v-else
                     type="button"
                     class="group w-full flex items-center justify-between py-3 text-2xl font-light transition-colors md:text-3xl hover:text-pureWhite"
-                    @click="item.submenu ? toggleSubmenu(item.label) : (item.href && $router.push(item.href))"
+                    :class="isActive(item) ? 'text-pureWhite' : ''"
+                    @click="item.submenu ? toggleSubmenu(item.label) : undefined"
                   >
                     <span>{{ item.label }}</span>
 
@@ -116,17 +138,18 @@ function toggleSubmenu(label: string) {
                     :class="activeSubmenu === item.label ? 'max-h-48 opacity-100 pb-2' : 'max-h-0 opacity-0'"
                   >
                     <li
-                      v-for="sub in item.submenu"
-                      :key="sub.label"
+                    v-for="sub in item.submenu"
+                    :key="sub.label"
+                  >
+                    <NuxtLink
+                      :to="sub.href || '#'"
+                      class="block border-l-2 border-muted-foreground/40 py-1.5 pl-4 text-sm text-muted-foreground transition-colors hover:border-pureWhite hover:text-pureWhite"
+                      :class="sub.href === route.path ? 'text-pureWhite border-pureWhite' : ''"
+                      @click="close"
                     >
-                      <NuxtLink
-                        :to="sub.href || '#'"
-                        class="block border-l-2 border-muted-foreground/40 py-1.5 pl-4 text-sm text-muted-foreground transition-colors hover:border-pureWhite hover:text-pureWhite"
-                        @click="close"
-                      >
-                        {{ sub.label }}
-                      </NuxtLink>
-                    </li>
+                      {{ sub.label }}
+                    </NuxtLink>
+                  </li>
                   </ul>
                 </li>
               </ul>

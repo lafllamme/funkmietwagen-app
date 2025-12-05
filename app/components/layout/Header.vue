@@ -10,15 +10,7 @@ const isPanelOpen = ref(false)
 const isHeaderSolid = ref(false)
 let closeTimer: ReturnType<typeof setTimeout> | null = null
 
-const baseNav
-  = '[@media(min-width:400px)]:text-sm [@media(max-width:400px)]:mr-3 text-xs items-center gap-2 rounded-full border border-transparent px-4 py-2 text-muted-foreground font-light tracking-widest uppercase transition-colors duration-300 ease-[cubic-bezier(0.33,1,0.68,1)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-pureWhite focus-visible:ring-offset-pureBlack'
-const hoverNav = 'hover:bg-pureWhite hover:text-pureBlack'
-const activeNav = 'bg-pureWhite text-pureBlack border-pureWhite/60'
-
-function navClass(path: string, extra = '') {
-  const isActive = route.path === path
-  return [baseNav, extra, isActive ? activeNav : hoverNav]
-}
+const activeRoute = computed(() => route.path)
 
 const headerBase
   = 'fixed top-0 left-0 right-0 z-50 w-full border-b border-gray-12 border-solid'
@@ -70,20 +62,20 @@ onBeforeUnmount(() => {
         </div>
       </NuxtLink>
 
-      <nav class="flex items-center [@media(min-width:400px)]:gap-3 md:gap-4">
-        <NuxtLink to="/" :class="navClass('/')">
-          Start
+      <nav class="flex items-center gap-3 md:gap-4">
+        <NuxtLink
+          :to="`tel:${mainMenuContact.phone.replace(/\\s+/g, '')}`"
+          class="inline-flex items-center gap-2 border border-pureWhite border-solid px-3 py-2 text-xs text-foreground font-light tracking-widest uppercase transition-all hover:bg-foreground hover:text-background sm:px-4 sm:text-sm"
+        >
+          <Icon name="lucide:phone" class="h-4 w-4" />
+          <span class="hidden sm:inline">Anrufen</span>
         </NuxtLink>
-        <NuxtLink to="/impressum" :class="navClass('/impressum', 'hidden xl:inline-flex')">
-          Impressum
-        </NuxtLink>
-        <NuxtLink to="/datenschutz" :class="navClass('/datenschutz', 'hidden xl:inline-flex')">
-          Datenschutz
-        </NuxtLink>
-        <NuxtLink to="/ueber-uns" :class="navClass('/ueber-uns', 'hidden xl:inline-flex')">
-          Ueber uns
-        </NuxtLink>
-        <NuxtLink to="/vorbestellung" :class="navClass('/vorbestellung')">
+
+        <NuxtLink
+          to="/vorbestellung"
+          class="[@media(min-width:400px)]:text-sm [@media(max-width:400px)]:mr-3 text-xs inline-flex items-center gap-2 rounded-full border border-transparent px-4 py-2 text-muted-foreground font-light tracking-widest uppercase transition-colors duration-300 ease-[cubic-bezier(0.33,1,0.68,1)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-pureWhite focus-visible:ring-offset-pureBlack"
+          :class="activeRoute === '/vorbestellung' ? 'bg-pureWhite text-pureBlack border-pureWhite/60' : 'hover:bg-pureWhite hover:text-pureBlack'"
+        >
           Reservieren
         </NuxtLink>
 
