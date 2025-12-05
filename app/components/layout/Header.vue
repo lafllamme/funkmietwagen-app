@@ -77,7 +77,7 @@ onBeforeUnmount(() => {
 
         <NuxtLink
           to="/vorbestellung"
-          class="inline-flex items-center gap-2 border border-transparent rounded-full px-4 py-2 text-xs text-muted-foreground font-light tracking-widest uppercase transition-colors duration-300 ease-[cubic-bezier(0.33,1,0.68,1)] [@media(max-width:400px)]:mr-3 [@media(min-width:400px)]:text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-pureWhite focus-visible:ring-offset-pureBlack"
+          class="inline-flex items-center gap-2 border border-transparent rounded-full px-4 py-2 text-xs text-muted-foreground font-light tracking-widest uppercase transition-colors duration-300 ease-[cubic-bezier(0.33,1,0.68,1)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-pureWhite focus-visible:ring-offset-pureBlack"
           :class="activeRoute === '/vorbestellung' ? 'bg-pureWhite text-pureBlack border-pureWhite/60' : 'hover:bg-pureWhite hover:text-pureBlack'"
         >
           Reservieren
