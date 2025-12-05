@@ -5,6 +5,7 @@ export default defineNuxtConfig({
   modules: ['@unocss/nuxt', '@nuxt/icon', '@pinia/nuxt'],
   pages: true,
   routeRules: {
+    '/': { prerender: true },
     '/ueber-uns': { prerender: true },
     '/impressum': { prerender: true },
     '/datenschutz': { prerender: true },
