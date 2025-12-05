@@ -18,7 +18,6 @@ function navClass(path: string, extra = '') {
   return [baseNav, extra, isActive ? activeNav : hoverNav]
 }
 
-// wie im React Code: fixed
 const headerBase
   = 'fixed top-0 left-0 right-0 z-50 w-full border-b border-gray-12 border-solid transition-colors duration-300'
 
@@ -26,7 +25,7 @@ const headerClosed
   = 'bg-pureBlack/60 backdrop-blur-md supports-[backdrop-filter]:bg-pureBlack/60'
 
 const headerOpen
-  = 'bg-pureBlack backdrop-blur-none supports-[backdrop-filter]:bg-pureBlack'
+  = 'bg-pureBlack supports-[backdrop-filter]:bg-pureBlack'
 
 const headerClasses = computed(() => [
   headerBase,
@@ -35,6 +34,7 @@ const headerClasses = computed(() => [
 </script>
 
 <template>
+  <!-- nur der Header -->
   <header :class="headerClasses">
     <div class="container mx-auto h-20 flex items-center justify-between px-4 md:px-6">
       <NuxtLink to="/" class="flex items-center gap-3">
@@ -58,7 +58,7 @@ const headerClasses = computed(() => [
           Datenschutz
         </NuxtLink>
         <NuxtLink to="/ueber-uns" :class="navClass('/ueber-uns', 'hidden xl:inline-flex')">
-          Über uns
+          Ueber uns
         </NuxtLink>
         <NuxtLink to="/vorbestellung" :class="navClass('/vorbestellung')">
           Reservieren
@@ -71,20 +71,20 @@ const headerClasses = computed(() => [
         >
           <Icon name="lucide:menu" class="h-4 w-4" />
           <span class="hidden md:inline">
-            {{ isMenuOpen ? 'Schließen' : 'Menü' }}
+            {{ isMenuOpen ? "Schliessen" : "Menue" }}
           </span>
         </button>
       </nav>
     </div>
-
-    <!-- h-20 = 80px -->
-    <MainMenu
-      :open="isMenuOpen"
-      :items="mainMenuItems"
-      :contact="mainMenuContact"
-      :social="mainMenuSocial"
-      offset="80px"
-      @close="isMenuOpen = false"
-    />
   </header>
+
+  <!-- Overlay Menu, komplett entkoppelt vom Header, aber gesteuert ueber isMenuOpen -->
+  <MainMenu
+    :open="isMenuOpen"
+    :items="mainMenuItems"
+    :contact="mainMenuContact"
+    :social="mainMenuSocial"
+    offset="80px"
+    @close="isMenuOpen = false"
+  />
 </template>
