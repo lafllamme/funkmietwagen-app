@@ -5,7 +5,7 @@ import type { DestinationOption } from '@/components/form/DestinationSelect.mode
 import type { VehicleOption } from '@/components/form/VehicleRadioGroup.model'
 import type { FieldKey } from '@/composables/useFormValidation'
 import { useRoute } from '#imports'
-import { getLocalTimeZone, parseTime, today } from '@internationalized/date'
+import { getLocalTimeZone, parseDate, parseTime, today } from '@internationalized/date'
 import { unrefElement } from '@vueuse/core'
 import { consola } from 'consola'
 import { AnimatePresence, Motion } from 'motion-v'
@@ -48,8 +48,33 @@ const phoneValue = ref('')
 const emailValue = ref('')
 const pickupValue = ref('')
 const destinationValue = ref<DestinationOption | null>(null)
-const dateValue = ref<DateValue | null>(null)
-const timeValue = ref<Time | null>(null)
+const dateIso = ref<string | null>(null)
+const timeIso = ref<string | null>(null)
+const dateValue = computed<DateValue | null>({
+  get: () => (dateIso.value ? parseDate(dateIso.value) : null),
+  set: (val) => {
+    if (!val) {
+      dateIso.value = null
+      return
+    }
+    const y = String(val.year).padStart(4, '0')
+    const m = String(val.month).padStart(2, '0')
+    const d = String(val.day).padStart(2, '0')
+    dateIso.value = `${y}-${m}-${d}`
+  },
+})
+const timeValue = computed<Time | null>({
+  get: () => (timeIso.value ? parseTime(timeIso.value) : null),
+  set: (val) => {
+    if (!val) {
+      timeIso.value = null
+      return
+    }
+    const h = String(val.hour).padStart(2, '0')
+    const m = String(val.minute).padStart(2, '0')
+    timeIso.value = `${h}:${m}`
+  },
+})
 const passengers = ref(1)
 const vehicleValue = ref<VehicleOption | null>(null)
 const passengerMax = computed(() => vehicleValue.value?.capacity ?? 7)
@@ -85,10 +110,12 @@ function resetCaptcha() {
   captchaRef.value?.reset?.()
 }
 
-if (!dateValue.value)
-  dateValue.value = today(getLocalTimeZone())
-if (!timeValue.value)
-  timeValue.value = defaultTimeValue
+function setDefaultDateTime() {
+  if (dateIso.value === null)
+    dateValue.value = today(getLocalTimeZone()) as DateValue
+  if (timeIso.value === null)
+    timeValue.value = defaultTimeValue as Time
+}
 
 const vehicleQueryId = computed(() => {
   const value = route.query.vehicle
@@ -144,6 +171,7 @@ function scrollToVehicle(vehicleId?: string | null, force = false) {
 onMounted(() => {
   if (!process.client)
     return
+  setDefaultDateTime()
   window.scrollTo({ top: 0, behavior: 'auto' })
   if (vehicleQueryId.value)
     scrollToVehicle(vehicleQueryId.value, true)
@@ -194,11 +222,11 @@ function applyPreset(preset: 'happy' | 'invalid' | 'spam') {
     phoneValue.value = '+49 221 1234567'
     emailValue.value = 'anna.schmidt@mail.de'
     pickupValue.value = 'Neusser Str. 72A, 50737 Köln'
-    destinationValue.value = destinationOptions[0]
-    dateValue.value = today(getLocalTimeZone())
-    timeValue.value = parseTime('09:00')
+    destinationValue.value = destinationOptions[0] ?? null
+    dateValue.value = today(getLocalTimeZone()) as DateValue
+    timeValue.value = parseTime('09:00') as Time
     passengers.value = 2
-    vehicleValue.value = vehicleOptions[0]
+    vehicleValue.value = vehicleOptions[0] ?? null
     destinationWrapper.value?.scrollIntoView({ behavior: 'smooth', block: 'center' })
   }
   else if (preset === 'invalid') {
@@ -207,7 +235,7 @@ function applyPreset(preset: 'happy' | 'invalid' | 'spam') {
     emailValue.value = 'invalid-email'
     pickupValue.value = ''
     destinationValue.value = null
-    dateValue.value = today(getLocalTimeZone())
+    dateValue.value = today(getLocalTimeZone()) as DateValue
     timeValue.value = null
     passengers.value = 1
     vehicleValue.value = null
@@ -218,10 +246,10 @@ function applyPreset(preset: 'happy' | 'invalid' | 'spam') {
     emailValue.value = 'offer@buyherefree.com'
     pickupValue.value = 'buyherefree.com / 1337 Spam Street'
     destinationValue.value = { code: 'spam-free-cars', label: 'free-cars.buyherefree.com' }
-    dateValue.value = today(getLocalTimeZone())
-    timeValue.value = parseTime('08:00')
+    dateValue.value = today(getLocalTimeZone()) as DateValue
+    timeValue.value = parseTime('08:00') as Time
     passengers.value = 3
-    vehicleValue.value = vehicleOptions[1] || vehicleOptions[0]
+    vehicleValue.value = vehicleOptions[1] || vehicleOptions[0] || null
   }
 }
 
