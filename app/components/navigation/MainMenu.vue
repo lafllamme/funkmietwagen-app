@@ -48,14 +48,14 @@ function isActive(link: MainMenuLink) {
     >
       <!-- Backdrop hinter dem Header, da Header z-50 hat -->
       <div
-        class="absolute inset-0 bg-pureBlack/60 transition-opacity"
-        :class="open ? 'opacity-100 duration-0' : 'opacity-0 duration-300'"
+        class="absolute inset-0 bg-pureBlack/60 backdrop-blur-sm transition-opacity duration-500"
+        :class="open ? 'opacity-100' : 'opacity-0'"
         @click="close"
       />
 
       <!-- Panel: startet unterhalb des Headers -->
       <div
-        class="absolute left-0 right-0 bg-pureBlack bg-pureBlack text-foreground shadow-[0_30px_120px_-60px_rgba(255,255,255,0.25)]"
+        class="absolute left-0 right-0 bg-pureBlack text-foreground shadow-[0_25px_50px_-12px_rgb(255_255_255_/_0.125)]"
         :style="{
           top: props.offset || '80px', // exakt unter Header
           transform: open ? 'translateY(0)' : 'translateY(-105%)',
@@ -70,7 +70,7 @@ function isActive(link: MainMenuLink) {
             <!-- Navigation Block -->
             <nav class="lg:col-span-2">
               <p
-                class="mb-6 text-xs text-muted-foreground font-light tracking-[0.4em] uppercase"
+                class="mb-6 text-xs color-gray-8 font-light tracking-widest uppercase"
                 :style="{
                   opacity: open ? 1 : 0,
                   transition: 'opacity 0.4s ease 0.2s',
@@ -92,8 +92,8 @@ function isActive(link: MainMenuLink) {
                   <NuxtLink
                     v-if="item.href && !item.submenu"
                     :to="item.href"
-                    class="group w-full flex items-center justify-between py-3 text-2xl font-light transition-colors md:text-3xl hover:text-pureWhite"
-                    :class="isActive(item) ? 'text-pureWhite' : ''"
+                    class="group font-geist w-full flex items-center justify-between py-3 text-2xl font-medium tracking-normal antialiased transition-colors md:text-3xl xl:text-4xl hover:color-pureWhite"
+                    :class="isActive(item) ? 'color-pureWhite underline underline-offset-8' : 'color-pureWhite/20'"
                     @click="close"
                   >
                     <span>{{ item.label }}</span>
@@ -102,8 +102,8 @@ function isActive(link: MainMenuLink) {
                   <button
                     v-else
                     type="button"
-                    class="group w-full flex items-center justify-between py-3 text-2xl font-light transition-colors md:text-3xl hover:text-pureWhite"
-                    :class="isActive(item) ? 'text-pureWhite' : ''"
+                    class="group w-full flex items-center justify-between py-3 text-2xl font-medium tracking-normal antialiased transition-colors md:text-3xl xl:text-4xl hover:color-pureWhite"
+                    :class="isActive(item) ? 'color-pureWhite underline underline-offset-8' : 'color-pureWhite/20'"
                     @click="item.submenu ? toggleSubmenu(item.label) : undefined"
                   >
                     <span>{{ item.label }}</span>
@@ -137,8 +137,8 @@ function isActive(link: MainMenuLink) {
                     >
                       <NuxtLink
                         :to="sub.href || '#'"
-                        class="block border-l-2 border-muted-foreground/40 py-1.5 pl-4 text-sm text-muted-foreground transition-colors hover:border-pureWhite hover:text-pureWhite"
-                        :class="sub.href === route.path ? 'text-pureWhite border-pureWhite' : ''"
+                        class="block border-l-2 border-muted-foreground/40 py-1.5 pl-4 text-sm text-muted-foreground transition-colors hover:border-pureWhite hover:color-pureWhite"
+                        :class="sub.href === route.path ? 'color-pureWhite border-pureWhite' : ''"
                         @click="close"
                       >
                         {{ sub.label }}
@@ -151,34 +151,34 @@ function isActive(link: MainMenuLink) {
 
             <!-- Kontaktkarte -->
             <div
-              class="border-white/10 bg-white/5 border rounded-2xl bg-red-10 p-6"
+              class="border-white/10 bg-white/5 border rounded-2xl bg-pureWhite/10 p-6"
               :style="{
                 opacity: open ? 1 : 0,
                 transform: open ? 'translateY(0)' : 'translateY(30px)',
                 transition: 'all 0.6s ease 0.6s',
               }"
             >
-              <p class="mb-4 text-xs text-muted-foreground font-light tracking-[0.35em] uppercase">
+              <p class="mb-4 text-xs text-muted-foreground font-medium tracking-widest uppercase">
                 Kontakt aufnehmen
               </p>
 
-              <div class="mb-6 text-sm text-muted-foreground space-y-3">
+              <div class="text-sm font-medium space-y-3">
                 <a
                   :href="`mailto:${contact.email}`"
-                  class="block text-foreground font-medium hover:underline"
+                  class="block color-pureWhite hover:underline"
                 >
                   {{ contact.email }}
                 </a>
                 <a
                   :href="`tel:${contact.phone}`"
-                  class="flex items-center gap-2 hover:text-pureWhite"
+                  class="flex items-center gap-2 color-pureWhite/80 hover:color-pureWhite"
                 >
-                  <Icon name="lucide:phone" class="h-4 w-4" />
+                  <Icon name="lucide:phone" class="size-4" />
                   <span>{{ contact.phone }}</span>
                 </a>
                 <p
                   v-if="contact.address"
-                  class="text-xs leading-relaxed"
+                  class="text-xs color-gray-10 leading-relaxed"
                 >
                   {{ contact.address }}
                 </p>
