@@ -21,8 +21,6 @@ import { defaultTimeValue } from '@/components/form/TimeField.model'
 import TimeField from '@/components/form/TimeField.vue'
 import { vehicleOptions } from '@/components/form/VehicleRadioGroup.model'
 import VehicleRadioGroup from '@/components/form/VehicleRadioGroup.vue'
-import AppFooter from '@/components/layout/Footer.vue'
-import AppHeader from '@/components/layout/Header.vue'
 import NextSteps from '@/components/sections/NextSteps.vue'
 import UiInput from '@/components/ui/Input.vue'
 import UiLabel from '@/components/ui/Label.vue'
@@ -351,8 +349,6 @@ async function onSubmit() {
 
 <template>
   <div class="min-h-screen flex flex-col bg-background">
-    <AppHeader />
-
     <div
       v-if="isDev"
       class="fixed right-4 top-24 z-[60] flex flex-col gap-2"
@@ -380,7 +376,7 @@ async function onSubmit() {
       </button>
     </div>
 
-    <main class="flex-1 py-12 md:py-20">
+    <main class="flex-1">
       <div class="container mx-auto px-4 md:px-6">
         <div v-if="submitted" class="py-24">
           <SuccessOverlay
@@ -690,7 +686,5 @@ async function onSubmit() {
         </div>
       </div>
     </main>
-
-    <AppFooter />
   </div>
 </template>
