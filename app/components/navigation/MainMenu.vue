@@ -63,7 +63,7 @@ function toggleSubmenu(label: string) {
         >
           <div class="grid mx-auto max-w-6xl gap-10 lg:grid-cols-3 lg:gap-16">
             <!-- Navigation Block -->
-            <nav class="lg:col-span-2">
+            <nav class="mt-20 lg:col-span-2">
               <p
                 class="mb-6 text-xs text-muted-foreground font-light tracking-[0.4em] uppercase"
                 :style="{

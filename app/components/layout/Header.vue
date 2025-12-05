@@ -71,7 +71,7 @@ const headerClasses = computed(() => [
         >
           <Icon name="lucide:menu" class="h-4 w-4" />
           <span class="hidden md:inline">
-            {{ isMenuOpen ? "Schliessen" : "Menue" }}
+            Menu
           </span>
         </button>
       </nav>
