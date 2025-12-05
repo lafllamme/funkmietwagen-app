@@ -68,19 +68,18 @@ onBeforeUnmount(() => {
 
       <nav class="flex gap-3 md:gap-4">
         <NuxtLink
+          to="/vorbestellung"
+          class="inline-flex items-center gap-2 border border-transparent rounded-full px-4 py-2 text-sm text-muted-foreground font-light tracking-widest uppercase transition-colors duration-300 ease-[cubic-bezier(0.33,1,0.68,1)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-pureWhite focus-visible:ring-offset-pureBlack"
+          :class="activeRoute === '/vorbestellung' ? 'bg-pureWhite text-pureBlack border-pureWhite/60' : 'hover:bg-pureWhite hover:text-pureBlack'"
+        >
+          Reservieren
+        </NuxtLink>
+        <NuxtLink
           :to="phoneLink"
           class="inline-flex items-center gap-2 border border-pureWhite border-solid px-3 py-2 text-xs text-foreground font-light tracking-widest uppercase transition-all hover:bg-foreground sm:px-4 sm:text-sm hover:text-background"
         >
           <Icon name="lucide:phone" class="h-4 w-4" />
           <span class="hidden sm:inline">Anrufen</span>
-        </NuxtLink>
-
-        <NuxtLink
-          to="/vorbestellung"
-          class="inline-flex items-center gap-2 border border-transparent rounded-full px-4 py-2 text-xs text-muted-foreground font-light tracking-widest uppercase transition-colors duration-300 ease-[cubic-bezier(0.33,1,0.68,1)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-pureWhite focus-visible:ring-offset-pureBlack"
-          :class="activeRoute === '/vorbestellung' ? 'bg-pureWhite text-pureBlack border-pureWhite/60' : 'hover:bg-pureWhite hover:text-pureBlack'"
-        >
-          Reservieren
         </NuxtLink>
 
         <button
