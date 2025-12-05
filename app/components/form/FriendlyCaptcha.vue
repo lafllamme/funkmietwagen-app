@@ -31,14 +31,48 @@ const trackedStatesReady = new Set<WidgetState>([
   'completed',
 ])
 
+// Singleton pattern: reuse SDK instance across component mounts
+function getOrCreateSDK() {
+  if (typeof window === 'undefined')
+    return null
+
+  const win = window as any
+  if (win.__friendlyCaptchaSDK) {
+    return win.__friendlyCaptchaSDK
+  }
+
+  return null
+}
+
+async function initSDK() {
+  if (typeof window === 'undefined')
+    return null
+
+  const existingSDK = getOrCreateSDK()
+  if (existingSDK) {
+    return existingSDK
+  }
+
+  const mod = await import('@friendlycaptcha/sdk')
+  const FriendlyCaptchaSDK = (mod as any).FriendlyCaptchaSDK || (mod as any).default
+  const sdkInstance = new FriendlyCaptchaSDK()
+
+  const win = window as any
+  win.__friendlyCaptchaSDK = sdkInstance
+
+  return sdkInstance
+}
+
 onMounted(async () => {
   if (typeof window === 'undefined')
     return
 
   try {
-    const mod = await import('@friendlycaptcha/sdk')
-    const FriendlyCaptchaSDK = (mod as any).FriendlyCaptchaSDK || (mod as any).default
-    sdk.value = new FriendlyCaptchaSDK()
+    sdk.value = await initSDK()
+    if (!sdk.value) {
+      consola.warn('[FriendlyCaptcha] SDK initialization failed')
+      return
+    }
     widget.value = sdk.value.createWidget({
       element: containerRef.value!,
       sitekey: props.siteKey,
@@ -57,7 +91,7 @@ onMounted(async () => {
       emit('completed', { response: event.detail.response })
     }
 
-    handleReset.value = (_event: FRCWidgetResetEvent) => {
+    handleReset.value = (_event: Event) => {
       emit('reset')
     }
 
