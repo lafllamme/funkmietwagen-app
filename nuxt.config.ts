@@ -6,8 +6,6 @@ export default defineNuxtConfig({
   pages: true,
   routeRules: {
     '/ueber-uns': { prerender: true },
-    '/': { prerender: true },
-    '/vorbestellung': { prerender: true },
     '/impressum': { prerender: true },
     '/datenschutz': { prerender: true },
     '/nutzungsbedingungen': { prerender: true },
