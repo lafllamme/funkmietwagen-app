@@ -13,7 +13,7 @@ let closeTimer: ReturnType<typeof setTimeout> | null = null
 const activeRoute = computed(() => route.path)
 
 const headerBase
-  = 'fixed top-0 left-0 right-0 z-50 w-full max-w-[100vw] border-b border-gray-12 border-solid'
+  = 'fixed top-0 left-0 right-0 z-50 w-full border-b border-gray-12 border-solid'
 
 const headerClosed
   = 'bg-pureBlack/60 backdrop-blur-md supports-[backdrop-filter]:bg-pureBlack/60'

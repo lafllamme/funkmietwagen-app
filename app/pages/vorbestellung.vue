@@ -348,10 +348,10 @@ async function onSubmit() {
 </script>
 
 <template>
-  <main class="relative flex-1">
+  <main class="relative flex-1 overflow-x-hidden">
     <div
       v-if="isDev"
-      class="fixed right-4 top-24 z-[60] flex flex-col gap-2"
+      class="fixed right-2 top-24 z-[60] flex flex-col gap-2 sm:right-4"
     >
       <button
         type="button"
@@ -376,8 +376,8 @@ async function onSubmit() {
       </button>
     </div>
 
-    <section class="py-12 md:py-16">
-      <div class="container mx-auto px-4 md:px-6">
+    <section class="overflow-x-hidden py-12 md:py-16">
+      <div class="container mx-auto max-w-full px-4 md:px-6">
         <div v-if="submitted" class="py-12 md:py-16">
           <SuccessOverlay
             label="Bestätigung"
@@ -428,7 +428,7 @@ async function onSubmit() {
                   novalidate
                   @submit.prevent="onSubmit"
                 >
-                  <div class="border border-gray-5 border-solid p-8">
+                  <div class="border border-gray-5 border-solid p-4 sm:p-8">
                     <h3 class="mb-6 text-xs text-muted-foreground font-light tracking-[0.3em] uppercase">
                       Persönliche Daten
                     </h3>
@@ -491,7 +491,7 @@ async function onSubmit() {
                     </div>
                   </div>
 
-                  <div class="border border-gray-5 border-solid p-8">
+                  <div class="border border-gray-5 border-solid p-4 sm:p-8">
                     <h3 class="mb-6 text-xs text-muted-foreground font-light tracking-[0.3em] uppercase">
                       Fahrtdetails
                     </h3>
@@ -578,11 +578,11 @@ async function onSubmit() {
                                   class="hour-range w-full accent-foreground"
                                   :required="bookingType === 'hourly'"
                                 >
-                                <div class="flex justify-between px-1">
+                                <div class="flex justify-between overflow-hidden px-0.5">
                                   <span
                                     v-for="n in 10"
                                     :key="n"
-                                    class="text-center transition-all duration-300"
+                                    class="min-w-0 flex-1 text-center transition-all duration-300"
                                     :class="hourlyHours === n ? 'text-foreground text-lg font-light' : 'text-muted-foreground text-[11px]'"
                                   >
                                     {{ n }}
@@ -641,7 +641,7 @@ async function onSubmit() {
                     </div>
                   </div>
 
-                  <div class="border border-gray-5 border-solid p-8">
+                  <div class="border border-gray-5 border-solid p-4 sm:p-8">
                     <h3 class="mb-6 text-xs text-muted-foreground font-light tracking-[0.3em] uppercase">
                       Anmerkungen
                     </h3>
