@@ -662,14 +662,16 @@ async function onSubmit() {
                 </button>
 
                 <div class="mt-4">
-                  <FriendlyCaptcha
-                    ref="captchaRef"
-                    :site-key="FRIENDLY_CAPTCHA_SITEKEY"
-                    @ready="onCaptchaReady"
-                    @completed="onCaptchaCompleted"
-                    @reset="onCaptchaReset"
-                    @state="onCaptchaState"
-                  />
+                  <ClientOnly>
+                    <FriendlyCaptcha
+                      ref="captchaRef"
+                      :site-key="FRIENDLY_CAPTCHA_SITEKEY"
+                      @ready="onCaptchaReady"
+                      @completed="onCaptchaCompleted"
+                      @reset="onCaptchaReset"
+                      @state="onCaptchaState"
+                    />
+                  </ClientOnly>
                 </div>
 
                 <p v-if="errorMessage" class="text-center text-sm color-crimson-11 font-light">
