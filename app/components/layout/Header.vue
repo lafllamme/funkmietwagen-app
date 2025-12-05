@@ -1,7 +1,14 @@
 <script setup lang="ts">
 import { useRoute } from '#imports'
+import { ref } from 'vue'
+import { Icon } from '#components'
 
 const route = useRoute()
+
+import MainMenu from '@/components/navigation/MainMenu.vue'
+import { mainMenuContact, mainMenuItems, mainMenuSocial } from '@/components/navigation/MainMenu.model'
+
+const isMenuOpen = ref(false)
 
 const baseNav = '[@media(min-width:400px)]:text-sm [@media(max-width:400px)]:mr-3 text-xs items-center gap-2 rounded-full border border-transparent px-4 py-2 text-muted-foreground font-light tracking-widest uppercase transition-colors duration-300 ease-[cubic-bezier(0.33,1,0.68,1)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-pureWhite focus-visible:ring-offset-pureBlack'
 const hoverNav = 'hover:bg-pureWhite hover:text-pureBlack'
@@ -14,7 +21,12 @@ function navClass(path: string, extra = '') {
 </script>
 
 <template>
-  <header class="sticky top-0 z-50 w-full border-b border-gray-12 border-solid bg-pureBlack/60 backdrop-blur-md supports-[backdrop-filter]:bg-pureBlack/60">
+  <header
+    class="sticky top-0 z-50 w-full border-b border-gray-12 border-solid transition-colors duration-300"
+    :class="isMenuOpen
+      ? 'bg-pureBlack/95 backdrop-blur-none supports-[backdrop-filter]:bg-pureBlack/95'
+      : 'bg-pureBlack/60 backdrop-blur-md supports-[backdrop-filter]:bg-pureBlack/60'"
+  >
     <div class="container mx-auto h-20 flex items-center justify-between px-4 md:px-6">
       <NuxtLink to="/" class="flex items-center gap-3">
         <div class="h-11 w-11 flex items-center justify-center border-2 border-pureWhite border-solid">
@@ -57,14 +69,23 @@ function navClass(path: string, extra = '') {
         >
           Reservieren
         </NuxtLink>
-        <a
-          href="tel:+49123456789"
-          class="flex items-center gap-2 border border-pureWhite border-solid px-5 py-2.5 text-sm text-foreground font-light tracking-widest uppercase transition-all hover:bg-foreground hover:text-background"
+        <button
+          type="button"
+          class="flex items-center gap-2 border border-pureWhite border-solid px-4 py-2 text-sm text-foreground font-light tracking-widest uppercase transition-all hover:bg-foreground hover:text-background"
+          @click="isMenuOpen = true"
         >
-          <Icon name="lucide:phone" class="h-4 w-4" />
-          <span class="hidden md:inline">Anrufen</span>
-        </a>
+          <Icon name="lucide:menu" class="h-4 w-4" />
+          <span class="hidden md:inline">Menü</span>
+        </button>
       </nav>
     </div>
+    <MainMenu
+      :open="isMenuOpen"
+      :items="mainMenuItems"
+      :contact="mainMenuContact"
+      :social="mainMenuSocial"
+      offset="80px"
+      @close="isMenuOpen = false"
+    />
   </header>
 </template>
