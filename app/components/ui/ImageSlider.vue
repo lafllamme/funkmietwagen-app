@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type { PropType, Ref } from 'vue'
 import { onKeyStroke, useIntervalFn, useSwipe } from '@vueuse/core'
-import { computed, defineModel, onBeforeUnmount, onMounted, ref, watch } from 'vue'
+import { computed, onBeforeUnmount, onMounted, ref, watch } from 'vue'
 
 const props = defineProps({
   images: {
