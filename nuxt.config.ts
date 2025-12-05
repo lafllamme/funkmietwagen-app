@@ -32,12 +32,4 @@ export default defineNuxtConfig({
       BLOG_URL: '',
     },
   },
-  // Enable verbose logging during prerender to surface the failing route.
-  nitro: {
-    logLevel: 'trace',
-    prerender: {
-      concurrency: 1,
-      routes: [],
-    },
-  },
 })
