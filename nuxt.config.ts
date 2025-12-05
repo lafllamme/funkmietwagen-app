@@ -10,7 +10,6 @@ export default defineNuxtConfig({
     '/impressum': { prerender: true },
     '/datenschutz': { prerender: true },
     '/nutzungsbedingungen': { prerender: true },
-    '/vorbestellung': { prerender: true },
   },
   // Global CSS
   css: [
