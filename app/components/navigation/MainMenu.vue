@@ -66,7 +66,7 @@ function isActive(link: MainMenuLink) {
         <div
           class="px-6 pb-10 lg:px-20 md:px-12"
         >
-          <div class="grid mx-auto max-w-6xl gap-10 lg:grid-cols-3 lg:mt-12 lg:gap-16">
+          <div class="grid mx-auto mt-6 max-w-6xl gap-10 lg:grid-cols-3 lg:mt-12 lg:gap-16">
             <!-- Navigation Block -->
             <nav class="lg:col-span-2">
               <p
