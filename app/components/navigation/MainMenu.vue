@@ -53,17 +53,6 @@ function isActive(link: MainMenuLink) {
         @click="close"
       />
 
-      <!-- Sofortige schwarze Fläche unterhalb des Headers, verhindert Durchblitzen -->
-      <div
-        class="absolute left-0 right-0 bg-pureBlack"
-        :style="{
-          top: props.offset || '80px',
-          bottom: 0,
-          opacity: open ? 1 : 0,
-          transition: open ? 'opacity 0ms' : 'opacity 0ms 550ms',
-        }"
-      />
-
       <!-- Panel: startet unterhalb des Headers -->
       <div
         class="absolute left-0 right-0 bg-pureBlack bg-sky-9 text-foreground shadow-[0_30px_120px_-60px_rgba(255,255,255,0.6)]"
