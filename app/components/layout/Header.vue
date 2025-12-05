@@ -43,7 +43,7 @@ function closeMenu() {
   isPanelOpen.value = false
   closeTimer = setTimeout(() => {
     isHeaderSolid.value = false
-  }, 420)
+  }, 600)
 }
 
 onBeforeUnmount(() => {

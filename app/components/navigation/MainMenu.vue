@@ -60,7 +60,7 @@ function isActive(link: MainMenuLink) {
           top: props.offset || '80px',
           bottom: 0,
           opacity: open ? 1 : 0,
-          transition: open ? 'opacity 0ms' : 'opacity 220ms ease',
+          transition: open ? 'opacity 0ms' : 'opacity 0ms 550ms',
         }"
       />
 
