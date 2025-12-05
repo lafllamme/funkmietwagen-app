@@ -1,7 +1,8 @@
 <script setup lang="ts">
 import type { MainMenuContact, MainMenuLink, MainMenuSocial } from './MainMenu.model'
+import { Icon } from '#components'
 import { useRoute } from '#imports'
-import { ref } from 'vue'
+import { onMounted, ref } from 'vue'
 
 const props = defineProps<{
   open: boolean
@@ -19,6 +20,11 @@ function close() {
 
 const activeSubmenu = ref<string | null>(null)
 const route = useRoute()
+const isMounted = ref(false)
+
+onMounted(() => {
+  isMounted.value = true
+})
 
 function toggleSubmenu(label: string) {
   activeSubmenu.value = activeSubmenu.value === label ? null : label
@@ -35,10 +41,10 @@ function isActive(link: MainMenuLink) {
 
 <template>
   <!-- Overlay wird direkt auf body gelegt, nicht im Header -->
-  <Teleport to="body">
+  <Teleport v-if="isMounted" to="body">
     <div
+      v-show="open"
       class="fixed inset-0 z-40 transition-all duration-500"
-      :class="open ? 'visible' : 'invisible'"
     >
       <!-- Backdrop hinter dem Header, da Header z-50 hat -->
       <div
@@ -178,7 +184,7 @@ function isActive(link: MainMenuLink) {
                   :href="`tel:${contact.phone}`"
                   class="flex items-center gap-2 hover:text-pureWhite"
                 >
-                  <Icon name="lucide:phone" class="size-4" />
+                  <Icon name="lucide:phone" class="h-4 w-4" />
                   <span>{{ contact.phone }}</span>
                 </a>
                 <p

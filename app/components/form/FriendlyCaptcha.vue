@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { FRCWidgetCompleteEvent, FRCWidgetResetEvent, FRCWidgetStateChangeEvent, WidgetState } from '@friendlycaptcha/sdk'
+import type { FRCWidgetCompleteEvent, FRCWidgetStateChangeEvent, WidgetState } from '@friendlycaptcha/sdk'
 import { consola } from 'consola'
 import { onBeforeUnmount, onMounted, ref } from 'vue'
 
@@ -16,8 +16,11 @@ const emit = defineEmits<{
 }>()
 
 const containerRef = ref<HTMLElement | null>(null)
-let sdk: any = null
-let widget: any = null
+const sdk = ref<any>(null)
+const widget = ref<any>(null)
+const handleStateChange = ref<((event: FRCWidgetStateChangeEvent) => void) | null>(null)
+const handleComplete = ref<((event: FRCWidgetCompleteEvent) => void) | null>(null)
+const handleReset = ref<((_event: Event) => void) | null>(null)
 
 const trackedStatesReady = new Set<WidgetState>([
   'activating',
@@ -35,53 +38,59 @@ onMounted(async () => {
   try {
     const mod = await import('@friendlycaptcha/sdk')
     const FriendlyCaptchaSDK = (mod as any).FriendlyCaptchaSDK || (mod as any).default
-    sdk = new FriendlyCaptchaSDK()
-    widget = sdk.createWidget({
+    sdk.value = new FriendlyCaptchaSDK()
+    widget.value = sdk.value.createWidget({
       element: containerRef.value!,
       sitekey: props.siteKey,
       language: props.language ?? 'de',
       startMode: 'focus',
     })
 
-    const handleStateChange = (event: FRCWidgetStateChangeEvent) => {
+    handleStateChange.value = (event: FRCWidgetStateChangeEvent) => {
       const state = event.detail.state
       emit('state', state)
       if (trackedStatesReady.has(state))
         emit('ready')
     }
 
-    const handleComplete = (event: FRCWidgetCompleteEvent) => {
+    handleComplete.value = (event: FRCWidgetCompleteEvent) => {
       emit('completed', { response: event.detail.response })
     }
 
-    const handleReset = (_event: FRCWidgetResetEvent) => {
+    handleReset.value = (_event: FRCWidgetResetEvent) => {
       emit('reset')
     }
 
-    widget.addEventListener('frc:widget.statechange', handleStateChange)
-    widget.addEventListener('frc:widget.complete', handleComplete)
-    widget.addEventListener('frc:widget.reset', handleReset)
-
-    onBeforeUnmount(() => {
-      try {
-        widget.removeEventListener('frc:widget.statechange', handleStateChange)
-        widget.removeEventListener('frc:widget.complete', handleComplete)
-        widget.removeEventListener('frc:widget.reset', handleReset)
-        widget?.destroy?.()
-      }
-      catch (error) {
-        consola.warn('[FriendlyCaptcha] destroy failed', error)
-      }
-    })
+    widget.value.addEventListener('frc:widget.statechange', handleStateChange.value)
+    widget.value.addEventListener('frc:widget.complete', handleComplete.value)
+    widget.value.addEventListener('frc:widget.reset', handleReset.value)
   }
   catch (error) {
     consola.error('[FriendlyCaptcha] load/init failed', error)
   }
 })
 
+onBeforeUnmount(() => {
+  if (!widget.value)
+    return
+
+  try {
+    if (handleStateChange.value)
+      widget.value.removeEventListener('frc:widget.statechange', handleStateChange.value)
+    if (handleComplete.value)
+      widget.value.removeEventListener('frc:widget.complete', handleComplete.value)
+    if (handleReset.value)
+      widget.value.removeEventListener('frc:widget.reset', handleReset.value)
+    widget.value?.destroy?.()
+  }
+  catch (error) {
+    consola.warn('[FriendlyCaptcha] destroy failed', error)
+  }
+})
+
 function reset() {
   try {
-    widget?.reset?.()
+    widget.value?.reset?.()
   }
   catch (error) {
     consola.warn('[FriendlyCaptcha] reset failed', error)
