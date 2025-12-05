@@ -399,288 +399,286 @@ async function onSubmit() {
             </NuxtLink>
           </div>
 
-          <div class="mx-auto max-w-6xl">
-            <div class="mb-14 text-center md:mb-16">
-              <p class="mb-4 text-xs text-muted-foreground font-light tracking-[0.4em] uppercase">
-                Reservierung
-              </p>
-              <h1 class="mb-4 text-3xl text-foreground font-medium font-serif md:text-5xl">
-                Fahrt anfragen
-              </h1>
-              <p class="text-muted-foreground font-light">
-                Teilen Sie uns Ihre Wünsche mit und erhalten Sie ein individuelles Angebot.
-              </p>
+          <div class="mb-14 text-center md:mb-16">
+            <p class="mb-4 text-xs text-muted-foreground font-light tracking-[0.4em] uppercase">
+              Reservierung
+            </p>
+            <h1 class="mb-4 text-3xl text-foreground font-medium font-serif md:text-5xl">
+              Fahrt anfragen
+            </h1>
+            <p class="text-muted-foreground font-light">
+              Teilen Sie uns Ihre Wünsche mit und erhalten Sie ein individuelles Angebot.
+            </p>
+          </div>
+
+          <div class="grid gap-12 lg:grid-cols-3">
+            <div class="lg:col-span-1">
+              <div class="sticky top-28">
+                <NextSteps />
+              </div>
             </div>
 
-            <div class="grid gap-12 lg:grid-cols-3">
-              <div class="lg:col-span-1">
-                <div class="sticky top-28">
-                  <NextSteps />
-                </div>
-              </div>
-
-              <div class="lg:col-span-2">
-                <form
-                  ref="formRef"
-                  class="space-y-8"
-                  :method="FORM_METHOD"
-                  :action="FORM_ACTION"
-                  novalidate
-                  @submit.prevent="onSubmit"
-                >
-                  <div class="border border-gray-5 border-solid p-4 sm:p-8">
-                    <h3 class="mb-6 text-xs text-muted-foreground font-light tracking-[0.3em] uppercase">
-                      Persönliche Daten
-                    </h3>
-                    <div class="grid gap-6 sm:grid-cols-2">
-                      <div class="space-y-2">
-                        <UiLabel for="name">
-                          Name *
-                        </UiLabel>
-                        <UiInput
-                          id="name"
-                          ref="nameInputRef"
-                          v-model="nameValue"
-                          name="name"
-                          required
-                          placeholder="Ihr vollständiger Name"
-                          :class="errors.name ? 'border-red-10 focus-visible:ring-red-10' : ''"
-                        />
-                        <p v-if="errors.name" class="text-xs text-red-10 font-light">
-                          {{ errors.name }}
-                        </p>
-                      </div>
-                      <div class="space-y-2">
-                        <UiLabel for="phone">
-                          Telefon *
-                        </UiLabel>
-                        <UiInput
-                          id="phone"
-                          ref="phoneInputRef"
-                          v-model="phoneValue"
-                          name="phone"
-                          type="tel"
-                          inputmode="tel"
-                          required
-                          placeholder="+49 123 456789"
-                          :class="errors.phone ? 'border-red-10 focus-visible:ring-red-10' : ''"
-                        />
-                        <p v-if="errors.phone" class="text-xs text-red-10 font-light">
-                          {{ errors.phone }}
-                        </p>
-                      </div>
-                    </div>
-                    <div class="mt-6 space-y-2">
-                      <UiLabel for="email">
-                        E-Mail *
+            <div class="lg:col-span-2">
+              <form
+                ref="formRef"
+                class="space-y-8"
+                :method="FORM_METHOD"
+                :action="FORM_ACTION"
+                novalidate
+                @submit.prevent="onSubmit"
+              >
+                <div class="border border-gray-5 border-solid p-4 sm:p-8">
+                  <h3 class="mb-6 text-xs text-muted-foreground font-light tracking-[0.3em] uppercase">
+                    Persönliche Daten
+                  </h3>
+                  <div class="grid gap-6 sm:grid-cols-2">
+                    <div class="space-y-2">
+                      <UiLabel for="name">
+                        Name *
                       </UiLabel>
                       <UiInput
-                        id="email"
-                        ref="emailInputRef"
-                        v-model="emailValue"
-                        name="email"
-                        type="email"
-                        inputmode="email"
+                        id="name"
+                        ref="nameInputRef"
+                        v-model="nameValue"
+                        name="name"
                         required
-                        placeholder="ihre.email@beispiel.de"
-                        :class="errors.email ? 'border-red-10 focus-visible:ring-red-10' : ''"
+                        placeholder="Ihr vollständiger Name"
+                        :class="errors.name ? 'border-red-10 focus-visible:ring-red-10' : ''"
                       />
-                      <p v-if="errors.email" class="text-xs text-red-10 font-light">
-                        {{ errors.email }}
+                      <p v-if="errors.name" class="text-xs text-red-10 font-light">
+                        {{ errors.name }}
+                      </p>
+                    </div>
+                    <div class="space-y-2">
+                      <UiLabel for="phone">
+                        Telefon *
+                      </UiLabel>
+                      <UiInput
+                        id="phone"
+                        ref="phoneInputRef"
+                        v-model="phoneValue"
+                        name="phone"
+                        type="tel"
+                        inputmode="tel"
+                        required
+                        placeholder="+49 123 456789"
+                        :class="errors.phone ? 'border-red-10 focus-visible:ring-red-10' : ''"
+                      />
+                      <p v-if="errors.phone" class="text-xs text-red-10 font-light">
+                        {{ errors.phone }}
                       </p>
                     </div>
                   </div>
+                  <div class="mt-6 space-y-2">
+                    <UiLabel for="email">
+                      E-Mail *
+                    </UiLabel>
+                    <UiInput
+                      id="email"
+                      ref="emailInputRef"
+                      v-model="emailValue"
+                      name="email"
+                      type="email"
+                      inputmode="email"
+                      required
+                      placeholder="ihre.email@beispiel.de"
+                      :class="errors.email ? 'border-red-10 focus-visible:ring-red-10' : ''"
+                    />
+                    <p v-if="errors.email" class="text-xs text-red-10 font-light">
+                      {{ errors.email }}
+                    </p>
+                  </div>
+                </div>
 
-                  <div class="border border-gray-5 border-solid p-4 sm:p-8">
-                    <h3 class="mb-6 text-xs text-muted-foreground font-light tracking-[0.3em] uppercase">
-                      Fahrtdetails
-                    </h3>
+                <div class="border border-gray-5 border-solid p-4 sm:p-8">
+                  <h3 class="mb-6 text-xs text-muted-foreground font-light tracking-[0.3em] uppercase">
+                    Fahrtdetails
+                  </h3>
 
-                    <div class="space-y-6">
-                      <div class="space-y-4">
-                        <BookingTypeSwitch v-model="bookingType" />
-                        <input type="hidden" name="bookingType" :value="bookingType">
-                      </div>
-                      <div
-                        ref="vehicleSectionRef"
-                        class="space-y-2"
-                        :class="errors.vehicle ? 'ring-2 ring-red-10 rounded-sm ring-offset-12 ring-offset-background' : ''"
-                      >
-                        <UiLabel for="vehicle">
-                          Fahrzeugklasse *
-                        </UiLabel>
-                        <VehicleRadioGroup v-model="vehicleValue" required />
-                        <p v-if="errors.vehicle" class="text-xs text-red-10 font-light">
-                          {{ errors.vehicle }}
-                        </p>
-                      </div>
-                      <div class="space-y-2">
-                        <UiLabel for="pickup">
-                          Abholadresse *
-                        </UiLabel>
-                        <UiInput
-                          id="pickup"
-                          ref="pickupInputRef"
-                          v-model="pickupValue"
-                          name="pickup"
-                          required
-                          placeholder="Straße, Hausnummer, PLZ, Ort"
-                          :class="errors.pickup ? 'border-red-10 focus-visible:ring-red-10' : ''"
-                        />
-                        <p v-if="errors.pickup" class="text-xs text-red-10 font-light">
-                          {{ errors.pickup }}
-                        </p>
-                      </div>
+                  <div class="space-y-6">
+                    <div class="space-y-4">
+                      <BookingTypeSwitch v-model="bookingType" />
+                      <input type="hidden" name="bookingType" :value="bookingType">
+                    </div>
+                    <div
+                      ref="vehicleSectionRef"
+                      class="space-y-2"
+                      :class="errors.vehicle ? 'ring-2 ring-red-10 rounded-sm ring-offset-12 ring-offset-background' : ''"
+                    >
+                      <UiLabel for="vehicle">
+                        Fahrzeugklasse *
+                      </UiLabel>
+                      <VehicleRadioGroup v-model="vehicleValue" required />
+                      <p v-if="errors.vehicle" class="text-xs text-red-10 font-light">
+                        {{ errors.vehicle }}
+                      </p>
+                    </div>
+                    <div class="space-y-2">
+                      <UiLabel for="pickup">
+                        Abholadresse *
+                      </UiLabel>
+                      <UiInput
+                        id="pickup"
+                        ref="pickupInputRef"
+                        v-model="pickupValue"
+                        name="pickup"
+                        required
+                        placeholder="Straße, Hausnummer, PLZ, Ort"
+                        :class="errors.pickup ? 'border-red-10 focus-visible:ring-red-10' : ''"
+                      />
+                      <p v-if="errors.pickup" class="text-xs text-red-10 font-light">
+                        {{ errors.pickup }}
+                      </p>
+                    </div>
 
-                      <div class="relative overflow-hidden">
-                        <AnimatePresence :initial="false" mode="wait">
-                          <Motion
-                            :key="bookingType"
-                            tag="div"
-                            :initial="{ opacity: 0, height: 0, y: bookingType === 'route' ? -12 : 12 }"
-                            :animate="{ opacity: 1, height: 'auto', y: 0 }"
-                            :exit="{ opacity: 0, height: 0, y: bookingType === 'route' ? -12 : 12 }"
-                            :transition="{ duration: 0.4, ease: 'easeInOut' }"
-                          >
-                            <template v-if="bookingType === 'route'">
-                              <div ref="destinationWrapper" class="space-y-2">
-                                <UiLabel for="destination">
-                                  Ziel *
-                                </UiLabel>
-                                <DestinationSelect
-                                  v-model="destinationValue"
-                                  :required="bookingType === 'route'"
-                                  :error="!!errors.destination"
-                                  @selected="focusDateField"
-                                />
-                                <p v-if="errors.destination" class="text-xs text-red-10 font-light">
-                                  {{ errors.destination }}
-                                </p>
-                              </div>
-                            </template>
-                            <template v-else>
-                              <UiLabel for="hours">
-                                Stunden *
+                    <div class="relative overflow-hidden">
+                      <AnimatePresence :initial="false" mode="wait">
+                        <Motion
+                          :key="bookingType"
+                          tag="div"
+                          :initial="{ opacity: 0, height: 0, y: bookingType === 'route' ? -12 : 12 }"
+                          :animate="{ opacity: 1, height: 'auto', y: 0 }"
+                          :exit="{ opacity: 0, height: 0, y: bookingType === 'route' ? -12 : 12 }"
+                          :transition="{ duration: 0.4, ease: 'easeInOut' }"
+                        >
+                          <template v-if="bookingType === 'route'">
+                            <div ref="destinationWrapper" class="space-y-2">
+                              <UiLabel for="destination">
+                                Ziel *
                               </UiLabel>
-                              <div class="space-y-4">
-                                <div class="flex justify-between px-1 text-xs text-muted-foreground tracking-[0.25em] uppercase">
-                                  <span>1</span>
-                                  <span>10</span>
-                                </div>
-                                <input
-                                  id="hours"
-                                  v-model.number="hourlyHours"
-                                  type="range"
-                                  name="hours"
-                                  min="1"
-                                  max="10"
-                                  step="1"
-                                  class="hour-range w-full accent-foreground"
-                                  :required="bookingType === 'hourly'"
+                              <DestinationSelect
+                                v-model="destinationValue"
+                                :required="bookingType === 'route'"
+                                :error="!!errors.destination"
+                                @selected="focusDateField"
+                              />
+                              <p v-if="errors.destination" class="text-xs text-red-10 font-light">
+                                {{ errors.destination }}
+                              </p>
+                            </div>
+                          </template>
+                          <template v-else>
+                            <UiLabel for="hours">
+                              Stunden *
+                            </UiLabel>
+                            <div class="space-y-4">
+                              <div class="flex justify-between px-1 text-xs text-muted-foreground tracking-[0.25em] uppercase">
+                                <span>1</span>
+                                <span>10</span>
+                              </div>
+                              <input
+                                id="hours"
+                                v-model.number="hourlyHours"
+                                type="range"
+                                name="hours"
+                                min="1"
+                                max="10"
+                                step="1"
+                                class="hour-range w-full accent-foreground"
+                                :required="bookingType === 'hourly'"
+                              >
+                              <div class="flex justify-between overflow-hidden px-0.5">
+                                <span
+                                  v-for="n in 10"
+                                  :key="n"
+                                  class="min-w-0 flex-1 text-center transition-all duration-300"
+                                  :class="hourlyHours === n ? 'text-foreground text-lg font-light' : 'text-muted-foreground text-[11px]'"
                                 >
-                                <div class="flex justify-between overflow-hidden px-0.5">
-                                  <span
-                                    v-for="n in 10"
-                                    :key="n"
-                                    class="min-w-0 flex-1 text-center transition-all duration-300"
-                                    :class="hourlyHours === n ? 'text-foreground text-lg font-light' : 'text-muted-foreground text-[11px]'"
-                                  >
-                                    {{ n }}
-                                  </span>
+                                  {{ n }}
+                                </span>
+                              </div>
+                              <div class="text-center">
+                                <div class="text-5xl text-foreground font-light leading-none">
+                                  {{ hourlyHours }}
                                 </div>
-                                <div class="text-center">
-                                  <div class="text-5xl text-foreground font-light leading-none">
-                                    {{ hourlyHours }}
-                                  </div>
-                                  <div class="mt-2 text-xs text-muted-foreground tracking-[0.2em] uppercase">
-                                    Stunden
-                                  </div>
+                                <div class="mt-2 text-xs text-muted-foreground tracking-[0.2em] uppercase">
+                                  Stunden
                                 </div>
                               </div>
-                            </template>
-                          </Motion>
-                        </AnimatePresence>
-                      </div>
+                            </div>
+                          </template>
+                        </Motion>
+                      </AnimatePresence>
+                    </div>
 
-                      <div class="grid gap-6 sm:grid-cols-2">
-                        <div ref="dateFieldWrapper" class="space-y-2">
-                          <UiLabel for="date">
-                            Datum *
-                          </UiLabel>
-                          <DatePickerField
-                            ref="datePickerRef"
-                            v-model="dateValue"
-                            required
-                            :error="!!errors.date"
-                          />
-                          <p v-if="errors.date" class="text-xs text-red-10 font-light">
-                            {{ errors.date }}
-                          </p>
-                        </div>
-                        <div ref="timeFieldWrapper" class="space-y-2">
-                          <UiLabel for="time">
-                            Uhrzeit *
-                          </UiLabel>
-                          <TimeField
-                            v-model="timeValue"
-                            required
-                            :error="!!errors.time"
-                          />
-                          <p v-if="errors.time" class="text-xs text-red-10 font-light">
-                            {{ errors.time }}
-                          </p>
-                        </div>
-                      </div>
-
-                      <div class="space-y-2">
-                        <UiLabel for="passengers">
-                          Passagiere *
+                    <div class="grid gap-6 sm:grid-cols-2">
+                      <div ref="dateFieldWrapper" class="space-y-2">
+                        <UiLabel for="date">
+                          Datum *
                         </UiLabel>
-                        <PersonSelector v-model="passengers" :max="passengerMax" required />
+                        <DatePickerField
+                          ref="datePickerRef"
+                          v-model="dateValue"
+                          required
+                          :error="!!errors.date"
+                        />
+                        <p v-if="errors.date" class="text-xs text-red-10 font-light">
+                          {{ errors.date }}
+                        </p>
+                      </div>
+                      <div ref="timeFieldWrapper" class="space-y-2">
+                        <UiLabel for="time">
+                          Uhrzeit *
+                        </UiLabel>
+                        <TimeField
+                          v-model="timeValue"
+                          required
+                          :error="!!errors.time"
+                        />
+                        <p v-if="errors.time" class="text-xs text-red-10 font-light">
+                          {{ errors.time }}
+                        </p>
                       </div>
                     </div>
+
+                    <div class="space-y-2">
+                      <UiLabel for="passengers">
+                        Passagiere *
+                      </UiLabel>
+                      <PersonSelector v-model="passengers" :max="passengerMax" required />
+                    </div>
                   </div>
+                </div>
 
-                  <div class="border border-gray-5 border-solid p-4 sm:p-8">
-                    <h3 class="mb-6 text-xs text-muted-foreground font-light tracking-[0.3em] uppercase">
-                      Anmerkungen
-                    </h3>
-                    <UiTextarea
-                      id="notes"
-                      name="notes"
-                      rows="4"
-                      placeholder="z.B. Kindersitz benötigt, Rückfahrt gewünscht, besondere Anforderungen..."
-                    />
-                  </div>
+                <div class="border border-gray-5 border-solid p-4 sm:p-8">
+                  <h3 class="mb-6 text-xs text-muted-foreground font-light tracking-[0.3em] uppercase">
+                    Anmerkungen
+                  </h3>
+                  <UiTextarea
+                    id="notes"
+                    name="notes"
+                    rows="4"
+                    placeholder="z.B. Kindersitz benötigt, Rückfahrt gewünscht, besondere Anforderungen..."
+                  />
+                </div>
 
-                  <button
-                    type="submit"
-                    :disabled="submitDisabled"
-                    class="w-full flex items-center justify-center gap-3 border border-foreground bg-foreground px-8 py-5 text-sm text-background font-light tracking-widest uppercase transition-all disabled:cursor-not-allowed hover:bg-transparent hover:text-foreground disabled:opacity-60 disabled:hover:bg-foreground disabled:hover:text-background"
-                  >
-                    <Icon name="lucide:send" class="size-4" />
-                    {{ sending ? 'Wird gesendet...' : 'Anfrage senden' }}
-                  </button>
+                <button
+                  type="submit"
+                  :disabled="submitDisabled"
+                  class="w-full flex items-center justify-center gap-3 border border-foreground bg-foreground px-8 py-5 text-sm text-background font-light tracking-widest uppercase transition-all disabled:cursor-not-allowed hover:bg-transparent hover:text-foreground disabled:opacity-60 disabled:hover:bg-foreground disabled:hover:text-background"
+                >
+                  <Icon name="lucide:send" class="size-4" />
+                  {{ sending ? 'Wird gesendet...' : 'Anfrage senden' }}
+                </button>
 
-                  <div class="mt-4">
-                    <FriendlyCaptcha
-                      ref="captchaRef"
-                      :site-key="FRIENDLY_CAPTCHA_SITEKEY"
-                      @ready="onCaptchaReady"
-                      @completed="onCaptchaCompleted"
-                      @reset="onCaptchaReset"
-                      @state="onCaptchaState"
-                    />
-                  </div>
+                <div class="mt-4">
+                  <FriendlyCaptcha
+                    ref="captchaRef"
+                    :site-key="FRIENDLY_CAPTCHA_SITEKEY"
+                    @ready="onCaptchaReady"
+                    @completed="onCaptchaCompleted"
+                    @reset="onCaptchaReset"
+                    @state="onCaptchaState"
+                  />
+                </div>
 
-                  <p v-if="errorMessage" class="text-center text-sm color-crimson-11 font-light">
-                    {{ errorMessage }}
-                  </p>
-                  <p class="text-center text-xs text-muted-foreground font-light">
-                    Wir melden uns innerhalb von 24 Stunden bei Ihnen.
-                  </p>
-                </form>
-              </div>
+                <p v-if="errorMessage" class="text-center text-sm color-crimson-11 font-light">
+                  {{ errorMessage }}
+                </p>
+                <p class="text-center text-xs text-muted-foreground font-light">
+                  Wir melden uns innerhalb von 24 Stunden bei Ihnen.
+                </p>
+              </form>
             </div>
           </div>
         </div>
