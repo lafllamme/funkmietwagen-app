@@ -348,7 +348,7 @@ async function onSubmit() {
 </script>
 
 <template>
-  <div class="min-h-screen flex flex-col bg-background">
+  <main class="relative flex-1">
     <div
       v-if="isDev"
       class="fixed right-4 top-24 z-[60] flex flex-col gap-2"
@@ -376,9 +376,9 @@ async function onSubmit() {
       </button>
     </div>
 
-    <main class="flex-1">
+    <section class="py-12 md:py-16">
       <div class="container mx-auto px-4 md:px-6">
-        <div v-if="submitted" class="py-24">
+        <div v-if="submitted" class="py-12 md:py-16">
           <SuccessOverlay
             label="Bestätigung"
             title="Vielen Dank"
@@ -389,7 +389,7 @@ async function onSubmit() {
         </div>
 
         <div v-else>
-          <div class="mb-12">
+          <div class="mb-10 md:mb-12">
             <NuxtLink
               to="/"
               class="inline-flex items-center gap-2 text-sm text-muted-foreground font-light tracking-widest uppercase transition-colors hover:text-foreground"
@@ -400,7 +400,7 @@ async function onSubmit() {
           </div>
 
           <div class="mx-auto">
-            <div class="mb-16 text-center">
+            <div class="mb-14 text-center md:mb-16">
               <p class="mb-4 text-xs text-muted-foreground font-light tracking-[0.4em] uppercase">
                 Reservierung
               </p>
@@ -685,6 +685,6 @@ async function onSubmit() {
           </div>
         </div>
       </div>
-    </main>
-  </div>
+    </section>
+  </main>
 </template>

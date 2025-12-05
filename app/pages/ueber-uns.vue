@@ -5,7 +5,7 @@ import { Icon } from '#components'
 <template>
   <main class="flex-1 bg-background">
     <section class="border-white/10 from-black to-black relative overflow-hidden border-b via-[#0b0b0f] bg-gradient-to-b">
-      <div class="container relative mx-auto px-4 py-16 md:px-6 md:py-24">
+      <div class="container relative mx-auto px-4 py-12 md:px-6 md:py-16">
         <div class="mx-auto max-w-4xl text-center space-y-6">
           <p class="text-xs text-muted-foreground font-light tracking-[0.4em] uppercase">
             Über uns

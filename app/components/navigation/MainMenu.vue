@@ -40,7 +40,7 @@ function toggleSubmenu(label: string) {
 
       <!-- Panel: startet unterhalb des Headers -->
       <div
-        class="absolute left-0 right-0 bg-pureBlack bg-sky-9 text-foreground shadow-[0_30px_120px_-60px_rgba(0,0,0,0.7)]"
+        class="absolute left-0 right-0 bg-pureBlack bg-sky-9 text-foreground shadow-[0_30px_120px_-60px_rgba(255,255,255,0.6)]"
         :style="{
           top: props.offset || '80px', // exakt unter Header
           transform: open ? 'translateY(0)' : 'translateY(-100%)',
