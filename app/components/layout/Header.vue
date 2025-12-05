@@ -56,7 +56,7 @@ onBeforeUnmount(() => {
   <!-- nur der Header -->
   <header :class="headerClasses">
     <div class="container mx-auto h-20 flex items-center justify-between px-4 md:px-6">
-      <NuxtLink to="/" class="flex items-center gap-3">
+      <NuxtLink to="/" class="flex items-center gap-3" @click="closeMenu">
         <div class="h-11 w-11 flex items-center justify-center border-2 border-pureWhite border-solid">
           <span class="text-xl font-semibold tracking-tight font-serif">A</span>
         </div>
@@ -71,6 +71,7 @@ onBeforeUnmount(() => {
           to="/vorbestellung"
           class="inline-flex items-center gap-2 border border-transparent rounded-full px-4 py-2 text-sm text-muted-foreground font-light tracking-widest uppercase transition-colors duration-300 ease-[cubic-bezier(0.33,1,0.68,1)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-pureWhite focus-visible:ring-offset-pureBlack"
           :class="activeRoute === '/vorbestellung' ? 'bg-pureWhite text-pureBlack border-pureWhite/60' : 'hover:bg-pureWhite hover:text-pureBlack'"
+          @click="closeMenu"
         >
           Reservieren
         </NuxtLink>
