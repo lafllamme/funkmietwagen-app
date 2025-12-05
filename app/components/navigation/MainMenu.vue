@@ -1,8 +1,7 @@
 <script setup lang="ts">
 import type { MainMenuContact, MainMenuLink, MainMenuSocial } from './MainMenu.model'
-import { Icon } from '#components'
-import { ref } from 'vue'
 import { useRoute } from '#imports'
+import { ref } from 'vue'
 
 const props = defineProps<{
   open: boolean
@@ -138,18 +137,18 @@ function isActive(link: MainMenuLink) {
                     :class="activeSubmenu === item.label ? 'max-h-48 opacity-100 pb-2' : 'max-h-0 opacity-0'"
                   >
                     <li
-                    v-for="sub in item.submenu"
-                    :key="sub.label"
-                  >
-                    <NuxtLink
-                      :to="sub.href || '#'"
-                      class="block border-l-2 border-muted-foreground/40 py-1.5 pl-4 text-sm text-muted-foreground transition-colors hover:border-pureWhite hover:text-pureWhite"
-                      :class="sub.href === route.path ? 'text-pureWhite border-pureWhite' : ''"
-                      @click="close"
+                      v-for="sub in item.submenu"
+                      :key="sub.label"
                     >
-                      {{ sub.label }}
-                    </NuxtLink>
-                  </li>
+                      <NuxtLink
+                        :to="sub.href || '#'"
+                        class="block border-l-2 border-muted-foreground/40 py-1.5 pl-4 text-sm text-muted-foreground transition-colors hover:border-pureWhite hover:text-pureWhite"
+                        :class="sub.href === route.path ? 'text-pureWhite border-pureWhite' : ''"
+                        @click="close"
+                      >
+                        {{ sub.label }}
+                      </NuxtLink>
+                    </li>
                   </ul>
                 </li>
               </ul>
@@ -175,15 +174,13 @@ function isActive(link: MainMenuLink) {
                 >
                   {{ contact.email }}
                 </a>
-                <p class="flex items-center gap-2">
-                  <Icon name="lucide:phone" class="h-4 w-4" />
-                  <a
-                    :href="`tel:${contact.phone}`"
-                    class="hover:text-pureWhite"
-                  >
-                    {{ contact.phone }}
-                  </a>
-                </p>
+                <a
+                  :href="`tel:${contact.phone}`"
+                  class="flex items-center gap-2 hover:text-pureWhite"
+                >
+                  <Icon name="lucide:phone" class="size-4" />
+                  <span>{{ contact.phone }}</span>
+                </a>
                 <p
                   v-if="contact.address"
                   class="text-xs leading-relaxed"
