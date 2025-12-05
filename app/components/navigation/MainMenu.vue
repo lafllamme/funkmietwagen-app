@@ -22,16 +22,6 @@ const activeSubmenu = ref<string | null>(null)
 function toggleSubmenu(label: string) {
   activeSubmenu.value = activeSubmenu.value === label ? null : label
 }
-
-// Body scroll sperren, wenn Menu offen
-/* watch(
-  () => props.open,
-  (isOpen) => {
-    if (process.client) {
-      document.body.style.overflow = isOpen ? 'hidden' : ''
-    }
-  },
-) */
 </script>
 
 <template>
@@ -50,7 +40,7 @@ function toggleSubmenu(label: string) {
 
       <!-- Panel: startet unterhalb des Headers -->
       <div
-        class="absolute left-0 right-0 bg-pureBlack bg-red-10 text-foreground shadow-[0_30px_120px_-60px_rgba(0,0,0,0.7)]"
+        class="absolute left-0 right-0 bg-pureBlack bg-pureBlack text-foreground shadow-[0_30px_120px_-60px_rgba(0,0,0,0.7)]"
         :style="{
           top: props.offset || '80px', // exakt unter Header
           transform: open ? 'translateY(0)' : 'translateY(-100%)',
@@ -108,7 +98,7 @@ function toggleSubmenu(label: string) {
                     </svg>
                   </button>
 
-                  <!-- Untermenue -->
+                  <!-- Sub Menu -->
                   <ul
                     v-if="item.submenu"
                     class="overflow-hidden transition-all duration-400"
