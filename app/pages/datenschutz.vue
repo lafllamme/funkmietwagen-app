@@ -1,12 +1,6 @@
-<script setup lang="ts">
-import AppFooter from '@/components/layout/Footer.vue'
-import AppHeader from '@/components/layout/Header.vue'
-</script>
-
 <template>
-  <div class="min-h-screen flex flex-col bg-background text-foreground">
-    <AppHeader />
-    <main class="flex-1 py-12 md:py-20">
+  <main class="flex-1">
+    <section class="py-12 md:py-16">
       <div class="container mx-auto max-w-4xl px-4 space-y-10 md:px-6">
         <div class="space-y-3">
           <p class="text-xs text-muted-foreground tracking-[0.35em] uppercase">
@@ -96,7 +90,6 @@ import AppHeader from '@/components/layout/Header.vue'
           </section>
         </div>
       </div>
-    </main>
-    <AppFooter />
-  </div>
+    </section>
+  </main>
 </template>
