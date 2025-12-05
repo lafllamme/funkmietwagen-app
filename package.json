@@ -15,13 +15,13 @@
   "dependencies": {
     "@friendlycaptcha/sdk": "^0.1.36",
     "@internationalized/date": "^3.5.5",
-    "@pinia/nuxt": "^0.8.0",
+    "@pinia/nuxt": "^0.11.3",
     "@unocss/reset": "^66.5.9",
     "@vueuse/core": "^14.1.0",
     "consola": "^3.2.3",
     "motion-v": "^0.2.0",
     "nuxt": "^4.2.1",
-    "pinia": "^2.2.6",
+    "pinia": "^3.0.4",
     "reka-ui": "^2.6.0",
     "resend": "^6.5.2"
   },
