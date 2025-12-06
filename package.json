@@ -27,7 +27,7 @@
   },
   "devDependencies": {
     "@antfu/eslint-config": "^6.4.2",
-    "@iconify-json/lucide": "^1.2.78",
+    "@iconify-json/lucide": "^1.2.79",
     "@iconify-json/ph": "^1.2.2",
     "@nuxt/icon": "^2.1.0",
     "@unocss/eslint-plugin": "^66.5.10",
