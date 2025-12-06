@@ -1,5 +1,34 @@
 <script setup lang="ts">
 import { Icon } from '#components'
+
+const siteUrl = 'https://funkmietwagen.vercel.app/ueber-uns'
+const ogImage = 'https://i.imgur.com/qWUewqZ.png'
+
+useSeoMeta({
+  title: 'Über uns | Funkmietwagen ADE Chauffeurservice',
+  description:
+      'Inhabergeführter Chauffeurservice für Köln, Bonn und Düsseldorf: direkter Draht zu den Inhabern, handverlesene Fahrzeuge und verlässliche Disposition.',
+  ogTitle: 'Über uns | Funkmietwagen ADE Chauffeurservice',
+  ogDescription:
+      'Lernen Sie Funkmietwagen ADE kennen: diskrete Inhaberbetreuung, planbare Abläufe und persönliche Koordination Ihrer Fahrten im Rheinland.',
+  ogImage,
+  ogUrl: siteUrl,
+  ogType: 'website',
+  twitterCard: 'summary_large_image',
+  twitterTitle: 'Über uns | Funkmietwagen ADE Chauffeurservice',
+  twitterDescription:
+      'Persönlicher Chauffeurservice im Rheinland mit direktem Draht zu den Inhabern und ausgewählten Fahrzeugen.',
+  twitterImage: ogImage,
+})
+
+useHead({
+  link: [
+    {
+      rel: 'canonical',
+      href: siteUrl,
+    },
+  ],
+})
 </script>
 
 <template>

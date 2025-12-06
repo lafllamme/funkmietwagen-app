@@ -1,3 +1,34 @@
+<script setup lang="ts">
+const siteUrl = 'https://funkmietwagen.vercel.app/datenschutz'
+const ogImage = 'https://i.imgur.com/qWUewqZ.png'
+
+useSeoMeta({
+  title: 'Datenschutzerklärung | Funkmietwagen ADE',
+  description:
+      'Datenschutzhinweise des Chauffeurservice Funkmietwagen ADE: Verantwortlicher, verarbeitete Daten, Zwecke, Aufbewahrung und Ihre Rechte.',
+  ogTitle: 'Datenschutzerklärung | Funkmietwagen ADE',
+  ogDescription:
+      'Erfahren Sie, wie Funkmietwagen ADE personenbezogene Daten bei Anfragen und Fahrten verarbeitet und schützt.',
+  ogImage,
+  ogUrl: siteUrl,
+  ogType: 'website',
+  twitterCard: 'summary_large_image',
+  twitterTitle: 'Datenschutzerklärung | Funkmietwagen ADE',
+  twitterDescription:
+      'Transparente Informationen zur Datenverarbeitung bei Funkmietwagen ADE.',
+  twitterImage: ogImage,
+})
+
+useHead({
+  link: [
+    {
+      rel: 'canonical',
+      href: siteUrl,
+    },
+  ],
+})
+</script>
+
 <template>
   <main class="flex-1">
     <section class="py-12 md:py-16">

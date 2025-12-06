@@ -30,6 +30,35 @@ import { useBookingStore } from '@/stores/useBookingStore'
 
 definePageMeta({ scrollToTop: true })
 
+const siteUrl = 'https://funkmietwagen.vercel.app/vorbestellung'
+const ogImage = 'https://i.imgur.com/qWUewqZ.png'
+
+useSeoMeta({
+  title: 'Fahrt vorbestellen | Funkmietwagen ADE',
+  description:
+      'Chauffeur- und Flughafentransfers im Rheinland online anfragen: Start- und Zieladresse, Fahrzeugwunsch, Datum und Uhrzeit in wenigen Schritten übermitteln.',
+  ogTitle: 'Fahrt vorbestellen | Funkmietwagen ADE',
+  ogDescription:
+      'Reservieren Sie Ihren Chauffeur für Köln, Bonn, Düsseldorf oder individuelle Transfers. Limousinen, Vans und Stundenbuchungen bequem online anfragen.',
+  ogImage,
+  ogUrl: siteUrl,
+  ogType: 'website',
+  twitterCard: 'summary_large_image',
+  twitterTitle: 'Fahrt vorbestellen | Funkmietwagen ADE',
+  twitterDescription:
+      'Chauffeurservice und Flughafentransfers im Rheinland: Anfrageformular für Limousinen- und Vanfahrten.',
+  twitterImage: ogImage,
+})
+
+useHead({
+  link: [
+    {
+      rel: 'canonical',
+      href: siteUrl,
+    },
+  ],
+})
+
 const FORM_HEADERS = { 'Content-Type': 'application/json' }
 const FORM_ACTION = '/api/contact'
 const FORM_METHOD = 'POST'

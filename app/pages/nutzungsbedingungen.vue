@@ -1,6 +1,35 @@
 <script setup lang="ts">
 import AppFooter from '@/components/layout/Footer.vue'
 import AppHeader from '@/components/layout/Header.vue'
+
+const siteUrl = 'https://funkmietwagen.vercel.app/nutzungsbedingungen'
+const ogImage = 'https://i.imgur.com/qWUewqZ.png'
+
+useSeoMeta({
+  title: 'Nutzungsbedingungen | Funkmietwagen ADE',
+  description:
+      'Nutzungsbedingungen für Website, Anfragen und Buchungen des Chauffeurservice Funkmietwagen ADE in Köln, Bonn und Düsseldorf.',
+  ogTitle: 'Nutzungsbedingungen | Funkmietwagen ADE',
+  ogDescription:
+      'Rechtliche Hinweise zu Anfrage, Angebot, Stornierung und Haftung bei Fahrten mit Funkmietwagen ADE.',
+  ogImage,
+  ogUrl: siteUrl,
+  ogType: 'website',
+  twitterCard: 'summary_large_image',
+  twitterTitle: 'Nutzungsbedingungen | Funkmietwagen ADE',
+  twitterDescription:
+      'Überblick der Nutzungsbedingungen von Funkmietwagen ADE für Chauffeur- und Transferleistungen.',
+  twitterImage: ogImage,
+})
+
+useHead({
+  link: [
+    {
+      rel: 'canonical',
+      href: siteUrl,
+    },
+  ],
+})
 </script>
 
 <template>

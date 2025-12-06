@@ -1,3 +1,34 @@
+<script setup lang="ts">
+const siteUrl = 'https://funkmietwagen.vercel.app/impressum'
+const ogImage = 'https://i.imgur.com/qWUewqZ.png'
+
+useSeoMeta({
+  title: 'Impressum | Funkmietwagen ADE',
+  description:
+      'Impressum von Funkmietwagen ADE – Anbieterkennzeichnung, Kontaktdaten und Pflichtangaben für unseren Chauffeurservice in Köln.',
+  ogTitle: 'Impressum | Funkmietwagen ADE',
+  ogDescription:
+      'Anbieterkennzeichnung und Kontaktdaten von Funkmietwagen ADE, Ihrem Chauffeurservice für Köln, Bonn und Düsseldorf.',
+  ogImage,
+  ogUrl: siteUrl,
+  ogType: 'website',
+  twitterCard: 'summary_large_image',
+  twitterTitle: 'Impressum | Funkmietwagen ADE',
+  twitterDescription:
+      'Impressum und Pflichtangaben des Chauffeurservice Funkmietwagen ADE.',
+  twitterImage: ogImage,
+})
+
+useHead({
+  link: [
+    {
+      rel: 'canonical',
+      href: siteUrl,
+    },
+  ],
+})
+</script>
+
 <template>
   <main class="flex-1">
     <section class="py-12 md:py-16">

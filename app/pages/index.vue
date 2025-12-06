@@ -5,32 +5,35 @@ import PriceHero from '@/components/sections/PriceHero.vue'
 import VehicleShowcase from '@/components/sections/VehicleShowcase.vue'
 import ImageSlider from '@/components/ui/ImageSlider.vue'
 
+const siteUrl = 'https://funkmietwagen.vercel.app'
+const ogImage = 'https://i.imgur.com/qWUewqZ.png'
+
 useSeoMeta({
-  title: 'Funkmietwagen ADE – Premium Chauffeur Service',
+  title: 'Funkmietwagen ADE | Chauffeurservice Köln & Düsseldorf',
   description:
-      'Funkmietwagen ADE – Premium Chauffeur Service für Wien und Umgebung. Stilvolle Transfers, diskrete Fahrer und höchste Zuverlässigkeit für Flughafen, Business und Events.',
+      'Premium Chauffeurservice für Köln, Bonn, Düsseldorf und Rhein-Ruhr: diskrete Fahrer, gepflegte Limousinen & Vans, zuverlässige Flughafentransfers, Businessfahrten und Events.',
 
   // Open Graph
-  ogTitle: 'Funkmietwagen ADE – Premium Chauffeur Service',
+  ogTitle: 'Funkmietwagen ADE | Chauffeurservice Köln & Düsseldorf',
   ogDescription:
-      'Erstklassige Chauffeur- und Transferdienste mit stilvollen Fahrzeugen, professionellen Fahrern und höchstem Komfort. Reservieren Sie Ihre Fahrt ganz einfach online.',
-  ogImage: 'https://i.imgur.com/qWUewqZ.png',
-  ogUrl: 'https://funkmietwagen.netlify.app',
+      'Erstklassige Chauffeur- und Transferdienste mit stilvollen Fahrzeugen, professionellen Fahrern und höchstem Komfort im Rheinland. Reservieren Sie Ihre Fahrt online.',
+  ogImage,
+  ogUrl: siteUrl,
   ogType: 'website',
 
   // Twitter
   twitterCard: 'summary_large_image',
-  twitterTitle: 'Funkmietwagen ADE – Premium Chauffeur Service',
+  twitterTitle: 'Funkmietwagen ADE | Chauffeurservice Köln & Düsseldorf',
   twitterDescription:
-      'Premium Chauffeur Service für Wien & Umgebung – stilvoll, zuverlässig, komfortabel. Jetzt Fahrt reservieren.',
-  twitterImage: 'https://i.imgur.com/qWUewqZ.png',
+      'Premium Chauffeurservice für Köln, Bonn, Düsseldorf und Rhein-Ruhr – stilvoll, zuverlässig, komfortabel.',
+  twitterImage: ogImage,
 })
 
 useHead({
   link: [
     {
       rel: 'canonical',
-      href: 'https://funkmietwagen.netlify.app',
+      href: siteUrl,
     },
   ],
   meta: [
