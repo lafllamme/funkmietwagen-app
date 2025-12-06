@@ -24,6 +24,7 @@ export const mainMenuItems: MainMenuLink[] = [
     submenu: [
       { label: 'Impressum', href: '/impressum' },
       { label: 'Datenschutz', href: '/datenschutz' },
+      { label: 'Nutzungsbedingungen', href: '/nutzungsbedingungen' },
     ],
   },
 ]

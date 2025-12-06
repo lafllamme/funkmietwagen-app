@@ -4,12 +4,6 @@ export default defineNuxtConfig({
   devtools: { enabled: true },
   modules: ['@unocss/nuxt', '@nuxt/icon', '@pinia/nuxt'],
   pages: true,
-  routeRules: {
-    '/ueber-uns': { prerender: true },
-    '/impressum': { prerender: true },
-    '/datenschutz': { prerender: true },
-    '/nutzungsbedingungen': { prerender: true },
-  },
   // Global CSS
   css: [
     '@/assets/reset/main.ts',
